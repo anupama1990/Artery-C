@@ -7,3 +7,6 @@
 [submodule "extern/vanetza"]
 	path = extern/vanetza
 	url = https://github.com/anupama1990/vanetza.git
+[submodule "extern/pybind11"]
+	path = extern/pybind11
+	url = https://github.com/anupama1990/pybind11.git
