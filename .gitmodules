@@ -1,0 +1,3 @@
+[submodule "extern/inet"]
+	path = extern/inet
+	url = https://github.com/anupama1990/inet.git
