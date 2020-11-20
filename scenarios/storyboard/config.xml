@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<AnalogueModels>
+		<AnalogueModel type="SimplePathlossModel">
+			<parameter name="carrierFrequency" type="double" value="5.89e9" />
+		</AnalogueModel>
+	</AnalogueModels>
+	<Decider type="Decider80211p">
+		<!-- The center frequency on which the PHY listens -->
+		<!-- NOTE: CCH is hard-coded in Mac1609_4 at 5.89 GHz -->
+		<parameter name="centerFrequency" type="double" value="5.89e9"/>
+	</Decider>
+</root>

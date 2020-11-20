@@ -1,0 +1,4580 @@
+E # 0 t 0 m 1 ce -1 msg -1
+SB v 1285 rid BlackIce-D2DMulticast-0-20191220-19:43:22-25919 b 1000
+KF p -1 c "" s ""
+MC id 1 c omnetpp::cModule t artery.lte.World n World cm 1
+MS id 1 d ""
+MC id 2 c omnetpp::cModule t traci.Manager pid 1 n traci cm 1
+MS id 2 d p=20,20;i=block/network2;is=s
+MC id 3 c inet::physicallayer::RadioMedium t inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium pid 1 n radioMedium cm 1
+MS id 3 d p=60,20;i=misc/sun_s
+MC id 4 c artery::Storyboard t artery.storyboard.Storyboard pid 1 n storyboard
+MS id 4 d p=140,20;i=block/blackboard;is=s
+CM id 0 tid 0 eid 0 etid 0 c omnetpp::cMessage n "insert static node" pe -1
+MC id 5 c artery::StaticNodeManager t artery.StaticNodeManager pid 1 n staticNodes
+MS id 5 d p=20,40;i=block/network2;is=s
+MC id 6 c LteChannelControl t lte.world.radio.LteChannelControl pid 1 n channelControl
+MS id 6 d p=140,20;i=misc/sun
+MC id 7 c LteBinder t lte.corenetwork.binder.LteBinder pid 1 n binder
+MS id 7 d p=140,60;i=block/cogwheel
+MC id 8 c inet::IPv4NetworkConfigurator t inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator pid 1 n configurator
+MS id 8 d p=60,60;i=block/cogwheel_s
+MC id 9 c omnetpp::cModule t lte.corenetwork.nodes.eNodeB pid 1 n eNodeB[0] cm 1
+GC m 9 g 0 n ppp$i o 0
+GC m 9 g 1 n ppp$o o 1
+GC m 9 g 2 n radioIn o 0
+MS id 9 d p=297,199;i=device/antennatower;bgb=814,437
+MC id 10 c omnetpp::cModule t lte.corenetwork.nodes.eNodeB pid 1 n eNodeB[1] cm 1
+GC m 10 g 0 n ppp$i o 0
+GC m 10 g 1 n ppp$o o 1
+GC m 10 g 2 n radioIn o 0
+MS id 10 d p=297,199;i=device/antennatower;bgb=814,437
+MC id 11 c omnetpp::cModule t lte.epc.PgwStandardSimplified pid 1 n pgw cm 1
+GC m 11 g 6 n filterGate$i o 0
+GC m 11 g 7 n filterGate$o o 1
+MS id 11 d p=369,120;i=device/mainframe;bgb=920,462
+MC id 12 c omnetpp::cModule t inet.node.inet.StandardHost pid 1 n server cm 1
+MS id 12 d is=n;p=220,20;i=device/server;bgb=1156,582
+MC id 13 c omnetpp::cModule t inet.node.inet.Router pid 1 n router cm 1
+MS id 13 d p=220,60;i=device/smallrouter;bgb=,448
+GC m 9 g 3145728 n x2$i i 0 o 0
+GC m 9 g 3670016 n x2$o i 0 o 1
+GC m 10 g 3145728 n x2$i i 0 o 0
+GC m 10 g 3670016 n x2$o i 0 o 1
+CC sm 9 sg 3670016 dm 10 dg 3145728
+CS sm 9 sg 3670016 d ""
+CC sm 10 sg 3670016 dm 9 dg 3145728
+CS sm 10 sg 3670016 d ""
+GC m 11 g 2097152 n pppg$i i 0 o 0
+GC m 11 g 2621440 n pppg$o i 0 o 1
+CC sm 11 sg 2621440 dm 9 dg 0
+CS sm 11 sg 2621440 d ""
+CC sm 9 sg 1 dm 11 dg 2097152
+CS sm 9 sg 1 d ""
+GC m 11 g 2097153 n pppg$i i 1 o 0
+GC m 11 g 2621441 n pppg$o i 1 o 1
+CC sm 11 sg 2621441 dm 10 dg 0
+CS sm 11 sg 2621441 d ""
+CC sm 10 sg 1 dm 11 dg 2097153
+CS sm 10 sg 1 d ""
+GC m 12 g 2097152 n pppg$i i 0 o 0
+GC m 12 g 2621440 n pppg$o i 0 o 1
+GC m 13 g 2097152 n pppg$i i 0 o 0
+GC m 13 g 2621440 n pppg$o i 0 o 1
+CC sm 12 sg 2621440 dm 13 dg 2097152
+CS sm 12 sg 2621440 d ""
+CC sm 13 sg 2621440 dm 12 dg 2097152
+CS sm 13 sg 2621440 d ""
+GC m 13 g 2097153 n pppg$i i 1 o 0
+GC m 13 g 2621441 n pppg$o i 1 o 1
+CC sm 13 sg 2621441 dm 11 dg 6
+CS sm 13 sg 2621441 d ""
+CC sm 11 sg 7 dm 13 dg 2097153
+CS sm 11 sg 7 d ""
+MC id 24 c traci::Core t traci.Core pid 2 n core
+MS id 24 d ""
+MC id 25 c traci::PosixLauncher t traci.PosixLauncher pid 2 n launcher
+MS id 25 d ""
+MC id 26 c traci::BasicSubscriptionManager t traci.BasicSubscriptionManager pid 2 n subscriptions
+MS id 26 d ""
+MC id 27 c traci::BasicNodeManager t traci.BasicNodeManager pid 2 n nodes
+MS id 27 d ""
+MC id 28 c traci::BasicModuleMapper t traci.BasicModuleMapper pid 2 n mapper
+MS id 28 d ""
+MC id 29 c inet::physicallayer::ConstantSpeedPropagation t inet.physicallayer.propagation.ConstantSpeedPropagation pid 3 n propagation cm 1
+MS id 29 d p=100,50;i=block/timer
+MC id 30 c inet::physicallayer::ScalarAnalogModel t inet.physicallayer.analogmodel.packetlevel.ScalarAnalogModel pid 3 n analogModel cm 1
+MS id 30 d p=100,150;i=block/tunnel
+MC id 31 c inet::physicallayer::IsotropicScalarBackgroundNoise t inet.physicallayer.backgroundnoise.IsotropicScalarBackgroundNoise pid 3 n backgroundNoise cm 1
+MS id 31 d p=100,250;i=block/mac
+MC id 32 c inet::physicallayer::FreeSpacePathLoss t inet.physicallayer.pathloss.FreeSpacePathLoss pid 3 n pathLoss cm 1
+MS id 32 d p=300,50;i=block/control
+MC id 33 c inet::physicallayer::MediumLimitCache t inet.physicallayer.common.packetlevel.MediumLimitCache pid 3 n mediumLimitCache cm 1
+MS id 33 d p=500,50;i=block/table2
+MC id 34 c inet::physicallayer::VectorCommunicationCache t inet.physicallayer.communicationcache.VectorCommunicationCache pid 3 n communicationCache cm 1
+MS id 34 d p=500,250;i=block/table2
+MC id 35 c inet::InterfaceTable t inet.networklayer.common.InterfaceTable pid 9 n interfaceTable
+MS id 35 d is=s;p=50,75;i=block/table
+MC id 36 c inet::IPv4RoutingTable t inet.networklayer.ipv4.IPv4RoutingTable pid 9 n routingTable
+MS id 36 d is=s;p=50,125;i=block/table
+MC id 37 c inet::StationaryMobility t inet.mobility.static.StationaryMobility pid 9 n mobility
+MS id 37 d is=s;p=50,175;i=block/cogwheel
+MC id 38 c LteCellInfo t lte.corenetwork.lteCellInfo.LteCellInfo pid 9 n cellInfo
+MS id 38 d is=s;p=50,225;i=block/control
+MC id 39 c omnetpp::cModule t lte.stack.LteNicEnbD2D pid 9 n lteNic cm 1
+GC m 39 g 0 n EUTRAN_RRC_Sap$i o 0
+GC m 39 g 1 n EUTRAN_RRC_Sap$o o 1
+GC m 39 g 2 n upperLayerIn o 0
+GC m 39 g 5 n upperLayerOut o 1
+GC m 39 g 6 n radioIn o 0
+MS id 39 d p=250,407;i=block/ifcard;bgb=250,444;bgl=3
+MC id 40 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 9 n pppIf cm 1
+GC m 40 g 0 n upperLayerIn o 0
+GC m 40 g 3 n upperLayerOut o 1
+GC m 40 g 4 n phys$i o 0
+GC m 40 g 5 n phys$o o 1
+MS id 40 d p=501,363;i=block/ifcard;bgb=214,249;bgl=53
+MC id 41 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 9 n x2ppp[0] cm 1
+GC m 41 g 0 n upperLayerIn o 0
+GC m 41 g 3 n upperLayerOut o 1
+GC m 41 g 4 n phys$i o 0
+GC m 41 g 5 n phys$o o 1
+MS id 41 d p=683,363;i=block/ifcard;bgb=214,249;bgl=53
+MC id 42 c omnetpp::cModule t inet.networklayer.ipv4.IPv4NetworkLayer pid 9 n networkLayer cm 1
+GC m 42 g 12 n igmpIn o 0
+GC m 42 g 15 n igmpOut o 1
+MS id 42 d q=queue;p=501,269;i=block/fork
+MC id 43 c inet::UDP t inet.transportlayer.udp.UDP pid 9 n udp
+GC m 43 g 2 n ipIn o 0
+GC m 43 g 7 n ipOut o 1
+MS id 43 d p=501,148;i=block/transport
+MC id 44 c omnetpp::cModule t lte.x2.LteX2App pid 9 n x2App[0] cm 1
+GC m 44 g 4 n x2ManagerIn o 0
+GC m 44 g 7 n x2ManagerOut o 1
+MS id 44 d p=155,48,row;i=block/app;bgb=258,148
+GC m 44 g 1048576 n sctpIn i 0 o 0
+GC m 44 g 1048577 n sctpIn i 1 o 0
+GC m 44 g 2621440 n sctpOut i 0 o 1
+GC m 44 g 2621441 n sctpOut i 1 o 1
+MC id 45 c inet::sctp::SCTP t inet.transportlayer.sctp.SCTP pid 9 n sctp
+GC m 45 g 2 n from_ip o 0
+GC m 45 g 7 n to_ip o 1
+MS id 45 d p=275,148;i=block/wheelbarrow
+MC id 46 c TrafficFlowFilterSimplified t lte.epc.TrafficFlowFilterSimplified pid 9 n trafficFlowFilter
+GC m 46 g 0 n internetFilterGateIn o 0
+GC m 46 g 3 n gtpUserGateOut o 1
+MS id 46 d p=330,48;i=block/filter
+MC id 47 c GtpUserSimplified t lte.epc.gtp.GtpUserSimplified pid 9 n gtpUser
+GC m 47 g 1 n udpOut o 1
+GC m 47 g 2 n udpIn o 0
+GC m 47 g 4 n trafficFlowFilterGate o 0
+GC m 47 g 7 n pppGate o 1
+MS id 47 d p=434,48;i=block/tunnel
+MC id 48 c GtpUserX2 t lte.epc.gtp.GtpUserX2 pid 9 n gtpUserX2
+GC m 48 g 1 n udpOut o 1
+GC m 48 g 2 n udpIn o 0
+GC m 48 g 5 n lteStackOut o 1
+GC m 48 g 6 n lteStackIn o 0
+MS id 48 d p=410,363;i=block/tunnel
+CC sm 9 sg 2 dm 39 dg 6
+CC sm 39 sg 5 dm 46 dg 0
+CC sm 47 sg 7 dm 39 dg 2
+CC sm 46 sg 3 dm 47 dg 4
+GC m 43 g 1048576 n appIn i 0 o 0
+CC sm 47 sg 1 dm 43 dg 1048576
+GC m 43 g 3670016 n appOut i 0 o 1
+CC sm 43 sg 3670016 dm 47 dg 2
+CC sm 40 sg 5 dm 9 dg 1
+CC sm 9 sg 0 dm 40 dg 4
+GC m 42 g 1048576 n ifIn i 0 o 0
+CC sm 40 sg 3 dm 42 dg 1048576
+GC m 42 g 2621440 n ifOut i 0 o 1
+CC sm 42 sg 2621440 dm 40 dg 0
+GC m 39 g 5242880 n x2$i i 0 o 0
+GC m 39 g 5767168 n x2$o i 0 o 1
+CC sm 48 sg 5 dm 39 dg 5242880
+CC sm 39 sg 5767168 dm 48 dg 6
+GC m 43 g 1048577 n appIn i 1 o 0
+CC sm 48 sg 1 dm 43 dg 1048577
+GC m 43 g 3670017 n appOut i 1 o 1
+CC sm 43 sg 3670017 dm 48 dg 2
+CC sm 41 sg 5 dm 9 dg 3670016
+CC sm 9 sg 3145728 dm 41 dg 4
+GC m 42 g 1048577 n ifIn i 1 o 0
+CC sm 41 sg 3 dm 42 dg 1048577
+GC m 42 g 2621441 n ifOut i 1 o 1
+CC sm 42 sg 2621441 dm 41 dg 0
+GC m 45 g 1048576 n from_appl i 0 o 0
+CC sm 44 sg 2621440 dm 45 dg 1048576
+GC m 45 g 3670016 n to_appl i 0 o 1
+CC sm 45 sg 3670016 dm 44 dg 1048576
+GC m 45 g 1048577 n from_appl i 1 o 0
+CC sm 44 sg 2621441 dm 45 dg 1048577
+GC m 45 g 3670017 n to_appl i 1 o 1
+CC sm 45 sg 3670017 dm 44 dg 1048577
+GC m 39 g 5242881 n x2$i i 1 o 0
+GC m 39 g 5767169 n x2$o i 1 o 1
+CC sm 39 sg 5767169 dm 44 dg 4
+CC sm 44 sg 7 dm 39 dg 5242881
+GC m 42 g 3145728 n transportIn i 0 o 0
+CC sm 43 sg 7 dm 42 dg 3145728
+GC m 42 g 4718592 n transportOut i 0 o 1
+CC sm 42 sg 4718592 dm 43 dg 2
+GC m 42 g 3145729 n transportIn i 1 o 0
+CC sm 45 sg 7 dm 42 dg 3145729
+GC m 42 g 4718593 n transportOut i 1 o 1
+CC sm 42 sg 4718593 dm 45 dg 2
+MC id 49 c IP2lte t lte.corenetwork.lteip.IP2lte pid 39 n ip2lte
+GC m 49 g 0 n upperLayerIn o 0
+GC m 49 g 3 n upperLayerOut o 1
+GC m 49 g 4 n stackLte$i o 0
+GC m 49 g 5 n stackLte$o o 1
+MS id 49 d p=150,68;i=block/layer
+MC id 50 c LtePdcpRrcEnbD2D t lte.stack.pdcp_rrc.LtePdcpRrcEnbD2D pid 39 n pdcpRrc
+GC m 50 g 0 n DataPort$i o 0
+GC m 50 g 1 n DataPort$o o 1
+GC m 50 g 2 n EUTRAN_RRC_Sap$i o 0
+GC m 50 g 3 n EUTRAN_RRC_Sap$o o 1
+GC m 50 g 4 n TM_Sap$i o 0
+GC m 50 g 5 n TM_Sap$o o 1
+GC m 50 g 6 n UM_Sap$i o 0
+GC m 50 g 7 n UM_Sap$o o 1
+GC m 50 g 8 n AM_Sap$i o 0
+GC m 50 g 9 n AM_Sap$o o 1
+MS id 50 d p=150,142;i=block/fork
+MC id 51 c omnetpp::cModule t lte.stack.rlc.LteRlc pid 39 n rlc cm 1
+GC m 51 g 0 n TM_Sap$i o 0
+GC m 51 g 1 n TM_Sap$o o 1
+GC m 51 g 2 n UM_Sap$i o 0
+GC m 51 g 3 n UM_Sap$o o 1
+GC m 51 g 4 n AM_Sap$i o 0
+GC m 51 g 5 n AM_Sap$o o 1
+GC m 51 g 6 n MAC_to_RLC o 0
+GC m 51 g 9 n RLC_to_MAC o 1
+MS id 51 d p=150,227;i=block/transport
+MC id 52 c LteMacEnbD2D t lte.stack.mac.LteMacEnbD2D pid 39 n mac
+GC m 52 g 0 n RLC_to_MAC o 0
+GC m 52 g 3 n MAC_to_RLC o 1
+GC m 52 g 4 n PHY_to_MAC o 0
+GC m 52 g 7 n MAC_to_PHY o 1
+MS id 52 d p=151,315;i=block/mac
+MC id 53 c LtePhyEnbD2D t lte.stack.phy.LtePhyEnbD2D pid 39 n phy
+GC m 53 g 0 n upperGateIn o 0
+GC m 53 g 3 n upperGateOut o 1
+GC m 53 g 4 n radioIn o 0
+MS id 53 d p=151,390;i=block/wrxtx
+MC id 54 c LteRealisticChannelModel t lte.stack.phy.ChannelModel.LteRealisticChannelModel pid 39 n channelModel
+MS id 54 d p=44.8,389.75998
+CC sm 49 sg 5 dm 50 dg 0
+CC sm 50 sg 1 dm 49 dg 4
+CC sm 39 sg 0 dm 50 dg 2
+CC sm 50 sg 3 dm 39 dg 1
+CC sm 50 sg 7 dm 51 dg 2
+CC sm 51 sg 3 dm 50 dg 6
+CC sm 50 sg 9 dm 51 dg 4
+CC sm 51 sg 5 dm 50 dg 8
+CC sm 50 sg 5 dm 51 dg 0
+CC sm 51 sg 1 dm 50 dg 4
+CC sm 51 sg 9 dm 52 dg 0
+CC sm 52 sg 3 dm 51 dg 6
+CC sm 52 sg 7 dm 53 dg 0
+CC sm 53 sg 3 dm 52 dg 4
+CC sm 39 sg 6 dm 53 dg 4
+CC sm 49 sg 3 dm 39 dg 5
+CC sm 39 sg 2 dm 49 dg 0
+MC id 55 c LteX2Manager t lte.x2.LteX2Manager pid 39 n x2Manager
+GC m 55 g 4 n x2Gtp$i o 0
+GC m 55 g 5 n x2Gtp$o o 1
+MS id 55 d p=60,227,row;i=block/cogwheel
+MC id 56 c LteHandoverManager t lte.stack.handoverManager.LteHandoverManager pid 39 n handoverManager
+GC m 56 g 0 n x2ManagerIn o 0
+GC m 56 g 3 n x2ManagerOut o 1
+MS id 56 d p=60,142,row;i=block/cogwheel
+GC m 55 g 1048576 n dataPort$i i 0 o 0
+GC m 55 g 1572864 n dataPort$o i 0 o 1
+CC sm 55 sg 1572864 dm 56 dg 0
+CC sm 56 sg 3 dm 55 dg 1048576
+CC sm 39 sg 5242880 dm 55 dg 4
+CC sm 55 sg 5 dm 39 dg 5767168
+GC m 55 g 2097152 n x2$i i 0 o 0
+GC m 55 g 2621440 n x2$o i 0 o 1
+CC sm 39 sg 5242881 dm 55 dg 2097152
+CC sm 55 sg 2621440 dm 39 dg 5767169
+MC id 57 c D2DModeSelectionBase t lte.stack.d2dModeSelection.D2DModeSelectionBase pid 39 n d2dModeSelection
+MS id 57 d p=60,68,row
+MC id 58 c LteRlcTm t lte.stack.rlc.LteRlcTm pid 51 n tm
+GC m 58 g 0 n TM_Sap_up$i o 0
+GC m 58 g 1 n TM_Sap_up$o o 1
+GC m 58 g 2 n TM_Sap_down$i o 0
+GC m 58 g 3 n TM_Sap_down$o o 1
+MS id 58 d p=100,100;i=block/wheelbarrow
+MC id 59 c LteRlcUmD2D t lte.stack.rlc.LteRlcUmD2D pid 51 n um
+GC m 59 g 0 n UM_Sap_up$i o 0
+GC m 59 g 1 n UM_Sap_up$o o 1
+GC m 59 g 2 n UM_Sap_down$i o 0
+GC m 59 g 3 n UM_Sap_down$o o 1
+MS id 59 d p=200,100;i=block/wheelbarrow
+MC id 60 c LteRlcAm t lte.stack.rlc.LteRlcAm pid 51 n am
+GC m 60 g 0 n AM_Sap_up$i o 0
+GC m 60 g 1 n AM_Sap_up$o o 1
+GC m 60 g 2 n AM_Sap_down$i o 0
+GC m 60 g 3 n AM_Sap_down$o o 1
+MS id 60 d p=300,100;i=block/wheelbarrow
+MC id 61 c LteRlcMux t lte.stack.rlc.LteRlcMux pid 51 n mux
+GC m 61 g 0 n TM_Sap$i o 0
+GC m 61 g 1 n TM_Sap$o o 1
+GC m 61 g 2 n UM_Sap$i o 0
+GC m 61 g 3 n UM_Sap$o o 1
+GC m 61 g 4 n AM_Sap$i o 0
+GC m 61 g 5 n AM_Sap$o o 1
+GC m 61 g 6 n MAC_to_RLC o 0
+GC m 61 g 9 n RLC_to_MAC o 1
+MS id 61 d p=200,200;i=block/classifier
+CC sm 58 sg 1 dm 51 dg 1
+CC sm 51 sg 0 dm 58 dg 0
+CC sm 59 sg 1 dm 51 dg 3
+CC sm 51 sg 2 dm 59 dg 0
+CC sm 60 sg 1 dm 51 dg 5
+CC sm 51 sg 4 dm 60 dg 0
+CC sm 58 sg 3 dm 61 dg 0
+CC sm 61 sg 1 dm 58 dg 2
+CC sm 59 sg 3 dm 61 dg 2
+CC sm 61 sg 3 dm 59 dg 2
+CC sm 60 sg 3 dm 61 dg 4
+CC sm 61 sg 5 dm 60 dg 2
+CC sm 51 sg 6 dm 61 dg 6
+CC sm 61 sg 9 dm 51 dg 9
+MC id 62 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 40 n queue
+GC m 62 g 0 n in o 0
+GC m 62 g 3 n out o 1
+MS id 62 d q=l2queue;p=42,161;i=block/queue
+MC id 63 c inet::PPP t inet.linklayer.ppp.PPP pid 40 n ppp
+GC m 63 g 0 n netwIn o 0
+GC m 63 g 3 n netwOut o 1
+GC m 63 g 4 n phys$i o 0
+GC m 63 g 5 n phys$o o 1
+MS id 63 d p=98,207;i=block/rxtx
+CC sm 40 sg 0 dm 62 dg 0
+CS sm 40 sg 0 d m=n
+CC sm 62 sg 3 dm 63 dg 0
+CC sm 40 sg 4 dm 63 dg 4
+CS sm 40 sg 4 d m=s
+CC sm 63 sg 5 dm 40 dg 5
+CS sm 63 sg 5 d m=s
+CC sm 63 sg 3 dm 40 dg 3
+CS sm 63 sg 3 d m=n
+MC id 68 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 41 n queue
+GC m 68 g 0 n in o 0
+GC m 68 g 3 n out o 1
+MS id 68 d q=l2queue;p=42,161;i=block/queue
+MC id 69 c inet::PPP t inet.linklayer.ppp.PPP pid 41 n ppp
+GC m 69 g 0 n netwIn o 0
+GC m 69 g 3 n netwOut o 1
+GC m 69 g 4 n phys$i o 0
+GC m 69 g 5 n phys$o o 1
+MS id 69 d p=98,207;i=block/rxtx
+CC sm 41 sg 0 dm 68 dg 0
+CS sm 41 sg 0 d m=n
+CC sm 68 sg 3 dm 69 dg 0
+CC sm 41 sg 4 dm 69 dg 4
+CS sm 41 sg 4 d m=s
+CC sm 69 sg 5 dm 41 dg 5
+CS sm 69 sg 5 d m=s
+CC sm 69 sg 3 dm 41 dg 3
+CS sm 69 sg 3 d m=n
+MC id 74 c inet::IPv4NodeConfigurator t inet.networklayer.configurator.ipv4.IPv4NodeConfigurator pid 42 n configurator
+MS id 74 d p=39,158;i=block/cogwheel_s
+MC id 75 c inet::IPv4 t inet.networklayer.ipv4.IPv4 pid 42 n ip
+GC m 75 g 4 n arpIn o 0
+GC m 75 g 7 n arpOut o 1
+MS id 75 d q=queue;p=85,95;i=block/routing
+GC m 75 g 5242880 n queueIn i 0 o 0
+GC m 75 g 5242881 n queueIn i 1 o 0
+GC m 75 g 6815744 n queueOut i 0 o 1
+GC m 75 g 6815745 n queueOut i 1 o 1
+MC id 76 c inet::ARP t inet.networklayer.arp.ipv4.ARP pid 42 n arp
+GC m 76 g 0 n netwIn o 0
+GC m 76 g 3 n netwOut o 1
+MS id 76 d is=s;q=pendingQueue;p=165,120;i=block/layer
+MC id 77 c inet::ICMP t inet.networklayer.ipv4.ICMP pid 42 n icmp
+GC m 77 g 0 n localIn o 0
+GC m 77 g 7 n sendOut o 1
+GC m 77 g 9 n errorOut o 1
+MS id 77 d p=165,70;i=block/control_s
+MC id 78 c inet::IGMPv2 t inet.networklayer.ipv4.IGMPv2 pid 42 n igmp
+GC m 78 g 0 n ipIn o 0
+GC m 78 g 3 n ipOut o 1
+GC m 78 g 4 n routerIn o 0
+GC m 78 g 7 n routerOut o 1
+MS id 78 d p=39,33;i=block/cogwheel_s
+MC id 79 c inet::ErrorHandling t inet.networklayer.ipv4.ErrorHandling pid 42 n errorHandling
+GC m 79 g 0 n in o 0
+MS id 79 d p=239,70;i=block/sink_s
+GC m 75 g 1048576 n transportIn i 0 o 0
+CC sm 42 sg 3145728 dm 75 dg 1048576
+CS sm 42 sg 3145728 d m=n
+GC m 75 g 1048577 n transportIn i 1 o 0
+CC sm 42 sg 3145729 dm 75 dg 1048577
+CS sm 42 sg 3145729 d m=n
+GC m 75 g 2621440 n transportOut i 0 o 1
+CC sm 75 sg 2621440 dm 42 dg 4718592
+CS sm 75 sg 2621440 d m=n
+GC m 75 g 2621441 n transportOut i 1 o 1
+CC sm 75 sg 2621441 dm 42 dg 4718593
+CS sm 75 sg 2621441 d m=n
+GC m 75 g 2621442 n transportOut i 2 o 1
+CC sm 75 sg 2621442 dm 77 dg 0
+GC m 75 g 1048578 n transportIn i 2 o 0
+CC sm 77 sg 7 dm 75 dg 1048578
+GC m 75 g 2621443 n transportOut i 3 o 1
+CC sm 75 sg 2621443 dm 78 dg 0
+GC m 75 g 1048579 n transportIn i 3 o 0
+CC sm 78 sg 3 dm 75 dg 1048579
+CC sm 77 sg 9 dm 79 dg 0
+CC sm 75 sg 7 dm 76 dg 0
+CC sm 76 sg 3 dm 75 dg 4
+CC sm 78 sg 7 dm 42 dg 15
+CC sm 42 sg 12 dm 78 dg 4
+CC sm 42 sg 1048576 dm 75 dg 5242880
+CS sm 42 sg 1048576 d m=s
+CC sm 42 sg 1048577 dm 75 dg 5242881
+CS sm 42 sg 1048577 d m=s
+CC sm 75 sg 6815744 dm 42 dg 2621440
+CS sm 75 sg 6815744 d m=s
+CC sm 75 sg 6815745 dm 42 dg 2621441
+CS sm 75 sg 6815745 d m=s
+- INFO (LteX2App)World.eNodeB[0].x2App[0]: sockstate=NOT_BOUND
+MC id 88 c X2AppClient t lte.x2.X2AppClient pid 44 n client
+GC m 88 g 0 n sctpIn o 0
+GC m 88 g 3 n sctpOut o 1
+GC m 88 g 5 n x2ManagerOut o 1
+MS id 88 d i=block/app;p=92,76
+MC id 89 c X2AppServer t lte.x2.X2AppServer pid 44 n server
+GC m 89 g 0 n sctpIn o 0
+GC m 89 g 3 n sctpOut o 1
+GC m 89 g 4 n x2ManagerIn o 0
+MS id 89 d i=block/app;p=163,76
+CC sm 44 sg 1048576 dm 88 dg 0
+CC sm 88 sg 3 dm 44 dg 2621440
+CC sm 44 sg 1048577 dm 89 dg 0
+CC sm 89 sg 3 dm 44 dg 2621441
+CC sm 44 sg 4 dm 89 dg 4
+CC sm 88 sg 5 dm 44 dg 7
+MC id 90 c inet::InterfaceTable t inet.networklayer.common.InterfaceTable pid 10 n interfaceTable
+MS id 90 d is=s;p=50,75;i=block/table
+MC id 91 c inet::IPv4RoutingTable t inet.networklayer.ipv4.IPv4RoutingTable pid 10 n routingTable
+MS id 91 d is=s;p=50,125;i=block/table
+MC id 92 c inet::StationaryMobility t inet.mobility.static.StationaryMobility pid 10 n mobility
+MS id 92 d is=s;p=50,175;i=block/cogwheel
+MC id 93 c LteCellInfo t lte.corenetwork.lteCellInfo.LteCellInfo pid 10 n cellInfo
+MS id 93 d is=s;p=50,225;i=block/control
+MC id 94 c omnetpp::cModule t lte.stack.LteNicEnbD2D pid 10 n lteNic cm 1
+GC m 94 g 0 n EUTRAN_RRC_Sap$i o 0
+GC m 94 g 1 n EUTRAN_RRC_Sap$o o 1
+GC m 94 g 2 n upperLayerIn o 0
+GC m 94 g 5 n upperLayerOut o 1
+GC m 94 g 6 n radioIn o 0
+MS id 94 d p=250,407;i=block/ifcard;bgb=250,444;bgl=3
+MC id 95 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 10 n pppIf cm 1
+GC m 95 g 0 n upperLayerIn o 0
+GC m 95 g 3 n upperLayerOut o 1
+GC m 95 g 4 n phys$i o 0
+GC m 95 g 5 n phys$o o 1
+MS id 95 d p=501,363;i=block/ifcard;bgb=214,249;bgl=53
+MC id 96 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 10 n x2ppp[0] cm 1
+GC m 96 g 0 n upperLayerIn o 0
+GC m 96 g 3 n upperLayerOut o 1
+GC m 96 g 4 n phys$i o 0
+GC m 96 g 5 n phys$o o 1
+MS id 96 d p=683,363;i=block/ifcard;bgb=214,249;bgl=53
+MC id 97 c omnetpp::cModule t inet.networklayer.ipv4.IPv4NetworkLayer pid 10 n networkLayer cm 1
+GC m 97 g 12 n igmpIn o 0
+GC m 97 g 15 n igmpOut o 1
+MS id 97 d q=queue;p=501,269;i=block/fork
+MC id 98 c inet::UDP t inet.transportlayer.udp.UDP pid 10 n udp
+GC m 98 g 2 n ipIn o 0
+GC m 98 g 7 n ipOut o 1
+MS id 98 d p=501,148;i=block/transport
+MC id 99 c omnetpp::cModule t lte.x2.LteX2App pid 10 n x2App[0] cm 1
+GC m 99 g 4 n x2ManagerIn o 0
+GC m 99 g 7 n x2ManagerOut o 1
+MS id 99 d p=155,48,row;i=block/app;bgb=258,148
+GC m 99 g 1048576 n sctpIn i 0 o 0
+GC m 99 g 1048577 n sctpIn i 1 o 0
+GC m 99 g 2621440 n sctpOut i 0 o 1
+GC m 99 g 2621441 n sctpOut i 1 o 1
+MC id 100 c inet::sctp::SCTP t inet.transportlayer.sctp.SCTP pid 10 n sctp
+GC m 100 g 2 n from_ip o 0
+GC m 100 g 7 n to_ip o 1
+MS id 100 d p=275,148;i=block/wheelbarrow
+MC id 101 c TrafficFlowFilterSimplified t lte.epc.TrafficFlowFilterSimplified pid 10 n trafficFlowFilter
+GC m 101 g 0 n internetFilterGateIn o 0
+GC m 101 g 3 n gtpUserGateOut o 1
+MS id 101 d p=330,48;i=block/filter
+MC id 102 c GtpUserSimplified t lte.epc.gtp.GtpUserSimplified pid 10 n gtpUser
+GC m 102 g 1 n udpOut o 1
+GC m 102 g 2 n udpIn o 0
+GC m 102 g 4 n trafficFlowFilterGate o 0
+GC m 102 g 7 n pppGate o 1
+MS id 102 d p=434,48;i=block/tunnel
+MC id 103 c GtpUserX2 t lte.epc.gtp.GtpUserX2 pid 10 n gtpUserX2
+GC m 103 g 1 n udpOut o 1
+GC m 103 g 2 n udpIn o 0
+GC m 103 g 5 n lteStackOut o 1
+GC m 103 g 6 n lteStackIn o 0
+MS id 103 d p=410,363;i=block/tunnel
+CC sm 10 sg 2 dm 94 dg 6
+CC sm 94 sg 5 dm 101 dg 0
+CC sm 102 sg 7 dm 94 dg 2
+CC sm 101 sg 3 dm 102 dg 4
+GC m 98 g 1048576 n appIn i 0 o 0
+CC sm 102 sg 1 dm 98 dg 1048576
+GC m 98 g 3670016 n appOut i 0 o 1
+CC sm 98 sg 3670016 dm 102 dg 2
+CC sm 95 sg 5 dm 10 dg 1
+CC sm 10 sg 0 dm 95 dg 4
+GC m 97 g 1048576 n ifIn i 0 o 0
+CC sm 95 sg 3 dm 97 dg 1048576
+GC m 97 g 2621440 n ifOut i 0 o 1
+CC sm 97 sg 2621440 dm 95 dg 0
+GC m 94 g 5242880 n x2$i i 0 o 0
+GC m 94 g 5767168 n x2$o i 0 o 1
+CC sm 103 sg 5 dm 94 dg 5242880
+CC sm 94 sg 5767168 dm 103 dg 6
+GC m 98 g 1048577 n appIn i 1 o 0
+CC sm 103 sg 1 dm 98 dg 1048577
+GC m 98 g 3670017 n appOut i 1 o 1
+CC sm 98 sg 3670017 dm 103 dg 2
+CC sm 96 sg 5 dm 10 dg 3670016
+CC sm 10 sg 3145728 dm 96 dg 4
+GC m 97 g 1048577 n ifIn i 1 o 0
+CC sm 96 sg 3 dm 97 dg 1048577
+GC m 97 g 2621441 n ifOut i 1 o 1
+CC sm 97 sg 2621441 dm 96 dg 0
+GC m 100 g 1048576 n from_appl i 0 o 0
+CC sm 99 sg 2621440 dm 100 dg 1048576
+GC m 100 g 3670016 n to_appl i 0 o 1
+CC sm 100 sg 3670016 dm 99 dg 1048576
+GC m 100 g 1048577 n from_appl i 1 o 0
+CC sm 99 sg 2621441 dm 100 dg 1048577
+GC m 100 g 3670017 n to_appl i 1 o 1
+CC sm 100 sg 3670017 dm 99 dg 1048577
+GC m 94 g 5242881 n x2$i i 1 o 0
+GC m 94 g 5767169 n x2$o i 1 o 1
+CC sm 94 sg 5767169 dm 99 dg 4
+CC sm 99 sg 7 dm 94 dg 5242881
+GC m 97 g 3145728 n transportIn i 0 o 0
+CC sm 98 sg 7 dm 97 dg 3145728
+GC m 97 g 4718592 n transportOut i 0 o 1
+CC sm 97 sg 4718592 dm 98 dg 2
+GC m 97 g 3145729 n transportIn i 1 o 0
+CC sm 100 sg 7 dm 97 dg 3145729
+GC m 97 g 4718593 n transportOut i 1 o 1
+CC sm 97 sg 4718593 dm 100 dg 2
+MC id 104 c IP2lte t lte.corenetwork.lteip.IP2lte pid 94 n ip2lte
+GC m 104 g 0 n upperLayerIn o 0
+GC m 104 g 3 n upperLayerOut o 1
+GC m 104 g 4 n stackLte$i o 0
+GC m 104 g 5 n stackLte$o o 1
+MS id 104 d p=150,68;i=block/layer
+MC id 105 c LtePdcpRrcEnbD2D t lte.stack.pdcp_rrc.LtePdcpRrcEnbD2D pid 94 n pdcpRrc
+GC m 105 g 0 n DataPort$i o 0
+GC m 105 g 1 n DataPort$o o 1
+GC m 105 g 2 n EUTRAN_RRC_Sap$i o 0
+GC m 105 g 3 n EUTRAN_RRC_Sap$o o 1
+GC m 105 g 4 n TM_Sap$i o 0
+GC m 105 g 5 n TM_Sap$o o 1
+GC m 105 g 6 n UM_Sap$i o 0
+GC m 105 g 7 n UM_Sap$o o 1
+GC m 105 g 8 n AM_Sap$i o 0
+GC m 105 g 9 n AM_Sap$o o 1
+MS id 105 d p=150,142;i=block/fork
+MC id 106 c omnetpp::cModule t lte.stack.rlc.LteRlc pid 94 n rlc cm 1
+GC m 106 g 0 n TM_Sap$i o 0
+GC m 106 g 1 n TM_Sap$o o 1
+GC m 106 g 2 n UM_Sap$i o 0
+GC m 106 g 3 n UM_Sap$o o 1
+GC m 106 g 4 n AM_Sap$i o 0
+GC m 106 g 5 n AM_Sap$o o 1
+GC m 106 g 6 n MAC_to_RLC o 0
+GC m 106 g 9 n RLC_to_MAC o 1
+MS id 106 d p=150,227;i=block/transport
+MC id 107 c LteMacEnbD2D t lte.stack.mac.LteMacEnbD2D pid 94 n mac
+GC m 107 g 0 n RLC_to_MAC o 0
+GC m 107 g 3 n MAC_to_RLC o 1
+GC m 107 g 4 n PHY_to_MAC o 0
+GC m 107 g 7 n MAC_to_PHY o 1
+MS id 107 d p=151,315;i=block/mac
+MC id 108 c LtePhyEnbD2D t lte.stack.phy.LtePhyEnbD2D pid 94 n phy
+GC m 108 g 0 n upperGateIn o 0
+GC m 108 g 3 n upperGateOut o 1
+GC m 108 g 4 n radioIn o 0
+MS id 108 d p=151,390;i=block/wrxtx
+MC id 109 c LteRealisticChannelModel t lte.stack.phy.ChannelModel.LteRealisticChannelModel pid 94 n channelModel
+MS id 109 d p=44.8,389.75998
+CC sm 104 sg 5 dm 105 dg 0
+CC sm 105 sg 1 dm 104 dg 4
+CC sm 94 sg 0 dm 105 dg 2
+CC sm 105 sg 3 dm 94 dg 1
+CC sm 105 sg 7 dm 106 dg 2
+CC sm 106 sg 3 dm 105 dg 6
+CC sm 105 sg 9 dm 106 dg 4
+CC sm 106 sg 5 dm 105 dg 8
+CC sm 105 sg 5 dm 106 dg 0
+CC sm 106 sg 1 dm 105 dg 4
+CC sm 106 sg 9 dm 107 dg 0
+CC sm 107 sg 3 dm 106 dg 6
+CC sm 107 sg 7 dm 108 dg 0
+CC sm 108 sg 3 dm 107 dg 4
+CC sm 94 sg 6 dm 108 dg 4
+CC sm 104 sg 3 dm 94 dg 5
+CC sm 94 sg 2 dm 104 dg 0
+MC id 110 c LteX2Manager t lte.x2.LteX2Manager pid 94 n x2Manager
+GC m 110 g 4 n x2Gtp$i o 0
+GC m 110 g 5 n x2Gtp$o o 1
+MS id 110 d p=60,227,row;i=block/cogwheel
+MC id 111 c LteHandoverManager t lte.stack.handoverManager.LteHandoverManager pid 94 n handoverManager
+GC m 111 g 0 n x2ManagerIn o 0
+GC m 111 g 3 n x2ManagerOut o 1
+MS id 111 d p=60,142,row;i=block/cogwheel
+GC m 110 g 1048576 n dataPort$i i 0 o 0
+GC m 110 g 1572864 n dataPort$o i 0 o 1
+CC sm 110 sg 1572864 dm 111 dg 0
+CC sm 111 sg 3 dm 110 dg 1048576
+CC sm 94 sg 5242880 dm 110 dg 4
+CC sm 110 sg 5 dm 94 dg 5767168
+GC m 110 g 2097152 n x2$i i 0 o 0
+GC m 110 g 2621440 n x2$o i 0 o 1
+CC sm 94 sg 5242881 dm 110 dg 2097152
+CC sm 110 sg 2621440 dm 94 dg 5767169
+MC id 112 c D2DModeSelectionBase t lte.stack.d2dModeSelection.D2DModeSelectionBase pid 94 n d2dModeSelection
+MS id 112 d p=60,68,row
+MC id 113 c LteRlcTm t lte.stack.rlc.LteRlcTm pid 106 n tm
+GC m 113 g 0 n TM_Sap_up$i o 0
+GC m 113 g 1 n TM_Sap_up$o o 1
+GC m 113 g 2 n TM_Sap_down$i o 0
+GC m 113 g 3 n TM_Sap_down$o o 1
+MS id 113 d p=100,100;i=block/wheelbarrow
+MC id 114 c LteRlcUmD2D t lte.stack.rlc.LteRlcUmD2D pid 106 n um
+GC m 114 g 0 n UM_Sap_up$i o 0
+GC m 114 g 1 n UM_Sap_up$o o 1
+GC m 114 g 2 n UM_Sap_down$i o 0
+GC m 114 g 3 n UM_Sap_down$o o 1
+MS id 114 d p=200,100;i=block/wheelbarrow
+MC id 115 c LteRlcAm t lte.stack.rlc.LteRlcAm pid 106 n am
+GC m 115 g 0 n AM_Sap_up$i o 0
+GC m 115 g 1 n AM_Sap_up$o o 1
+GC m 115 g 2 n AM_Sap_down$i o 0
+GC m 115 g 3 n AM_Sap_down$o o 1
+MS id 115 d p=300,100;i=block/wheelbarrow
+MC id 116 c LteRlcMux t lte.stack.rlc.LteRlcMux pid 106 n mux
+GC m 116 g 0 n TM_Sap$i o 0
+GC m 116 g 1 n TM_Sap$o o 1
+GC m 116 g 2 n UM_Sap$i o 0
+GC m 116 g 3 n UM_Sap$o o 1
+GC m 116 g 4 n AM_Sap$i o 0
+GC m 116 g 5 n AM_Sap$o o 1
+GC m 116 g 6 n MAC_to_RLC o 0
+GC m 116 g 9 n RLC_to_MAC o 1
+MS id 116 d p=200,200;i=block/classifier
+CC sm 113 sg 1 dm 106 dg 1
+CC sm 106 sg 0 dm 113 dg 0
+CC sm 114 sg 1 dm 106 dg 3
+CC sm 106 sg 2 dm 114 dg 0
+CC sm 115 sg 1 dm 106 dg 5
+CC sm 106 sg 4 dm 115 dg 0
+CC sm 113 sg 3 dm 116 dg 0
+CC sm 116 sg 1 dm 113 dg 2
+CC sm 114 sg 3 dm 116 dg 2
+CC sm 116 sg 3 dm 114 dg 2
+CC sm 115 sg 3 dm 116 dg 4
+CC sm 116 sg 5 dm 115 dg 2
+CC sm 106 sg 6 dm 116 dg 6
+CC sm 116 sg 9 dm 106 dg 9
+MC id 117 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 95 n queue
+GC m 117 g 0 n in o 0
+GC m 117 g 3 n out o 1
+MS id 117 d q=l2queue;p=42,161;i=block/queue
+MC id 118 c inet::PPP t inet.linklayer.ppp.PPP pid 95 n ppp
+GC m 118 g 0 n netwIn o 0
+GC m 118 g 3 n netwOut o 1
+GC m 118 g 4 n phys$i o 0
+GC m 118 g 5 n phys$o o 1
+MS id 118 d p=98,207;i=block/rxtx
+CC sm 95 sg 0 dm 117 dg 0
+CS sm 95 sg 0 d m=n
+CC sm 117 sg 3 dm 118 dg 0
+CC sm 95 sg 4 dm 118 dg 4
+CS sm 95 sg 4 d m=s
+CC sm 118 sg 5 dm 95 dg 5
+CS sm 118 sg 5 d m=s
+CC sm 118 sg 3 dm 95 dg 3
+CS sm 118 sg 3 d m=n
+MC id 123 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 96 n queue
+GC m 123 g 0 n in o 0
+GC m 123 g 3 n out o 1
+MS id 123 d q=l2queue;p=42,161;i=block/queue
+MC id 124 c inet::PPP t inet.linklayer.ppp.PPP pid 96 n ppp
+GC m 124 g 0 n netwIn o 0
+GC m 124 g 3 n netwOut o 1
+GC m 124 g 4 n phys$i o 0
+GC m 124 g 5 n phys$o o 1
+MS id 124 d p=98,207;i=block/rxtx
+CC sm 96 sg 0 dm 123 dg 0
+CS sm 96 sg 0 d m=n
+CC sm 123 sg 3 dm 124 dg 0
+CC sm 96 sg 4 dm 124 dg 4
+CS sm 96 sg 4 d m=s
+CC sm 124 sg 5 dm 96 dg 5
+CS sm 124 sg 5 d m=s
+CC sm 124 sg 3 dm 96 dg 3
+CS sm 124 sg 3 d m=n
+MC id 129 c inet::IPv4NodeConfigurator t inet.networklayer.configurator.ipv4.IPv4NodeConfigurator pid 97 n configurator
+MS id 129 d p=39,158;i=block/cogwheel_s
+MC id 130 c inet::IPv4 t inet.networklayer.ipv4.IPv4 pid 97 n ip
+GC m 130 g 4 n arpIn o 0
+GC m 130 g 7 n arpOut o 1
+MS id 130 d q=queue;p=85,95;i=block/routing
+GC m 130 g 5242880 n queueIn i 0 o 0
+GC m 130 g 5242881 n queueIn i 1 o 0
+GC m 130 g 6815744 n queueOut i 0 o 1
+GC m 130 g 6815745 n queueOut i 1 o 1
+MC id 131 c inet::ARP t inet.networklayer.arp.ipv4.ARP pid 97 n arp
+GC m 131 g 0 n netwIn o 0
+GC m 131 g 3 n netwOut o 1
+MS id 131 d is=s;q=pendingQueue;p=165,120;i=block/layer
+MC id 132 c inet::ICMP t inet.networklayer.ipv4.ICMP pid 97 n icmp
+GC m 132 g 0 n localIn o 0
+GC m 132 g 7 n sendOut o 1
+GC m 132 g 9 n errorOut o 1
+MS id 132 d p=165,70;i=block/control_s
+MC id 133 c inet::IGMPv2 t inet.networklayer.ipv4.IGMPv2 pid 97 n igmp
+GC m 133 g 0 n ipIn o 0
+GC m 133 g 3 n ipOut o 1
+GC m 133 g 4 n routerIn o 0
+GC m 133 g 7 n routerOut o 1
+MS id 133 d p=39,33;i=block/cogwheel_s
+MC id 134 c inet::ErrorHandling t inet.networklayer.ipv4.ErrorHandling pid 97 n errorHandling
+GC m 134 g 0 n in o 0
+MS id 134 d p=239,70;i=block/sink_s
+GC m 130 g 1048576 n transportIn i 0 o 0
+CC sm 97 sg 3145728 dm 130 dg 1048576
+CS sm 97 sg 3145728 d m=n
+GC m 130 g 1048577 n transportIn i 1 o 0
+CC sm 97 sg 3145729 dm 130 dg 1048577
+CS sm 97 sg 3145729 d m=n
+GC m 130 g 2621440 n transportOut i 0 o 1
+CC sm 130 sg 2621440 dm 97 dg 4718592
+CS sm 130 sg 2621440 d m=n
+GC m 130 g 2621441 n transportOut i 1 o 1
+CC sm 130 sg 2621441 dm 97 dg 4718593
+CS sm 130 sg 2621441 d m=n
+GC m 130 g 2621442 n transportOut i 2 o 1
+CC sm 130 sg 2621442 dm 132 dg 0
+GC m 130 g 1048578 n transportIn i 2 o 0
+CC sm 132 sg 7 dm 130 dg 1048578
+GC m 130 g 2621443 n transportOut i 3 o 1
+CC sm 130 sg 2621443 dm 133 dg 0
+GC m 130 g 1048579 n transportIn i 3 o 0
+CC sm 133 sg 3 dm 130 dg 1048579
+CC sm 132 sg 9 dm 134 dg 0
+CC sm 130 sg 7 dm 131 dg 0
+CC sm 131 sg 3 dm 130 dg 4
+CC sm 133 sg 7 dm 97 dg 15
+CC sm 97 sg 12 dm 133 dg 4
+CC sm 97 sg 1048576 dm 130 dg 5242880
+CS sm 97 sg 1048576 d m=s
+CC sm 97 sg 1048577 dm 130 dg 5242881
+CS sm 97 sg 1048577 d m=s
+CC sm 130 sg 6815744 dm 97 dg 2621440
+CS sm 130 sg 6815744 d m=s
+CC sm 130 sg 6815745 dm 97 dg 2621441
+CS sm 130 sg 6815745 d m=s
+- INFO (LteX2App)World.eNodeB[1].x2App[0]: sockstate=NOT_BOUND
+MC id 143 c X2AppClient t lte.x2.X2AppClient pid 99 n client
+GC m 143 g 0 n sctpIn o 0
+GC m 143 g 3 n sctpOut o 1
+GC m 143 g 5 n x2ManagerOut o 1
+MS id 143 d i=block/app;p=92,76
+MC id 144 c X2AppServer t lte.x2.X2AppServer pid 99 n server
+GC m 144 g 0 n sctpIn o 0
+GC m 144 g 3 n sctpOut o 1
+GC m 144 g 4 n x2ManagerIn o 0
+MS id 144 d i=block/app;p=163,76
+CC sm 99 sg 1048576 dm 143 dg 0
+CC sm 143 sg 3 dm 99 dg 2621440
+CC sm 99 sg 1048577 dm 144 dg 0
+CC sm 144 sg 3 dm 99 dg 2621441
+CC sm 99 sg 4 dm 144 dg 4
+CC sm 143 sg 5 dm 99 dg 7
+MC id 145 c omnetpp::cModule t inet.networklayer.ipv4.IPv4NetworkLayer pid 11 n networkLayer cm 1
+GC m 145 g 12 n igmpIn o 0
+GC m 145 g 15 n igmpOut o 1
+MS id 145 d q=queue;p=329,287;i=block/fork
+MC id 146 c inet::IPv4RoutingTable t inet.networklayer.ipv4.IPv4RoutingTable pid 11 n routingTable
+MS id 146 d is=s;p=53,250;i=block/table
+MC id 147 c inet::InterfaceTable t inet.networklayer.common.InterfaceTable pid 11 n interfaceTable
+MS id 147 d is=s;p=53,300;i=block/table
+MC id 148 c omnetpp::cModule t inet.linklayer.loopback.LoopbackInterface pid 11 n lo0 cm 1
+GC m 148 g 0 n upperLayerIn o 0
+GC m 148 g 3 n upperLayerOut o 1
+MS id 148 d p=78,406;i=block/ifcard;bgb=214,249;bgl=53
+MC id 149 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 11 n ppp[0] cm 1
+GC m 149 g 0 n upperLayerIn o 0
+GC m 149 g 3 n upperLayerOut o 1
+GC m 149 g 4 n phys$i o 0
+GC m 149 g 5 n phys$o o 1
+MS id 149 d q=txQueue;p=558,406,row,60;i=block/ifcard;bgb=214,249;bgl=53
+MC id 150 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 11 n ppp[1] cm 1
+GC m 150 g 0 n upperLayerIn o 0
+GC m 150 g 3 n upperLayerOut o 1
+GC m 150 g 4 n phys$i o 0
+GC m 150 g 5 n phys$o o 1
+MS id 150 d q=txQueue;p=558,406,row,60;i=block/ifcard;bgb=214,249;bgl=53
+GC m 145 g 2621440 n ifOut i 0 o 1
+CC sm 145 sg 2621440 dm 148 dg 0
+GC m 145 g 1048576 n ifIn i 0 o 0
+CC sm 148 sg 3 dm 145 dg 1048576
+CC sm 11 sg 2097152 dm 149 dg 4
+CS sm 11 sg 2097152 d m=s
+CC sm 149 sg 5 dm 11 dg 2621440
+CS sm 149 sg 5 d m=s
+GC m 145 g 1048577 n ifIn i 1 o 0
+CC sm 149 sg 3 dm 145 dg 1048577
+GC m 145 g 2621441 n ifOut i 1 o 1
+CC sm 145 sg 2621441 dm 149 dg 0
+CC sm 11 sg 2097153 dm 150 dg 4
+CS sm 11 sg 2097153 d m=s
+CC sm 150 sg 5 dm 11 dg 2621441
+CS sm 150 sg 5 d m=s
+GC m 145 g 1048578 n ifIn i 2 o 0
+CC sm 150 sg 3 dm 145 dg 1048578
+GC m 145 g 2621442 n ifOut i 2 o 1
+CC sm 145 sg 2621442 dm 150 dg 0
+MC id 155 c TrafficFlowFilterSimplified t lte.epc.TrafficFlowFilterSimplified pid 11 n trafficFlowFilter
+GC m 155 g 0 n internetFilterGateIn o 0
+GC m 155 g 3 n gtpUserGateOut o 1
+MS id 155 d p=813,206;i=block/filter
+MC id 156 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 11 n pppInterface cm 1
+GC m 156 g 0 n upperLayerIn o 0
+GC m 156 g 3 n upperLayerOut o 1
+GC m 156 g 4 n phys$i o 0
+GC m 156 g 5 n phys$o o 1
+MS id 156 d p=727,386;i=block/ifcard;bgb=214,249;bgl=53
+MC id 157 c inet::UDP t inet.transportlayer.udp.UDP pid 11 n udp
+GC m 157 g 2 n ipIn o 0
+GC m 157 g 7 n ipOut o 1
+MS id 157 d p=329,206;i=block/transport
+MC id 158 c GtpUserSimplified t lte.epc.gtp.GtpUserSimplified pid 11 n gtp_user
+GC m 158 g 1 n udpOut o 1
+GC m 158 g 2 n udpIn o 0
+GC m 158 g 4 n trafficFlowFilterGate o 0
+GC m 158 g 7 n pppGate o 1
+MS id 158 d p=591,206;i=block/tunnel
+GC m 145 g 3145728 n transportIn i 0 o 0
+CC sm 157 sg 7 dm 145 dg 3145728
+GC m 145 g 4718592 n transportOut i 0 o 1
+CC sm 145 sg 4718592 dm 157 dg 2
+CC sm 156 sg 3 dm 155 dg 0
+CC sm 158 sg 7 dm 156 dg 0
+CC sm 156 sg 5 dm 11 dg 7
+CC sm 11 sg 6 dm 156 dg 4
+GC m 157 g 3670016 n appOut i 0 o 1
+CC sm 157 sg 3670016 dm 158 dg 2
+GC m 157 g 1048576 n appIn i 0 o 0
+CC sm 158 sg 1 dm 157 dg 1048576
+CC sm 155 sg 3 dm 158 dg 4
+MC id 159 c inet::IPv4NodeConfigurator t inet.networklayer.configurator.ipv4.IPv4NodeConfigurator pid 145 n configurator
+MS id 159 d p=39,158;i=block/cogwheel_s
+MC id 160 c inet::IPv4 t inet.networklayer.ipv4.IPv4 pid 145 n ip
+GC m 160 g 4 n arpIn o 0
+GC m 160 g 7 n arpOut o 1
+MS id 160 d q=queue;p=85,95;i=block/routing
+GC m 160 g 5242880 n queueIn i 0 o 0
+GC m 160 g 5242881 n queueIn i 1 o 0
+GC m 160 g 5242882 n queueIn i 2 o 0
+GC m 160 g 6815744 n queueOut i 0 o 1
+GC m 160 g 6815745 n queueOut i 1 o 1
+GC m 160 g 6815746 n queueOut i 2 o 1
+MC id 161 c inet::ARP t inet.networklayer.arp.ipv4.ARP pid 145 n arp
+GC m 161 g 0 n netwIn o 0
+GC m 161 g 3 n netwOut o 1
+MS id 161 d is=s;q=pendingQueue;p=165,120;i=block/layer
+MC id 162 c inet::ICMP t inet.networklayer.ipv4.ICMP pid 145 n icmp
+GC m 162 g 0 n localIn o 0
+GC m 162 g 7 n sendOut o 1
+GC m 162 g 9 n errorOut o 1
+MS id 162 d p=165,70;i=block/control_s
+MC id 163 c inet::IGMPv2 t inet.networklayer.ipv4.IGMPv2 pid 145 n igmp
+GC m 163 g 0 n ipIn o 0
+GC m 163 g 3 n ipOut o 1
+GC m 163 g 4 n routerIn o 0
+GC m 163 g 7 n routerOut o 1
+MS id 163 d p=39,33;i=block/cogwheel_s
+MC id 164 c inet::ErrorHandling t inet.networklayer.ipv4.ErrorHandling pid 145 n errorHandling
+GC m 164 g 0 n in o 0
+MS id 164 d p=239,70;i=block/sink_s
+GC m 160 g 1048576 n transportIn i 0 o 0
+CC sm 145 sg 3145728 dm 160 dg 1048576
+CS sm 145 sg 3145728 d m=n
+GC m 160 g 2621440 n transportOut i 0 o 1
+CC sm 160 sg 2621440 dm 145 dg 4718592
+CS sm 160 sg 2621440 d m=n
+GC m 160 g 2621441 n transportOut i 1 o 1
+CC sm 160 sg 2621441 dm 162 dg 0
+GC m 160 g 1048577 n transportIn i 1 o 0
+CC sm 162 sg 7 dm 160 dg 1048577
+GC m 160 g 2621442 n transportOut i 2 o 1
+CC sm 160 sg 2621442 dm 163 dg 0
+GC m 160 g 1048578 n transportIn i 2 o 0
+CC sm 163 sg 3 dm 160 dg 1048578
+CC sm 162 sg 9 dm 164 dg 0
+CC sm 160 sg 7 dm 161 dg 0
+CC sm 161 sg 3 dm 160 dg 4
+CC sm 163 sg 7 dm 145 dg 15
+CC sm 145 sg 12 dm 163 dg 4
+CC sm 145 sg 1048576 dm 160 dg 5242880
+CS sm 145 sg 1048576 d m=s
+CC sm 145 sg 1048577 dm 160 dg 5242881
+CS sm 145 sg 1048577 d m=s
+CC sm 145 sg 1048578 dm 160 dg 5242882
+CS sm 145 sg 1048578 d m=s
+CC sm 160 sg 6815744 dm 145 dg 2621440
+CS sm 160 sg 6815744 d m=s
+CC sm 160 sg 6815745 dm 145 dg 2621441
+CS sm 160 sg 6815745 d m=s
+CC sm 160 sg 6815746 dm 145 dg 2621442
+CS sm 160 sg 6815746 d m=s
+MC id 173 c inet::Loopback t inet.linklayer.loopback.Loopback pid 148 n lo
+GC m 173 g 0 n netwIn o 0
+GC m 173 g 3 n netwOut o 1
+MS id 173 d p=98,207;i=block/rxtx
+CC sm 148 sg 0 dm 173 dg 0
+CS sm 148 sg 0 d m=n
+CC sm 173 sg 3 dm 148 dg 3
+CS sm 173 sg 3 d m=n
+MC id 176 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 149 n queue
+GC m 176 g 0 n in o 0
+GC m 176 g 3 n out o 1
+MS id 176 d q=l2queue;p=42,161;i=block/queue
+MC id 177 c inet::PPP t inet.linklayer.ppp.PPP pid 149 n ppp
+GC m 177 g 0 n netwIn o 0
+GC m 177 g 3 n netwOut o 1
+GC m 177 g 4 n phys$i o 0
+GC m 177 g 5 n phys$o o 1
+MS id 177 d p=98,207;i=block/rxtx
+CC sm 149 sg 0 dm 176 dg 0
+CS sm 149 sg 0 d m=n
+CC sm 176 sg 3 dm 177 dg 0
+CC sm 149 sg 4 dm 177 dg 4
+CS sm 149 sg 4 d m=s
+CC sm 177 sg 5 dm 149 dg 5
+CS sm 177 sg 5 d m=s
+CC sm 177 sg 3 dm 149 dg 3
+CS sm 177 sg 3 d m=n
+MC id 182 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 150 n queue
+GC m 182 g 0 n in o 0
+GC m 182 g 3 n out o 1
+MS id 182 d q=l2queue;p=42,161;i=block/queue
+MC id 183 c inet::PPP t inet.linklayer.ppp.PPP pid 150 n ppp
+GC m 183 g 0 n netwIn o 0
+GC m 183 g 3 n netwOut o 1
+GC m 183 g 4 n phys$i o 0
+GC m 183 g 5 n phys$o o 1
+MS id 183 d p=98,207;i=block/rxtx
+CC sm 150 sg 0 dm 182 dg 0
+CS sm 150 sg 0 d m=n
+CC sm 182 sg 3 dm 183 dg 0
+CC sm 150 sg 4 dm 183 dg 4
+CS sm 150 sg 4 d m=s
+CC sm 183 sg 5 dm 150 dg 5
+CS sm 183 sg 5 d m=s
+CC sm 183 sg 3 dm 150 dg 3
+CS sm 183 sg 3 d m=n
+MC id 188 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 156 n queue
+GC m 188 g 0 n in o 0
+GC m 188 g 3 n out o 1
+MS id 188 d q=l2queue;p=42,161;i=block/queue
+MC id 189 c inet::PPP t inet.linklayer.ppp.PPP pid 156 n ppp
+GC m 189 g 0 n netwIn o 0
+GC m 189 g 3 n netwOut o 1
+GC m 189 g 4 n phys$i o 0
+GC m 189 g 5 n phys$o o 1
+MS id 189 d p=98,207;i=block/rxtx
+CC sm 156 sg 0 dm 188 dg 0
+CS sm 156 sg 0 d m=n
+CC sm 188 sg 3 dm 189 dg 0
+CC sm 156 sg 4 dm 189 dg 4
+CS sm 156 sg 4 d m=s
+CC sm 189 sg 5 dm 156 dg 5
+CS sm 189 sg 5 d m=s
+CC sm 189 sg 3 dm 156 dg 3
+CS sm 189 sg 3 d m=n
+MC id 194 c omnetpp::cModule t inet.networklayer.ipv4.IPv4NetworkLayer pid 12 n networkLayer cm 1
+GC m 194 g 12 n igmpIn o 0
+GC m 194 g 15 n igmpOut o 1
+MS id 194 d q=queue;p=329,287;i=block/fork
+MC id 195 c inet::IPv4RoutingTable t inet.networklayer.ipv4.IPv4RoutingTable pid 12 n routingTable
+MS id 195 d is=s;p=53,250;i=block/table
+MC id 196 c inet::InterfaceTable t inet.networklayer.common.InterfaceTable pid 12 n interfaceTable
+MS id 196 d is=s;p=53,300;i=block/table
+MC id 197 c omnetpp::cModule t inet.linklayer.loopback.LoopbackInterface pid 12 n lo0 cm 1
+GC m 197 g 0 n upperLayerIn o 0
+GC m 197 g 3 n upperLayerOut o 1
+MS id 197 d p=78,406;i=block/ifcard;bgb=214,249;bgl=53
+MC id 198 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 12 n ppp[0] cm 1
+GC m 198 g 0 n upperLayerIn o 0
+GC m 198 g 3 n upperLayerOut o 1
+GC m 198 g 4 n phys$i o 0
+GC m 198 g 5 n phys$o o 1
+MS id 198 d q=txQueue;p=558,406,row,60;i=block/ifcard;bgb=214,249;bgl=53
+GC m 194 g 2621440 n ifOut i 0 o 1
+CC sm 194 sg 2621440 dm 197 dg 0
+GC m 194 g 1048576 n ifIn i 0 o 0
+CC sm 197 sg 3 dm 194 dg 1048576
+CC sm 12 sg 2097152 dm 198 dg 4
+CS sm 12 sg 2097152 d m=s
+CC sm 198 sg 5 dm 12 dg 2621440
+CS sm 198 sg 5 d m=s
+GC m 194 g 1048577 n ifIn i 1 o 0
+CC sm 198 sg 3 dm 194 dg 1048577
+GC m 194 g 2621441 n ifOut i 1 o 1
+CC sm 194 sg 2621441 dm 198 dg 0
+MC id 201 c inet::IPv4NodeConfigurator t inet.networklayer.configurator.ipv4.IPv4NodeConfigurator pid 194 n configurator
+MS id 201 d p=39,158;i=block/cogwheel_s
+MC id 202 c inet::IPv4 t inet.networklayer.ipv4.IPv4 pid 194 n ip
+GC m 202 g 4 n arpIn o 0
+GC m 202 g 7 n arpOut o 1
+MS id 202 d q=queue;p=85,95;i=block/routing
+GC m 202 g 5242880 n queueIn i 0 o 0
+GC m 202 g 5242881 n queueIn i 1 o 0
+GC m 202 g 6815744 n queueOut i 0 o 1
+GC m 202 g 6815745 n queueOut i 1 o 1
+MC id 203 c inet::ARP t inet.networklayer.arp.ipv4.ARP pid 194 n arp
+GC m 203 g 0 n netwIn o 0
+GC m 203 g 3 n netwOut o 1
+MS id 203 d is=s;q=pendingQueue;p=165,120;i=block/layer
+MC id 204 c inet::ICMP t inet.networklayer.ipv4.ICMP pid 194 n icmp
+GC m 204 g 0 n localIn o 0
+GC m 204 g 7 n sendOut o 1
+GC m 204 g 9 n errorOut o 1
+MS id 204 d p=165,70;i=block/control_s
+MC id 205 c inet::IGMPv2 t inet.networklayer.ipv4.IGMPv2 pid 194 n igmp
+GC m 205 g 0 n ipIn o 0
+GC m 205 g 3 n ipOut o 1
+GC m 205 g 4 n routerIn o 0
+GC m 205 g 7 n routerOut o 1
+MS id 205 d p=39,33;i=block/cogwheel_s
+MC id 206 c inet::ErrorHandling t inet.networklayer.ipv4.ErrorHandling pid 194 n errorHandling
+GC m 206 g 0 n in o 0
+MS id 206 d p=239,70;i=block/sink_s
+GC m 202 g 2621440 n transportOut i 0 o 1
+CC sm 202 sg 2621440 dm 204 dg 0
+GC m 202 g 1048576 n transportIn i 0 o 0
+CC sm 204 sg 7 dm 202 dg 1048576
+GC m 202 g 2621441 n transportOut i 1 o 1
+CC sm 202 sg 2621441 dm 205 dg 0
+GC m 202 g 1048577 n transportIn i 1 o 0
+CC sm 205 sg 3 dm 202 dg 1048577
+CC sm 204 sg 9 dm 206 dg 0
+CC sm 202 sg 7 dm 203 dg 0
+CC sm 203 sg 3 dm 202 dg 4
+CC sm 205 sg 7 dm 194 dg 15
+CC sm 194 sg 12 dm 205 dg 4
+CC sm 194 sg 1048576 dm 202 dg 5242880
+CS sm 194 sg 1048576 d m=s
+CC sm 194 sg 1048577 dm 202 dg 5242881
+CS sm 194 sg 1048577 d m=s
+CC sm 202 sg 6815744 dm 194 dg 2621440
+CS sm 202 sg 6815744 d m=s
+CC sm 202 sg 6815745 dm 194 dg 2621441
+CS sm 202 sg 6815745 d m=s
+MC id 211 c inet::Loopback t inet.linklayer.loopback.Loopback pid 197 n lo
+GC m 211 g 0 n netwIn o 0
+GC m 211 g 3 n netwOut o 1
+MS id 211 d p=98,207;i=block/rxtx
+CC sm 197 sg 0 dm 211 dg 0
+CS sm 197 sg 0 d m=n
+CC sm 211 sg 3 dm 197 dg 3
+CS sm 211 sg 3 d m=n
+MC id 214 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 198 n queue
+GC m 214 g 0 n in o 0
+GC m 214 g 3 n out o 1
+MS id 214 d q=l2queue;p=42,161;i=block/queue
+MC id 215 c inet::PPP t inet.linklayer.ppp.PPP pid 198 n ppp
+GC m 215 g 0 n netwIn o 0
+GC m 215 g 3 n netwOut o 1
+GC m 215 g 4 n phys$i o 0
+GC m 215 g 5 n phys$o o 1
+MS id 215 d p=98,207;i=block/rxtx
+CC sm 198 sg 0 dm 214 dg 0
+CS sm 198 sg 0 d m=n
+CC sm 214 sg 3 dm 215 dg 0
+CC sm 198 sg 4 dm 215 dg 4
+CS sm 198 sg 4 d m=s
+CC sm 215 sg 5 dm 198 dg 5
+CS sm 215 sg 5 d m=s
+CC sm 215 sg 3 dm 198 dg 3
+CS sm 215 sg 3 d m=n
+MC id 220 c omnetpp::cModule t inet.networklayer.ipv4.IPv4NetworkLayer pid 13 n networkLayer cm 1
+GC m 220 g 12 n igmpIn o 0
+GC m 220 g 15 n igmpOut o 1
+MS id 220 d q=queue;p=329,287;i=block/fork
+MC id 221 c inet::IPv4RoutingTable t inet.networklayer.ipv4.IPv4RoutingTable pid 13 n routingTable
+MS id 221 d is=s;p=53,250;i=block/table
+MC id 222 c inet::InterfaceTable t inet.networklayer.common.InterfaceTable pid 13 n interfaceTable
+MS id 222 d is=s;p=53,300;i=block/table
+MC id 223 c omnetpp::cModule t inet.linklayer.loopback.LoopbackInterface pid 13 n lo0 cm 1
+GC m 223 g 0 n upperLayerIn o 0
+GC m 223 g 3 n upperLayerOut o 1
+MS id 223 d p=78,406;i=block/ifcard;bgb=214,249;bgl=53
+MC id 224 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 13 n ppp[0] cm 1
+GC m 224 g 0 n upperLayerIn o 0
+GC m 224 g 3 n upperLayerOut o 1
+GC m 224 g 4 n phys$i o 0
+GC m 224 g 5 n phys$o o 1
+MS id 224 d q=txQueue;p=558,406,row,60;i=block/ifcard;bgb=214,249;bgl=53
+MC id 225 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 13 n ppp[1] cm 1
+GC m 225 g 0 n upperLayerIn o 0
+GC m 225 g 3 n upperLayerOut o 1
+GC m 225 g 4 n phys$i o 0
+GC m 225 g 5 n phys$o o 1
+MS id 225 d q=txQueue;p=558,406,row,60;i=block/ifcard;bgb=214,249;bgl=53
+GC m 220 g 2621440 n ifOut i 0 o 1
+CC sm 220 sg 2621440 dm 223 dg 0
+GC m 220 g 1048576 n ifIn i 0 o 0
+CC sm 223 sg 3 dm 220 dg 1048576
+CC sm 13 sg 2097152 dm 224 dg 4
+CS sm 13 sg 2097152 d m=s
+CC sm 224 sg 5 dm 13 dg 2621440
+CS sm 224 sg 5 d m=s
+GC m 220 g 1048577 n ifIn i 1 o 0
+CC sm 224 sg 3 dm 220 dg 1048577
+GC m 220 g 2621441 n ifOut i 1 o 1
+CC sm 220 sg 2621441 dm 224 dg 0
+CC sm 13 sg 2097153 dm 225 dg 4
+CS sm 13 sg 2097153 d m=s
+CC sm 225 sg 5 dm 13 dg 2621441
+CS sm 225 sg 5 d m=s
+GC m 220 g 1048578 n ifIn i 2 o 0
+CC sm 225 sg 3 dm 220 dg 1048578
+GC m 220 g 2621442 n ifOut i 2 o 1
+CC sm 220 sg 2621442 dm 225 dg 0
+MC id 230 c inet::IPv4NodeConfigurator t inet.networklayer.configurator.ipv4.IPv4NodeConfigurator pid 220 n configurator
+MS id 230 d p=39,158;i=block/cogwheel_s
+MC id 231 c inet::IPv4 t inet.networklayer.ipv4.IPv4 pid 220 n ip
+GC m 231 g 4 n arpIn o 0
+GC m 231 g 7 n arpOut o 1
+MS id 231 d q=queue;p=85,95;i=block/routing
+GC m 231 g 5242880 n queueIn i 0 o 0
+GC m 231 g 5242881 n queueIn i 1 o 0
+GC m 231 g 5242882 n queueIn i 2 o 0
+GC m 231 g 6815744 n queueOut i 0 o 1
+GC m 231 g 6815745 n queueOut i 1 o 1
+GC m 231 g 6815746 n queueOut i 2 o 1
+MC id 232 c inet::ARP t inet.networklayer.arp.ipv4.ARP pid 220 n arp
+GC m 232 g 0 n netwIn o 0
+GC m 232 g 3 n netwOut o 1
+MS id 232 d is=s;q=pendingQueue;p=165,120;i=block/layer
+MC id 233 c inet::ICMP t inet.networklayer.ipv4.ICMP pid 220 n icmp
+GC m 233 g 0 n localIn o 0
+GC m 233 g 7 n sendOut o 1
+GC m 233 g 9 n errorOut o 1
+MS id 233 d p=165,70;i=block/control_s
+MC id 234 c inet::IGMPv2 t inet.networklayer.ipv4.IGMPv2 pid 220 n igmp
+GC m 234 g 0 n ipIn o 0
+GC m 234 g 3 n ipOut o 1
+GC m 234 g 4 n routerIn o 0
+GC m 234 g 7 n routerOut o 1
+MS id 234 d p=39,33;i=block/cogwheel_s
+MC id 235 c inet::ErrorHandling t inet.networklayer.ipv4.ErrorHandling pid 220 n errorHandling
+GC m 235 g 0 n in o 0
+MS id 235 d p=239,70;i=block/sink_s
+GC m 231 g 2621440 n transportOut i 0 o 1
+CC sm 231 sg 2621440 dm 233 dg 0
+GC m 231 g 1048576 n transportIn i 0 o 0
+CC sm 233 sg 7 dm 231 dg 1048576
+GC m 231 g 2621441 n transportOut i 1 o 1
+CC sm 231 sg 2621441 dm 234 dg 0
+GC m 231 g 1048577 n transportIn i 1 o 0
+CC sm 234 sg 3 dm 231 dg 1048577
+CC sm 233 sg 9 dm 235 dg 0
+CC sm 231 sg 7 dm 232 dg 0
+CC sm 232 sg 3 dm 231 dg 4
+CC sm 234 sg 7 dm 220 dg 15
+CC sm 220 sg 12 dm 234 dg 4
+CC sm 220 sg 1048576 dm 231 dg 5242880
+CS sm 220 sg 1048576 d m=s
+CC sm 220 sg 1048577 dm 231 dg 5242881
+CS sm 220 sg 1048577 d m=s
+CC sm 220 sg 1048578 dm 231 dg 5242882
+CS sm 220 sg 1048578 d m=s
+CC sm 231 sg 6815744 dm 220 dg 2621440
+CS sm 231 sg 6815744 d m=s
+CC sm 231 sg 6815745 dm 220 dg 2621441
+CS sm 231 sg 6815745 d m=s
+CC sm 231 sg 6815746 dm 220 dg 2621442
+CS sm 231 sg 6815746 d m=s
+MC id 242 c inet::Loopback t inet.linklayer.loopback.Loopback pid 223 n lo
+GC m 242 g 0 n netwIn o 0
+GC m 242 g 3 n netwOut o 1
+MS id 242 d p=98,207;i=block/rxtx
+CC sm 223 sg 0 dm 242 dg 0
+CS sm 223 sg 0 d m=n
+CC sm 242 sg 3 dm 223 dg 3
+CS sm 242 sg 3 d m=n
+MC id 245 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 224 n queue
+GC m 245 g 0 n in o 0
+GC m 245 g 3 n out o 1
+MS id 245 d q=l2queue;p=42,161;i=block/queue
+MC id 246 c inet::PPP t inet.linklayer.ppp.PPP pid 224 n ppp
+GC m 246 g 0 n netwIn o 0
+GC m 246 g 3 n netwOut o 1
+GC m 246 g 4 n phys$i o 0
+GC m 246 g 5 n phys$o o 1
+MS id 246 d p=98,207;i=block/rxtx
+CC sm 224 sg 0 dm 245 dg 0
+CS sm 224 sg 0 d m=n
+CC sm 245 sg 3 dm 246 dg 0
+CC sm 224 sg 4 dm 246 dg 4
+CS sm 224 sg 4 d m=s
+CC sm 246 sg 5 dm 224 dg 5
+CS sm 246 sg 5 d m=s
+CC sm 246 sg 3 dm 224 dg 3
+CS sm 246 sg 3 d m=n
+MC id 251 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 225 n queue
+GC m 251 g 0 n in o 0
+GC m 251 g 3 n out o 1
+MS id 251 d q=l2queue;p=42,161;i=block/queue
+MC id 252 c inet::PPP t inet.linklayer.ppp.PPP pid 225 n ppp
+GC m 252 g 0 n netwIn o 0
+GC m 252 g 3 n netwOut o 1
+GC m 252 g 4 n phys$i o 0
+GC m 252 g 5 n phys$o o 1
+MS id 252 d p=98,207;i=block/rxtx
+CC sm 225 sg 0 dm 251 dg 0
+CS sm 225 sg 0 d m=n
+CC sm 251 sg 3 dm 252 dg 0
+CC sm 225 sg 4 dm 252 dg 4
+CS sm 225 sg 4 d m=s
+CC sm 252 sg 5 dm 225 dg 5
+CS sm 252 sg 5 d m=s
+CC sm 252 sg 3 dm 225 dg 3
+CS sm 252 sg 3 d m=n
+MB sm 1 tm 2 m initialize(0)
+ME
+MB sm 1 tm 24 m initialize(0)
+CM id 1 tid 1 eid 1 etid 1 c omnetpp::cMessage n "connect TraCI" pe -1
+CM id 2 tid 2 eid 2 etid 2 c omnetpp::cMessage n "TraCI step" pe -1
+BS id 1 tid 1 eid 1 etid 1 c omnetpp::cMessage n "connect TraCI" pe 0
+ES t 0
+ME
+MB sm 1 tm 25 m initialize(0)
+ME
+MB sm 1 tm 26 m initialize(0)
+ME
+MB sm 1 tm 27 m initialize(0)
+ME
+MB sm 1 tm 28 m initialize(0)
+ME
+MB sm 1 tm 3 m initialize(0)
+CM id 3 tid 3 eid 3 etid 3 c omnetpp::cMessage n removeNonInterferingTransmissions pe -1
+ME
+MB sm 1 tm 29 m initialize(0)
+ME
+MB sm 1 tm 30 m initialize(0)
+ME
+MB sm 1 tm 31 m initialize(0)
+ME
+MB sm 1 tm 32 m initialize(0)
+ME
+MB sm 1 tm 33 m initialize(0)
+ME
+MB sm 1 tm 34 m initialize(0)
+ME
+MB sm 1 tm 4 m initialize(0)
+- INFO (Storyboard)World.storyboard: Appended /home/hegde/Workspace/PhD/v2xframework/artery/scenarios/lte-blackice/ to Python system path
+ME
+MB sm 1 tm 5 m initialize(0)
+ME
+MB sm 1 tm 6 m initialize(0)
+- INFO (LteChannelControl)World.channelControl: LteChannelControl: initializing LteChannelControl
+- INFO (LteChannelControl)World.channelControl: initializing ChannelControl
+- INFO (LteChannelControl)World.channelControl: LteChannelControl: max interference distance:1.29057e+11
+ME
+MB sm 1 tm 7 m initialize(0)
+ME
+MB sm 1 tm 8 m initialize(0)
+ME
+MB sm 1 tm 9 m initialize(0)
+ME
+MB sm 1 tm 35 m initialize(0)
+ME
+MB sm 1 tm 36 m initialize(0)
+ME
+MB sm 1 tm 37 m initialize(0)
+ME
+MB sm 1 tm 38 m initialize(0)
+ME
+MB sm 1 tm 39 m initialize(0)
+ME
+MB sm 1 tm 49 m initialize(0)
+- INFO (IP2lte)World.eNodeB[0].lteNic.ip2lte: Node type: ENODEB -> 1
+MB sm 49 tm 7 m registerNode
+- INFO (LteBinder)World.binder: LteBinder : Assigning to module eNodeB with OmnetId: 9 and MacNodeId 1
+- INFO (LteBinder)World.binder: LteBinder : Registering slave 1 to master 1
+ME
+MB sm 49 tm 35 m ""
+ME
+MB sm 49 tm 35 m ""
+ME
+ME
+MB sm 1 tm 50 m initialize(0)
+ME
+MB sm 1 tm 51 m initialize(0)
+ME
+MB sm 1 tm 58 m initialize(0)
+ME
+MB sm 1 tm 59 m initialize(0)
+ME
+MB sm 1 tm 60 m initialize(0)
+ME
+MB sm 1 tm 61 m initialize(0)
+ME
+MB sm 1 tm 52 m initialize(0)
+CM id 4 tid 4 eid 4 etid 4 c omnetpp::cMessage n ttiTick_ pe -1
+BS id 4 tid 4 eid 4 etid 4 c omnetpp::cMessage n ttiTick_ p 1 pe 0
+ES t 0.001
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: Creating LteScheduler MAXCI
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: Creating LteScheduler MAXCI
+ME
+MB sm 1 tm 53 m initialize(0)
+- INFO (LtePhyEnbD2D)World.eNodeB[0].lteNic.phy: Local MacNodeId: 1
+MB sm 53 tm 7 m getNextHop
+ME
+ME
+MB sm 1 tm 54 m initialize(0)
+ME
+MB sm 1 tm 55 m initialize(0)
+ME
+MB sm 1 tm 56 m initialize(0)
+CM id 5 tid 5 eid 5 etid 5 c omnetpp::cMessage n "" pe -1
+BS id 5 tid 5 eid 5 etid 5 c X2HandoverControlMsg n "" pe 0
+CM id 6 tid 6 eid 6 etid 6 c omnetpp::cMessage n "" pe -1
+SH sm 56 sg 3
+ES t 0
+ME
+MB sm 1 tm 57 m initialize(0)
+CM id 7 tid 7 eid 7 etid 7 c omnetpp::cMessage n modeSelectionTick pe -1
+BS id 7 tid 7 eid 7 etid 7 c omnetpp::cMessage n modeSelectionTick p 1 pe 0
+ES t 0.05
+ME
+MB sm 1 tm 40 m initialize(0)
+ME
+MB sm 1 tm 62 m initialize(0)
+ME
+MB sm 1 tm 63 m initialize(0)
+CM id 8 tid 8 eid 8 etid 8 c omnetpp::cMessage n pppEndTxEvent pe -1
+ME
+MB sm 1 tm 41 m initialize(0)
+ME
+MB sm 1 tm 68 m initialize(0)
+ME
+MB sm 1 tm 69 m initialize(0)
+CM id 9 tid 9 eid 9 etid 9 c omnetpp::cMessage n pppEndTxEvent pe -1
+ME
+MB sm 1 tm 42 m initialize(0)
+ME
+MB sm 1 tm 74 m initialize(0)
+ME
+MB sm 1 tm 75 m initialize(0)
+CM id 10 tid 10 eid 10 etid 10 c omnetpp::cMessage n end-service pe -1
+ME
+MB sm 1 tm 76 m initialize(0)
+ME
+MB sm 1 tm 77 m initialize(0)
+ME
+MB sm 1 tm 78 m initialize(0)
+ME
+MB sm 1 tm 79 m initialize(0)
+ME
+MB sm 1 tm 43 m initialize(0)
+ME
+MB sm 1 tm 44 m initialize(0)
+ME
+MB sm 1 tm 88 m initialize(0)
+CM id 11 tid 11 eid 11 etid 11 c omnetpp::cMessage n CliAppTimer pe -1
+BS id 11 tid 11 eid 11 etid 11 c omnetpp::cMessage n CliAppTimer pe 0
+ES t 0
+ME
+MB sm 1 tm 89 m initialize(0)
+CM id 12 tid 12 eid 12 etid 12 c omnetpp::cMessage n SrvAppTimer pe -1
+CM id 13 tid 13 eid 13 etid 13 c omnetpp::cMessage n delayTimer pe -1
+CM id 14 tid 14 eid 14 etid 14 c omnetpp::cMessage n delayFirstReadTimer pe -1
+ME
+MB sm 1 tm 45 m initialize(0)
+ME
+MB sm 1 tm 46 m initialize(0)
+ME
+MB sm 1 tm 47 m initialize(0)
+ME
+MB sm 1 tm 48 m initialize(0)
+ME
+MB sm 1 tm 10 m initialize(0)
+ME
+MB sm 1 tm 90 m initialize(0)
+ME
+MB sm 1 tm 91 m initialize(0)
+ME
+MB sm 1 tm 92 m initialize(0)
+ME
+MB sm 1 tm 93 m initialize(0)
+ME
+MB sm 1 tm 94 m initialize(0)
+ME
+MB sm 1 tm 104 m initialize(0)
+- INFO (IP2lte)World.eNodeB[1].lteNic.ip2lte: Node type: ENODEB -> 1
+MB sm 104 tm 7 m registerNode
+- INFO (LteBinder)World.binder: LteBinder : Assigning to module eNodeB with OmnetId: 10 and MacNodeId 2
+- INFO (LteBinder)World.binder: LteBinder : Registering slave 2 to master 2
+ME
+MB sm 104 tm 90 m ""
+ME
+MB sm 104 tm 90 m ""
+ME
+ME
+MB sm 1 tm 105 m initialize(0)
+ME
+MB sm 1 tm 106 m initialize(0)
+ME
+MB sm 1 tm 113 m initialize(0)
+ME
+MB sm 1 tm 114 m initialize(0)
+ME
+MB sm 1 tm 115 m initialize(0)
+ME
+MB sm 1 tm 116 m initialize(0)
+ME
+MB sm 1 tm 107 m initialize(0)
+CM id 15 tid 15 eid 15 etid 15 c omnetpp::cMessage n ttiTick_ pe -1
+BS id 15 tid 15 eid 15 etid 15 c omnetpp::cMessage n ttiTick_ p 1 pe 0
+ES t 0.001
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: Creating LteScheduler MAXCI
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: Creating LteScheduler MAXCI
+ME
+MB sm 1 tm 108 m initialize(0)
+- INFO (LtePhyEnbD2D)World.eNodeB[1].lteNic.phy: Local MacNodeId: 2
+MB sm 108 tm 7 m getNextHop
+ME
+ME
+MB sm 1 tm 109 m initialize(0)
+ME
+MB sm 1 tm 110 m initialize(0)
+ME
+MB sm 1 tm 111 m initialize(0)
+CM id 16 tid 16 eid 16 etid 16 c omnetpp::cMessage n "" pe -1
+BS id 16 tid 16 eid 16 etid 16 c X2HandoverControlMsg n "" pe 0
+CM id 17 tid 17 eid 17 etid 17 c omnetpp::cMessage n "" pe -1
+SH sm 111 sg 3
+ES t 0
+ME
+MB sm 1 tm 112 m initialize(0)
+CM id 18 tid 18 eid 18 etid 18 c omnetpp::cMessage n modeSelectionTick pe -1
+BS id 18 tid 18 eid 18 etid 18 c omnetpp::cMessage n modeSelectionTick p 1 pe 0
+ES t 0.05
+ME
+MB sm 1 tm 95 m initialize(0)
+ME
+MB sm 1 tm 117 m initialize(0)
+ME
+MB sm 1 tm 118 m initialize(0)
+CM id 19 tid 19 eid 19 etid 19 c omnetpp::cMessage n pppEndTxEvent pe -1
+ME
+MB sm 1 tm 96 m initialize(0)
+ME
+MB sm 1 tm 123 m initialize(0)
+ME
+MB sm 1 tm 124 m initialize(0)
+CM id 20 tid 20 eid 20 etid 20 c omnetpp::cMessage n pppEndTxEvent pe -1
+ME
+MB sm 1 tm 97 m initialize(0)
+ME
+MB sm 1 tm 129 m initialize(0)
+ME
+MB sm 1 tm 130 m initialize(0)
+CM id 21 tid 21 eid 21 etid 21 c omnetpp::cMessage n end-service pe -1
+ME
+MB sm 1 tm 131 m initialize(0)
+ME
+MB sm 1 tm 132 m initialize(0)
+ME
+MB sm 1 tm 133 m initialize(0)
+ME
+MB sm 1 tm 134 m initialize(0)
+ME
+MB sm 1 tm 98 m initialize(0)
+ME
+MB sm 1 tm 99 m initialize(0)
+ME
+MB sm 1 tm 143 m initialize(0)
+CM id 22 tid 22 eid 22 etid 22 c omnetpp::cMessage n CliAppTimer pe -1
+BS id 22 tid 22 eid 22 etid 22 c omnetpp::cMessage n CliAppTimer pe 0
+ES t 0
+ME
+MB sm 1 tm 144 m initialize(0)
+CM id 23 tid 23 eid 23 etid 23 c omnetpp::cMessage n SrvAppTimer pe -1
+CM id 24 tid 24 eid 24 etid 24 c omnetpp::cMessage n delayTimer pe -1
+CM id 25 tid 25 eid 25 etid 25 c omnetpp::cMessage n delayFirstReadTimer pe -1
+ME
+MB sm 1 tm 100 m initialize(0)
+ME
+MB sm 1 tm 101 m initialize(0)
+ME
+MB sm 1 tm 102 m initialize(0)
+ME
+MB sm 1 tm 103 m initialize(0)
+ME
+MB sm 1 tm 11 m initialize(0)
+ME
+MB sm 1 tm 145 m initialize(0)
+ME
+MB sm 1 tm 159 m initialize(0)
+ME
+MB sm 1 tm 160 m initialize(0)
+CM id 26 tid 26 eid 26 etid 26 c omnetpp::cMessage n end-service pe -1
+ME
+MB sm 1 tm 161 m initialize(0)
+ME
+MB sm 1 tm 162 m initialize(0)
+ME
+MB sm 1 tm 163 m initialize(0)
+ME
+MB sm 1 tm 164 m initialize(0)
+ME
+MB sm 1 tm 146 m initialize(0)
+ME
+MB sm 1 tm 147 m initialize(0)
+ME
+MB sm 1 tm 148 m initialize(0)
+ME
+MB sm 1 tm 173 m initialize(0)
+ME
+MB sm 1 tm 149 m initialize(0)
+ME
+MB sm 1 tm 176 m initialize(0)
+ME
+MB sm 1 tm 177 m initialize(0)
+CM id 27 tid 27 eid 27 etid 27 c omnetpp::cMessage n pppEndTxEvent pe -1
+ME
+MB sm 1 tm 150 m initialize(0)
+ME
+MB sm 1 tm 182 m initialize(0)
+ME
+MB sm 1 tm 183 m initialize(0)
+CM id 28 tid 28 eid 28 etid 28 c omnetpp::cMessage n pppEndTxEvent pe -1
+ME
+MB sm 1 tm 155 m initialize(0)
+ME
+MB sm 1 tm 156 m initialize(0)
+ME
+MB sm 1 tm 188 m initialize(0)
+ME
+MB sm 1 tm 189 m initialize(0)
+CM id 29 tid 29 eid 29 etid 29 c omnetpp::cMessage n pppEndTxEvent pe -1
+ME
+MB sm 1 tm 157 m initialize(0)
+ME
+MB sm 1 tm 158 m initialize(0)
+ME
+MB sm 1 tm 12 m initialize(0)
+ME
+MB sm 1 tm 194 m initialize(0)
+ME
+MB sm 1 tm 201 m initialize(0)
+ME
+MB sm 1 tm 202 m initialize(0)
+CM id 30 tid 30 eid 30 etid 30 c omnetpp::cMessage n end-service pe -1
+ME
+MB sm 1 tm 203 m initialize(0)
+ME
+MB sm 1 tm 204 m initialize(0)
+ME
+MB sm 1 tm 205 m initialize(0)
+ME
+MB sm 1 tm 206 m initialize(0)
+ME
+MB sm 1 tm 195 m initialize(0)
+ME
+MB sm 1 tm 196 m initialize(0)
+ME
+MB sm 1 tm 197 m initialize(0)
+ME
+MB sm 1 tm 211 m initialize(0)
+ME
+MB sm 1 tm 198 m initialize(0)
+ME
+MB sm 1 tm 214 m initialize(0)
+ME
+MB sm 1 tm 215 m initialize(0)
+CM id 31 tid 31 eid 31 etid 31 c omnetpp::cMessage n pppEndTxEvent pe -1
+ME
+MB sm 1 tm 13 m initialize(0)
+ME
+MB sm 1 tm 220 m initialize(0)
+ME
+MB sm 1 tm 230 m initialize(0)
+ME
+MB sm 1 tm 231 m initialize(0)
+CM id 32 tid 32 eid 32 etid 32 c omnetpp::cMessage n end-service pe -1
+ME
+MB sm 1 tm 232 m initialize(0)
+ME
+MB sm 1 tm 233 m initialize(0)
+ME
+MB sm 1 tm 234 m initialize(0)
+ME
+MB sm 1 tm 235 m initialize(0)
+ME
+MB sm 1 tm 221 m initialize(0)
+ME
+MB sm 1 tm 222 m initialize(0)
+ME
+MB sm 1 tm 223 m initialize(0)
+ME
+MB sm 1 tm 242 m initialize(0)
+ME
+MB sm 1 tm 224 m initialize(0)
+ME
+MB sm 1 tm 245 m initialize(0)
+ME
+MB sm 1 tm 246 m initialize(0)
+CM id 33 tid 33 eid 33 etid 33 c omnetpp::cMessage n pppEndTxEvent pe -1
+ME
+MB sm 1 tm 225 m initialize(0)
+ME
+MB sm 1 tm 251 m initialize(0)
+ME
+MB sm 1 tm 252 m initialize(0)
+CM id 34 tid 34 eid 34 etid 34 c omnetpp::cMessage n pppEndTxEvent pe -1
+ME
+MB sm 1 tm 3 m initialize(1)
+ME
+MB sm 1 tm 33 m initialize(1)
+ME
+MB sm 1 tm 4 m initialize(1)
+ME
+MB sm 1 tm 5 m initialize(1)
+ME
+MB sm 1 tm 7 m initialize(1)
+ME
+MB sm 1 tm 8 m initialize(1)
+ME
+MB sm 1 tm 35 m initialize(1)
+ME
+MB sm 1 tm 36 m initialize(1)
+ME
+MB sm 1 tm 37 m initialize(1)
+ME
+MB sm 1 tm 49 m initialize(1)
+ME
+MB sm 1 tm 50 m initialize(1)
+ME
+MB sm 1 tm 59 m initialize(1)
+ME
+MB sm 1 tm 52 m initialize(1)
+MB sm 52 tm 7 m getDeployedUes
+ME
+MB sm 52 tm 7 m getDeployedUes
+ME
+MB sm 52 tm 7 m getDeployedUes
+ME
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: Creating Amc pilot D2D
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: ###################
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: # LteAmc parameters
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: ###################
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: NumUeDl: 0
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: NumUeUl: 0
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: Number of cell bands: 6
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: MacNodeId: 1
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: MacCellId: 1
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: AmcMode: D2D
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: RbAllocationType: 1
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: FBHB capacity DL: 5
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: FBHB capacity UL: 5
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: PmiWeight: 0
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: CqiWeight: 0
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: kCqi: 0
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: DL MCS scale: 153
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: UL MCS scale: 156
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: Confidence LB: 0.005
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: Confidence UB: 0.02
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: Adding Antenna: MACRO
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: DL CONNECTED: 0
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: UL CONNECTED: 0
+- INFO (LteMacEnbD2D)World.eNodeB[0].lteNic.mac: D2D CONNECTED: 0
+ME
+MB sm 1 tm 53 m initialize(1)
+- INFO (LtePhyEnbD2D)World.eNodeB[0].lteNic.phy: Feedback Computation "REAL" loaded.
+CM id 35 tid 35 eid 35 etid 35 c omnetpp::cMessage n bdcStarter pe -1
+BS id 35 tid 35 eid 35 etid 35 c omnetpp::cMessage n bdcStarter pe 0
+ES t 0
+ME
+MB sm 1 tm 55 m initialize(1)
+ME
+MB sm 1 tm 57 m initialize(1)
+ME
+MB sm 1 tm 63 m initialize(1)
+ME
+MB sm 1 tm 69 m initialize(1)
+ME
+MB sm 1 tm 74 m initialize(1)
+ME
+MB sm 1 tm 75 m initialize(1)
+ME
+MB sm 1 tm 76 m initialize(1)
+ME
+MB sm 1 tm 77 m initialize(1)
+ME
+MB sm 1 tm 78 m initialize(1)
+ME
+MB sm 1 tm 43 m initialize(1)
+ME
+MB sm 1 tm 88 m initialize(1)
+ME
+MB sm 1 tm 89 m initialize(1)
+ME
+MB sm 1 tm 45 m initialize(1)
+ME
+MB sm 1 tm 46 m initialize(1)
+ME
+MB sm 1 tm 47 m initialize(1)
+ME
+MB sm 1 tm 48 m initialize(1)
+ME
+MB sm 1 tm 90 m initialize(1)
+ME
+MB sm 1 tm 91 m initialize(1)
+ME
+MB sm 1 tm 92 m initialize(1)
+ME
+MB sm 1 tm 104 m initialize(1)
+ME
+MB sm 1 tm 105 m initialize(1)
+ME
+MB sm 1 tm 114 m initialize(1)
+ME
+MB sm 1 tm 107 m initialize(1)
+MB sm 107 tm 7 m getDeployedUes
+ME
+MB sm 107 tm 7 m getDeployedUes
+ME
+MB sm 107 tm 7 m getDeployedUes
+ME
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: Creating Amc pilot D2D
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: ###################
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: # LteAmc parameters
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: ###################
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: NumUeDl: 0
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: NumUeUl: 0
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: Number of cell bands: 6
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: MacNodeId: 2
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: MacCellId: 2
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: AmcMode: D2D
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: RbAllocationType: 1
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: FBHB capacity DL: 5
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: FBHB capacity UL: 5
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: PmiWeight: 0
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: CqiWeight: 0
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: kCqi: 0
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: DL MCS scale: 153
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: UL MCS scale: 156
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: Confidence LB: 0.005
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: Confidence UB: 0.02
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: Adding Antenna: MACRO
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: DL CONNECTED: 0
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: UL CONNECTED: 0
+- INFO (LteMacEnbD2D)World.eNodeB[1].lteNic.mac: D2D CONNECTED: 0
+ME
+MB sm 1 tm 108 m initialize(1)
+- INFO (LtePhyEnbD2D)World.eNodeB[1].lteNic.phy: Feedback Computation "REAL" loaded.
+CM id 36 tid 36 eid 36 etid 36 c omnetpp::cMessage n bdcStarter pe -1
+BS id 36 tid 36 eid 36 etid 36 c omnetpp::cMessage n bdcStarter pe 0
+ES t 0
+ME
+MB sm 1 tm 110 m initialize(1)
+ME
+MB sm 1 tm 112 m initialize(1)
+ME
+MB sm 1 tm 118 m initialize(1)
+ME
+MB sm 1 tm 124 m initialize(1)
+ME
+MB sm 1 tm 129 m initialize(1)
+ME
+MB sm 1 tm 130 m initialize(1)
+ME
+MB sm 1 tm 131 m initialize(1)
+ME
+MB sm 1 tm 132 m initialize(1)
+ME
+MB sm 1 tm 133 m initialize(1)
+ME
+MB sm 1 tm 98 m initialize(1)
+ME
+MB sm 1 tm 143 m initialize(1)
+ME
+MB sm 1 tm 144 m initialize(1)
+ME
+MB sm 1 tm 100 m initialize(1)
+ME
+MB sm 1 tm 101 m initialize(1)
+ME
+MB sm 1 tm 102 m initialize(1)
+ME
+MB sm 1 tm 103 m initialize(1)
+ME
+MB sm 1 tm 159 m initialize(1)
+ME
+MB sm 1 tm 160 m initialize(1)
+ME
+MB sm 1 tm 161 m initialize(1)
+ME
+MB sm 1 tm 162 m initialize(1)
+ME
+MB sm 1 tm 163 m initialize(1)
+ME
+MB sm 1 tm 146 m initialize(1)
+ME
+MB sm 1 tm 147 m initialize(1)
+ME
+MB sm 1 tm 173 m initialize(1)
+ME
+MB sm 1 tm 177 m initialize(1)
+ME
+MB sm 1 tm 183 m initialize(1)
+ME
+MB sm 1 tm 155 m initialize(1)
+ME
+MB sm 1 tm 189 m initialize(1)
+ME
+MB sm 1 tm 157 m initialize(1)
+ME
+MB sm 1 tm 158 m initialize(1)
+ME
+MB sm 1 tm 201 m initialize(1)
+ME
+MB sm 1 tm 202 m initialize(1)
+ME
+MB sm 1 tm 203 m initialize(1)
+ME
+MB sm 1 tm 204 m initialize(1)
+ME
+MB sm 1 tm 205 m initialize(1)
+ME
+MB sm 1 tm 195 m initialize(1)
+ME
+MB sm 1 tm 196 m initialize(1)
+ME
+MB sm 1 tm 211 m initialize(1)
+ME
+MB sm 1 tm 215 m initialize(1)
+ME
+MB sm 1 tm 230 m initialize(1)
+ME
+MB sm 1 tm 231 m initialize(1)
+ME
+MB sm 1 tm 232 m initialize(1)
+ME
+MB sm 1 tm 233 m initialize(1)
+ME
+MB sm 1 tm 234 m initialize(1)
+ME
+MB sm 1 tm 221 m initialize(1)
+ME
+MB sm 1 tm 222 m initialize(1)
+ME
+MB sm 1 tm 242 m initialize(1)
+ME
+MB sm 1 tm 246 m initialize(1)
+ME
+MB sm 1 tm 252 m initialize(1)
+ME
+MB sm 1 tm 3 m initialize(2)
+ME
+MB sm 1 tm 33 m initialize(2)
+ME
+MB sm 1 tm 5 m initialize(2)
+ME
+MB sm 1 tm 7 m initialize(2)
+ME
+MB sm 1 tm 8 m initialize(2)
+ME
+MB sm 1 tm 35 m initialize(2)
+ME
+MB sm 1 tm 36 m initialize(2)
+ME
+MB sm 1 tm 37 m initialize(2)
+MS id 9 d p=125.000000,199;i=device/antennatower;bgb=814,437
+MS id 9 d p=125.000000,125.000000;i=device/antennatower;bgb=814,437
+ME
+MB sm 1 tm 49 m initialize(2)
+ME
+MB sm 1 tm 50 m initialize(2)
+ME
+MB sm 1 tm 59 m initialize(2)
+ME
+MB sm 1 tm 52 m initialize(2)
+ME
+MB sm 1 tm 53 m initialize(2)
+MB sm 53 tm 6 m ""
+ME
+MB sm 53 tm 6 m ""
+ME
+ME
+MB sm 1 tm 55 m initialize(2)
+ME
+MB sm 1 tm 57 m initialize(2)
+ME
+MB sm 1 tm 63 m initialize(2)
+ME
+MB sm 1 tm 69 m initialize(2)
+ME
+MB sm 1 tm 74 m initialize(2)
+ME
+MB sm 1 tm 75 m initialize(2)
+ME
+MB sm 1 tm 76 m initialize(2)
+ME
+MB sm 1 tm 77 m initialize(2)
+ME
+MB sm 1 tm 78 m initialize(2)
+ME
+MB sm 1 tm 43 m initialize(2)
+ME
+MB sm 1 tm 88 m initialize(2)
+ME
+MB sm 1 tm 89 m initialize(2)
+ME
+MB sm 1 tm 45 m initialize(2)
+ME
+MB sm 1 tm 46 m initialize(2)
+ME
+MB sm 1 tm 47 m initialize(2)
+ME
+MB sm 1 tm 48 m initialize(2)
+ME
+MB sm 1 tm 90 m initialize(2)
+ME
+MB sm 1 tm 91 m initialize(2)
+ME
+MB sm 1 tm 92 m initialize(2)
+MS id 10 d p=875.000000,199;i=device/antennatower;bgb=814,437
+MS id 10 d p=875.000000,875.000000;i=device/antennatower;bgb=814,437
+ME
+MB sm 1 tm 104 m initialize(2)
+ME
+MB sm 1 tm 105 m initialize(2)
+ME
+MB sm 1 tm 114 m initialize(2)
+ME
+MB sm 1 tm 107 m initialize(2)
+ME
+MB sm 1 tm 108 m initialize(2)
+MB sm 108 tm 6 m ""
+ME
+MB sm 108 tm 6 m ""
+ME
+ME
+MB sm 1 tm 110 m initialize(2)
+ME
+MB sm 1 tm 112 m initialize(2)
+ME
+MB sm 1 tm 118 m initialize(2)
+ME
+MB sm 1 tm 124 m initialize(2)
+ME
+MB sm 1 tm 129 m initialize(2)
+ME
+MB sm 1 tm 130 m initialize(2)
+ME
+MB sm 1 tm 131 m initialize(2)
+ME
+MB sm 1 tm 132 m initialize(2)
+ME
+MB sm 1 tm 133 m initialize(2)
+ME
+MB sm 1 tm 98 m initialize(2)
+ME
+MB sm 1 tm 143 m initialize(2)
+ME
+MB sm 1 tm 144 m initialize(2)
+ME
+MB sm 1 tm 100 m initialize(2)
+ME
+MB sm 1 tm 101 m initialize(2)
+ME
+MB sm 1 tm 102 m initialize(2)
+ME
+MB sm 1 tm 103 m initialize(2)
+ME
+MB sm 1 tm 159 m initialize(2)
+ME
+MB sm 1 tm 160 m initialize(2)
+ME
+MB sm 1 tm 161 m initialize(2)
+ME
+MB sm 1 tm 162 m initialize(2)
+ME
+MB sm 1 tm 163 m initialize(2)
+ME
+MB sm 1 tm 146 m initialize(2)
+ME
+MB sm 1 tm 147 m initialize(2)
+ME
+MB sm 1 tm 173 m initialize(2)
+ME
+MB sm 1 tm 177 m initialize(2)
+ME
+MB sm 1 tm 183 m initialize(2)
+ME
+MB sm 1 tm 155 m initialize(2)
+ME
+MB sm 1 tm 189 m initialize(2)
+ME
+MB sm 1 tm 157 m initialize(2)
+ME
+MB sm 1 tm 158 m initialize(2)
+ME
+MB sm 1 tm 201 m initialize(2)
+ME
+MB sm 1 tm 202 m initialize(2)
+ME
+MB sm 1 tm 203 m initialize(2)
+ME
+MB sm 1 tm 204 m initialize(2)
+ME
+MB sm 1 tm 205 m initialize(2)
+ME
+MB sm 1 tm 195 m initialize(2)
+ME
+MB sm 1 tm 196 m initialize(2)
+ME
+MB sm 1 tm 211 m initialize(2)
+ME
+MB sm 1 tm 215 m initialize(2)
+ME
+MB sm 1 tm 230 m initialize(2)
+ME
+MB sm 1 tm 231 m initialize(2)
+ME
+MB sm 1 tm 232 m initialize(2)
+ME
+MB sm 1 tm 233 m initialize(2)
+ME
+MB sm 1 tm 234 m initialize(2)
+ME
+MB sm 1 tm 221 m initialize(2)
+ME
+MB sm 1 tm 222 m initialize(2)
+ME
+MB sm 1 tm 242 m initialize(2)
+ME
+MB sm 1 tm 246 m initialize(2)
+ME
+MB sm 1 tm 252 m initialize(2)
+ME
+MB sm 1 tm 3 m initialize(3)
+ME
+MB sm 1 tm 33 m initialize(3)
+ME
+MB sm 1 tm 5 m initialize(3)
+ME
+MB sm 1 tm 7 m initialize(3)
+ME
+MB sm 1 tm 8 m initialize(3)
+ME
+MB sm 1 tm 35 m initialize(3)
+ME
+MB sm 1 tm 36 m initialize(3)
+ME
+MB sm 1 tm 37 m initialize(3)
+ME
+MB sm 1 tm 49 m initialize(3)
+ME
+MB sm 1 tm 50 m initialize(3)
+ME
+MB sm 1 tm 59 m initialize(3)
+ME
+MB sm 1 tm 52 m initialize(3)
+ME
+MB sm 1 tm 53 m initialize(3)
+ME
+MB sm 1 tm 55 m initialize(3)
+ME
+MB sm 1 tm 57 m initialize(3)
+ME
+MB sm 1 tm 63 m initialize(3)
+ME
+MB sm 1 tm 69 m initialize(3)
+ME
+MB sm 1 tm 74 m initialize(3)
+ME
+MB sm 1 tm 75 m initialize(3)
+ME
+MB sm 1 tm 76 m initialize(3)
+ME
+MB sm 1 tm 77 m initialize(3)
+ME
+MB sm 1 tm 78 m initialize(3)
+ME
+MB sm 1 tm 43 m initialize(3)
+ME
+MB sm 1 tm 88 m initialize(3)
+ME
+MB sm 1 tm 89 m initialize(3)
+ME
+MB sm 1 tm 45 m initialize(3)
+ME
+MB sm 1 tm 46 m initialize(3)
+ME
+MB sm 1 tm 47 m initialize(3)
+ME
+MB sm 1 tm 48 m initialize(3)
+ME
+MB sm 1 tm 90 m initialize(3)
+ME
+MB sm 1 tm 91 m initialize(3)
+ME
+MB sm 1 tm 92 m initialize(3)
+ME
+MB sm 1 tm 104 m initialize(3)
+ME
+MB sm 1 tm 105 m initialize(3)
+ME
+MB sm 1 tm 114 m initialize(3)
+ME
+MB sm 1 tm 107 m initialize(3)
+ME
+MB sm 1 tm 108 m initialize(3)
+ME
+MB sm 1 tm 110 m initialize(3)
+ME
+MB sm 1 tm 112 m initialize(3)
+ME
+MB sm 1 tm 118 m initialize(3)
+ME
+MB sm 1 tm 124 m initialize(3)
+ME
+MB sm 1 tm 129 m initialize(3)
+ME
+MB sm 1 tm 130 m initialize(3)
+ME
+MB sm 1 tm 131 m initialize(3)
+ME
+MB sm 1 tm 132 m initialize(3)
+ME
+MB sm 1 tm 133 m initialize(3)
+ME
+MB sm 1 tm 98 m initialize(3)
+ME
+MB sm 1 tm 143 m initialize(3)
+ME
+MB sm 1 tm 144 m initialize(3)
+ME
+MB sm 1 tm 100 m initialize(3)
+ME
+MB sm 1 tm 101 m initialize(3)
+ME
+MB sm 1 tm 102 m initialize(3)
+ME
+MB sm 1 tm 103 m initialize(3)
+ME
+MB sm 1 tm 159 m initialize(3)
+ME
+MB sm 1 tm 160 m initialize(3)
+ME
+MB sm 1 tm 161 m initialize(3)
+ME
+MB sm 1 tm 162 m initialize(3)
+ME
+MB sm 1 tm 163 m initialize(3)
+ME
+MB sm 1 tm 146 m initialize(3)
+ME
+MB sm 1 tm 147 m initialize(3)
+ME
+MB sm 1 tm 173 m initialize(3)
+ME
+MB sm 1 tm 177 m initialize(3)
+ME
+MB sm 1 tm 183 m initialize(3)
+ME
+MB sm 1 tm 155 m initialize(3)
+ME
+MB sm 1 tm 189 m initialize(3)
+ME
+MB sm 1 tm 157 m initialize(3)
+ME
+MB sm 1 tm 158 m initialize(3)
+ME
+MB sm 1 tm 201 m initialize(3)
+ME
+MB sm 1 tm 202 m initialize(3)
+ME
+MB sm 1 tm 203 m initialize(3)
+ME
+MB sm 1 tm 204 m initialize(3)
+ME
+MB sm 1 tm 205 m initialize(3)
+ME
+MB sm 1 tm 195 m initialize(3)
+ME
+MB sm 1 tm 196 m initialize(3)
+ME
+MB sm 1 tm 211 m initialize(3)
+ME
+MB sm 1 tm 215 m initialize(3)
+ME
+MB sm 1 tm 230 m initialize(3)
+ME
+MB sm 1 tm 231 m initialize(3)
+ME
+MB sm 1 tm 232 m initialize(3)
+ME
+MB sm 1 tm 233 m initialize(3)
+ME
+MB sm 1 tm 234 m initialize(3)
+ME
+MB sm 1 tm 221 m initialize(3)
+ME
+MB sm 1 tm 222 m initialize(3)
+ME
+MB sm 1 tm 242 m initialize(3)
+ME
+MB sm 1 tm 246 m initialize(3)
+ME
+MB sm 1 tm 252 m initialize(3)
+ME
+MB sm 1 tm 3 m initialize(4)
+ME
+MB sm 1 tm 33 m initialize(4)
+ME
+MB sm 1 tm 7 m initialize(4)
+ME
+MB sm 1 tm 8 m initialize(4)
+ME
+MB sm 1 tm 35 m initialize(4)
+ME
+MB sm 1 tm 36 m initialize(4)
+ME
+MB sm 1 tm 37 m initialize(4)
+ME
+MB sm 1 tm 49 m initialize(4)
+ME
+MB sm 1 tm 50 m initialize(4)
+ME
+MB sm 1 tm 59 m initialize(4)
+ME
+MB sm 1 tm 52 m initialize(4)
+ME
+MB sm 1 tm 53 m initialize(4)
+ME
+MB sm 1 tm 55 m initialize(4)
+ME
+MB sm 1 tm 57 m initialize(4)
+ME
+MB sm 1 tm 63 m initialize(4)
+MB sm 63 tm 35 m ""
+ME
+MB sm 63 tm 35 m ""
+ME
+MB sm 63 tm 35 m ""
+ME
+MB sm 63 tm 35 m ""
+ME
+- DETAIL (PPP)World.eNodeB[0].pppIf.ppp: Requesting first frame from queue module
+MB sm 63 tm 62 m requestPacket()
+ME
+ME
+MB sm 1 tm 69 m initialize(4)
+MB sm 69 tm 35 m ""
+ME
+MB sm 69 tm 35 m ""
+ME
+MB sm 69 tm 35 m ""
+ME
+MB sm 69 tm 35 m ""
+ME
+- DETAIL (PPP)World.eNodeB[0].x2ppp[0].ppp: Requesting first frame from queue module
+MB sm 69 tm 68 m requestPacket()
+ME
+ME
+MB sm 1 tm 74 m initialize(4)
+ME
+MB sm 1 tm 75 m initialize(4)
+ME
+MB sm 1 tm 76 m initialize(4)
+ME
+MB sm 1 tm 77 m initialize(4)
+ME
+MB sm 1 tm 78 m initialize(4)
+ME
+MB sm 1 tm 43 m initialize(4)
+ME
+MB sm 1 tm 88 m initialize(4)
+ME
+MB sm 1 tm 89 m initialize(4)
+ME
+MB sm 1 tm 45 m initialize(4)
+ME
+MB sm 1 tm 46 m initialize(4)
+ME
+MB sm 1 tm 47 m initialize(4)
+ME
+MB sm 1 tm 48 m initialize(4)
+ME
+MB sm 1 tm 90 m initialize(4)
+ME
+MB sm 1 tm 91 m initialize(4)
+ME
+MB sm 1 tm 92 m initialize(4)
+ME
+MB sm 1 tm 104 m initialize(4)
+ME
+MB sm 1 tm 105 m initialize(4)
+ME
+MB sm 1 tm 114 m initialize(4)
+ME
+MB sm 1 tm 107 m initialize(4)
+ME
+MB sm 1 tm 108 m initialize(4)
+ME
+MB sm 1 tm 110 m initialize(4)
+ME
+MB sm 1 tm 112 m initialize(4)
+ME
+MB sm 1 tm 118 m initialize(4)
+MB sm 118 tm 90 m ""
+ME
+MB sm 118 tm 90 m ""
+ME
+MB sm 118 tm 90 m ""
+ME
+MB sm 118 tm 90 m ""
+ME
+- DETAIL (PPP)World.eNodeB[1].pppIf.ppp: Requesting first frame from queue module
+MB sm 118 tm 117 m requestPacket()
+ME
+ME
+MB sm 1 tm 124 m initialize(4)
+MB sm 124 tm 90 m ""
+ME
+MB sm 124 tm 90 m ""
+ME
+MB sm 124 tm 90 m ""
+ME
+MB sm 124 tm 90 m ""
+ME
+- DETAIL (PPP)World.eNodeB[1].x2ppp[0].ppp: Requesting first frame from queue module
+MB sm 124 tm 123 m requestPacket()
+ME
+ME
+MB sm 1 tm 129 m initialize(4)
+ME
+MB sm 1 tm 130 m initialize(4)
+ME
+MB sm 1 tm 131 m initialize(4)
+ME
+MB sm 1 tm 132 m initialize(4)
+ME
+MB sm 1 tm 133 m initialize(4)
+ME
+MB sm 1 tm 98 m initialize(4)
+ME
+MB sm 1 tm 143 m initialize(4)
+ME
+MB sm 1 tm 144 m initialize(4)
+ME
+MB sm 1 tm 100 m initialize(4)
+ME
+MB sm 1 tm 101 m initialize(4)
+ME
+MB sm 1 tm 102 m initialize(4)
+ME
+MB sm 1 tm 103 m initialize(4)
+ME
+MB sm 1 tm 159 m initialize(4)
+ME
+MB sm 1 tm 160 m initialize(4)
+ME
+MB sm 1 tm 161 m initialize(4)
+ME
+MB sm 1 tm 162 m initialize(4)
+ME
+MB sm 1 tm 163 m initialize(4)
+ME
+MB sm 1 tm 146 m initialize(4)
+ME
+MB sm 1 tm 147 m initialize(4)
+ME
+MB sm 1 tm 173 m initialize(4)
+MB sm 173 tm 147 m ""
+ME
+MB sm 173 tm 147 m ""
+ME
+ME
+MB sm 1 tm 177 m initialize(4)
+MB sm 177 tm 147 m ""
+ME
+MB sm 177 tm 147 m ""
+ME
+MB sm 177 tm 147 m ""
+ME
+MB sm 177 tm 147 m ""
+ME
+- DETAIL (PPP)World.pgw.ppp[0].ppp: Requesting first frame from queue module
+MB sm 177 tm 176 m requestPacket()
+ME
+ME
+MB sm 1 tm 183 m initialize(4)
+MB sm 183 tm 147 m ""
+ME
+MB sm 183 tm 147 m ""
+ME
+MB sm 183 tm 147 m ""
+ME
+MB sm 183 tm 147 m ""
+ME
+- DETAIL (PPP)World.pgw.ppp[1].ppp: Requesting first frame from queue module
+MB sm 183 tm 182 m requestPacket()
+ME
+ME
+MB sm 1 tm 155 m initialize(4)
+ME
+MB sm 1 tm 189 m initialize(4)
+MB sm 189 tm 147 m ""
+ME
+MB sm 189 tm 147 m ""
+ME
+MB sm 189 tm 147 m ""
+ME
+- DETAIL (PPP)World.pgw.pppInterface.ppp: Requesting first frame from queue module
+MB sm 189 tm 188 m requestPacket()
+ME
+ME
+MB sm 1 tm 157 m initialize(4)
+ME
+MB sm 1 tm 158 m initialize(4)
+ME
+MB sm 1 tm 201 m initialize(4)
+ME
+MB sm 1 tm 202 m initialize(4)
+ME
+MB sm 1 tm 203 m initialize(4)
+ME
+MB sm 1 tm 204 m initialize(4)
+ME
+MB sm 1 tm 205 m initialize(4)
+ME
+MB sm 1 tm 195 m initialize(4)
+ME
+MB sm 1 tm 196 m initialize(4)
+ME
+MB sm 1 tm 211 m initialize(4)
+MB sm 211 tm 196 m ""
+ME
+MB sm 211 tm 196 m ""
+ME
+ME
+MB sm 1 tm 215 m initialize(4)
+MB sm 215 tm 196 m ""
+ME
+MB sm 215 tm 196 m ""
+ME
+MB sm 215 tm 196 m ""
+ME
+MB sm 215 tm 196 m ""
+ME
+- DETAIL (PPP)World.server.ppp[0].ppp: Requesting first frame from queue module
+MB sm 215 tm 214 m requestPacket()
+ME
+ME
+MB sm 1 tm 230 m initialize(4)
+ME
+MB sm 1 tm 231 m initialize(4)
+ME
+MB sm 1 tm 232 m initialize(4)
+ME
+MB sm 1 tm 233 m initialize(4)
+ME
+MB sm 1 tm 234 m initialize(4)
+ME
+MB sm 1 tm 221 m initialize(4)
+ME
+MB sm 1 tm 222 m initialize(4)
+ME
+MB sm 1 tm 242 m initialize(4)
+MB sm 242 tm 222 m ""
+ME
+MB sm 242 tm 222 m ""
+ME
+ME
+MB sm 1 tm 246 m initialize(4)
+MB sm 246 tm 222 m ""
+ME
+MB sm 246 tm 222 m ""
+ME
+MB sm 246 tm 222 m ""
+ME
+MB sm 246 tm 222 m ""
+ME
+- DETAIL (PPP)World.router.ppp[0].ppp: Requesting first frame from queue module
+MB sm 246 tm 245 m requestPacket()
+ME
+ME
+MB sm 1 tm 252 m initialize(4)
+MB sm 252 tm 222 m ""
+ME
+MB sm 252 tm 222 m ""
+ME
+MB sm 252 tm 222 m ""
+ME
+MB sm 252 tm 222 m ""
+ME
+- DETAIL (PPP)World.router.ppp[1].ppp: Requesting first frame from queue module
+MB sm 252 tm 251 m requestPacket()
+ME
+ME
+MB sm 1 tm 3 m initialize(5)
+ME
+MB sm 1 tm 33 m initialize(5)
+ME
+MB sm 1 tm 7 m initialize(5)
+ME
+MB sm 1 tm 8 m initialize(5)
+ME
+MB sm 1 tm 35 m initialize(5)
+ME
+MB sm 1 tm 36 m initialize(5)
+ME
+MB sm 1 tm 37 m initialize(5)
+ME
+MB sm 1 tm 49 m initialize(5)
+ME
+MB sm 1 tm 50 m initialize(5)
+ME
+MB sm 1 tm 59 m initialize(5)
+ME
+MB sm 1 tm 52 m initialize(5)
+ME
+MB sm 1 tm 53 m initialize(5)
+ME
+MB sm 1 tm 55 m initialize(5)
+ME
+MB sm 1 tm 57 m initialize(5)
+ME
+MB sm 1 tm 63 m initialize(5)
+ME
+MB sm 1 tm 69 m initialize(5)
+ME
+MB sm 1 tm 74 m initialize(5)
+ME
+MB sm 1 tm 75 m initialize(5)
+ME
+MB sm 1 tm 76 m initialize(5)
+ME
+MB sm 1 tm 77 m initialize(5)
+ME
+MB sm 1 tm 78 m initialize(5)
+ME
+MB sm 1 tm 43 m initialize(5)
+ME
+MB sm 1 tm 88 m initialize(5)
+ME
+MB sm 1 tm 89 m initialize(5)
+ME
+MB sm 1 tm 45 m initialize(5)
+ME
+MB sm 1 tm 46 m initialize(5)
+ME
+MB sm 1 tm 47 m initialize(5)
+ME
+MB sm 1 tm 48 m initialize(5)
+ME
+MB sm 1 tm 90 m initialize(5)
+ME
+MB sm 1 tm 91 m initialize(5)
+ME
+MB sm 1 tm 92 m initialize(5)
+ME
+MB sm 1 tm 104 m initialize(5)
+ME
+MB sm 1 tm 105 m initialize(5)
+ME
+MB sm 1 tm 114 m initialize(5)
+ME
+MB sm 1 tm 107 m initialize(5)
+ME
+MB sm 1 tm 108 m initialize(5)
+ME
+MB sm 1 tm 110 m initialize(5)
+ME
+MB sm 1 tm 112 m initialize(5)
+ME
+MB sm 1 tm 118 m initialize(5)
+ME
+MB sm 1 tm 124 m initialize(5)
+ME
+MB sm 1 tm 129 m initialize(5)
+ME
+MB sm 1 tm 130 m initialize(5)
+ME
+MB sm 1 tm 131 m initialize(5)
+ME
+MB sm 1 tm 132 m initialize(5)
+ME
+MB sm 1 tm 133 m initialize(5)
+ME
+MB sm 1 tm 98 m initialize(5)
+ME
+MB sm 1 tm 143 m initialize(5)
+ME
+MB sm 1 tm 144 m initialize(5)
+ME
+MB sm 1 tm 100 m initialize(5)
+ME
+MB sm 1 tm 101 m initialize(5)
+ME
+MB sm 1 tm 102 m initialize(5)
+ME
+MB sm 1 tm 103 m initialize(5)
+ME
+MB sm 1 tm 159 m initialize(5)
+ME
+MB sm 1 tm 160 m initialize(5)
+ME
+MB sm 1 tm 161 m initialize(5)
+ME
+MB sm 1 tm 162 m initialize(5)
+ME
+MB sm 1 tm 163 m initialize(5)
+ME
+MB sm 1 tm 146 m initialize(5)
+ME
+MB sm 1 tm 147 m initialize(5)
+ME
+MB sm 1 tm 173 m initialize(5)
+ME
+MB sm 1 tm 177 m initialize(5)
+ME
+MB sm 1 tm 183 m initialize(5)
+ME
+MB sm 1 tm 155 m initialize(5)
+ME
+MB sm 1 tm 189 m initialize(5)
+ME
+MB sm 1 tm 157 m initialize(5)
+ME
+MB sm 1 tm 158 m initialize(5)
+ME
+MB sm 1 tm 201 m initialize(5)
+ME
+MB sm 1 tm 202 m initialize(5)
+ME
+MB sm 1 tm 203 m initialize(5)
+ME
+MB sm 1 tm 204 m initialize(5)
+ME
+MB sm 1 tm 205 m initialize(5)
+ME
+MB sm 1 tm 195 m initialize(5)
+ME
+MB sm 1 tm 196 m initialize(5)
+ME
+MB sm 1 tm 211 m initialize(5)
+ME
+MB sm 1 tm 215 m initialize(5)
+ME
+MB sm 1 tm 230 m initialize(5)
+ME
+MB sm 1 tm 231 m initialize(5)
+ME
+MB sm 1 tm 232 m initialize(5)
+ME
+MB sm 1 tm 233 m initialize(5)
+ME
+MB sm 1 tm 234 m initialize(5)
+ME
+MB sm 1 tm 221 m initialize(5)
+ME
+MB sm 1 tm 222 m initialize(5)
+ME
+MB sm 1 tm 242 m initialize(5)
+ME
+MB sm 1 tm 246 m initialize(5)
+ME
+MB sm 1 tm 252 m initialize(5)
+ME
+MB sm 1 tm 3 m initialize(6)
+ME
+MB sm 1 tm 33 m initialize(6)
+ME
+MB sm 1 tm 7 m initialize(6)
+ME
+MB sm 1 tm 8 m initialize(6)
+- INFO (IPv4NetworkConfigurator)World.configurator: Computing static network configuration (addresses and routes).
+MB sm 8 tm 147 m ""
+ME
+MB sm 8 tm 90 m ""
+ME
+MB sm 8 tm 147 m ""
+ME
+MB sm 8 tm 222 m ""
+ME
+MB sm 8 tm 222 m ""
+ME
+MB sm 8 tm 35 m ""
+ME
+MB sm 8 tm 147 m ""
+ME
+MB sm 8 tm 35 m ""
+ME
+MB sm 8 tm 90 m ""
+ME
+MB sm 8 tm 90 m ""
+ME
+MB sm 8 tm 147 m ""
+ME
+MB sm 8 tm 90 m ""
+ME
+MB sm 8 tm 35 m ""
+ME
+MB sm 8 tm 147 m ""
+ME
+MB sm 8 tm 35 m ""
+ME
+MB sm 8 tm 147 m ""
+ME
+MB sm 8 tm 90 m ""
+ME
+MB sm 8 tm 147 m ""
+ME
+MB sm 8 tm 222 m ""
+ME
+MB sm 8 tm 196 m ""
+ME
+MB sm 8 tm 222 m ""
+ME
+MB sm 8 tm 222 m ""
+ME
+MB sm 8 tm 196 m ""
+ME
+MB sm 8 tm 222 m ""
+ME
+MB sm 8 tm 147 m ""
+ME
+ME
+MB sm 1 tm 35 m initialize(6)
+ME
+MB sm 1 tm 36 m initialize(6)
+ME
+MB sm 1 tm 37 m initialize(6)
+ME
+MB sm 1 tm 49 m initialize(6)
+ME
+MB sm 1 tm 50 m initialize(6)
+ME
+MB sm 1 tm 59 m initialize(6)
+ME
+MB sm 1 tm 52 m initialize(6)
+ME
+MB sm 1 tm 53 m initialize(6)
+ME
+MB sm 1 tm 55 m initialize(6)
+ME
+MB sm 1 tm 57 m initialize(6)
+ME
+MB sm 1 tm 63 m initialize(6)
+ME
+MB sm 1 tm 69 m initialize(6)
+ME
+MB sm 1 tm 74 m initialize(6)
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 78 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 78 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 78 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 78 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 78 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 78 m ""
+ME
+ME
+MB sm 1 tm 75 m initialize(6)
+ME
+MB sm 1 tm 76 m initialize(6)
+ME
+MB sm 1 tm 77 m initialize(6)
+ME
+MB sm 1 tm 78 m initialize(6)
+ME
+MB sm 1 tm 43 m initialize(6)
+ME
+MB sm 1 tm 88 m initialize(6)
+ME
+MB sm 1 tm 89 m initialize(6)
+ME
+MB sm 1 tm 45 m initialize(6)
+ME
+MB sm 1 tm 46 m initialize(6)
+- INFO (TrafficFlowFilterSimplified)World.eNodeB[0].trafficFlowFilter: TrafficFlowFilterSimplified::selectOwnerType - setting owner type to ENODEB
+ME
+MB sm 1 tm 47 m initialize(6)
+ME
+MB sm 1 tm 48 m initialize(6)
+ME
+MB sm 1 tm 90 m initialize(6)
+ME
+MB sm 1 tm 91 m initialize(6)
+ME
+MB sm 1 tm 92 m initialize(6)
+ME
+MB sm 1 tm 104 m initialize(6)
+ME
+MB sm 1 tm 105 m initialize(6)
+ME
+MB sm 1 tm 114 m initialize(6)
+ME
+MB sm 1 tm 107 m initialize(6)
+ME
+MB sm 1 tm 108 m initialize(6)
+ME
+MB sm 1 tm 110 m initialize(6)
+ME
+MB sm 1 tm 112 m initialize(6)
+ME
+MB sm 1 tm 118 m initialize(6)
+ME
+MB sm 1 tm 124 m initialize(6)
+ME
+MB sm 1 tm 129 m initialize(6)
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 133 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 133 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 133 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 133 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 133 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 133 m ""
+ME
+ME
+MB sm 1 tm 130 m initialize(6)
+ME
+MB sm 1 tm 131 m initialize(6)
+ME
+MB sm 1 tm 132 m initialize(6)
+ME
+MB sm 1 tm 133 m initialize(6)
+ME
+MB sm 1 tm 98 m initialize(6)
+ME
+MB sm 1 tm 143 m initialize(6)
+ME
+MB sm 1 tm 144 m initialize(6)
+ME
+MB sm 1 tm 100 m initialize(6)
+ME
+MB sm 1 tm 101 m initialize(6)
+- INFO (TrafficFlowFilterSimplified)World.eNodeB[1].trafficFlowFilter: TrafficFlowFilterSimplified::selectOwnerType - setting owner type to ENODEB
+ME
+MB sm 1 tm 102 m initialize(6)
+ME
+MB sm 1 tm 103 m initialize(6)
+ME
+MB sm 1 tm 159 m initialize(6)
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 163 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 163 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 163 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 163 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 163 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 163 m ""
+ME
+ME
+MB sm 1 tm 160 m initialize(6)
+ME
+MB sm 1 tm 161 m initialize(6)
+ME
+MB sm 1 tm 162 m initialize(6)
+ME
+MB sm 1 tm 163 m initialize(6)
+ME
+MB sm 1 tm 146 m initialize(6)
+ME
+MB sm 1 tm 147 m initialize(6)
+ME
+MB sm 1 tm 173 m initialize(6)
+ME
+MB sm 1 tm 177 m initialize(6)
+ME
+MB sm 1 tm 183 m initialize(6)
+ME
+MB sm 1 tm 155 m initialize(6)
+- INFO (TrafficFlowFilterSimplified)World.pgw.trafficFlowFilter: TrafficFlowFilterSimplified::selectOwnerType - setting owner type to PGW
+ME
+MB sm 1 tm 189 m initialize(6)
+ME
+MB sm 1 tm 157 m initialize(6)
+ME
+MB sm 1 tm 158 m initialize(6)
+ME
+MB sm 1 tm 201 m initialize(6)
+MB sm 201 tm 196 m ""
+ME
+MB sm 201 tm 196 m ""
+ME
+MB sm 201 tm 196 m ""
+ME
+MB sm 201 tm 196 m ""
+ME
+MB sm 201 tm 196 m ""
+ME
+MB sm 201 tm 196 m ""
+ME
+MB sm 201 tm 196 m ""
+ME
+MB sm 201 tm 205 m ""
+ME
+ME
+MB sm 1 tm 202 m initialize(6)
+ME
+MB sm 1 tm 203 m initialize(6)
+ME
+MB sm 1 tm 204 m initialize(6)
+ME
+MB sm 1 tm 205 m initialize(6)
+ME
+MB sm 1 tm 195 m initialize(6)
+ME
+MB sm 1 tm 196 m initialize(6)
+ME
+MB sm 1 tm 211 m initialize(6)
+ME
+MB sm 1 tm 215 m initialize(6)
+ME
+MB sm 1 tm 230 m initialize(6)
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 234 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 234 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 234 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 234 m ""
+ME
+ME
+MB sm 1 tm 231 m initialize(6)
+ME
+MB sm 1 tm 232 m initialize(6)
+ME
+MB sm 1 tm 233 m initialize(6)
+ME
+MB sm 1 tm 234 m initialize(6)
+ME
+MB sm 1 tm 221 m initialize(6)
+ME
+MB sm 1 tm 222 m initialize(6)
+ME
+MB sm 1 tm 242 m initialize(6)
+ME
+MB sm 1 tm 246 m initialize(6)
+ME
+MB sm 1 tm 252 m initialize(6)
+ME
+MB sm 1 tm 3 m initialize(7)
+ME
+MB sm 1 tm 33 m initialize(7)
+ME
+MB sm 1 tm 7 m initialize(7)
+ME
+MB sm 1 tm 8 m initialize(7)
+ME
+MB sm 1 tm 35 m initialize(7)
+ME
+MB sm 1 tm 36 m initialize(7)
+ME
+MB sm 1 tm 37 m initialize(7)
+ME
+MB sm 1 tm 49 m initialize(7)
+ME
+MB sm 1 tm 50 m initialize(7)
+ME
+MB sm 1 tm 59 m initialize(7)
+ME
+MB sm 1 tm 52 m initialize(7)
+ME
+MB sm 1 tm 53 m initialize(7)
+ME
+MB sm 1 tm 55 m initialize(7)
+ME
+MB sm 1 tm 57 m initialize(7)
+ME
+MB sm 1 tm 63 m initialize(7)
+ME
+MB sm 1 tm 69 m initialize(7)
+ME
+MB sm 1 tm 74 m initialize(7)
+- DETAIL (IPv4NodeConfigurator)World.eNodeB[0].networkLayer.configurator: Configuring network interface World.eNodeB[0].wlan.
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+- DETAIL (IPv4NodeConfigurator)World.eNodeB[0].networkLayer.configurator: Configuring network interface World.eNodeB[0].pppIf.
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+- DETAIL (IPv4NodeConfigurator)World.eNodeB[0].networkLayer.configurator: Configuring network interface World.eNodeB[0].x2ppp0.
+MB sm 74 tm 35 m ""
+ME
+MB sm 74 tm 35 m ""
+ME
+ME
+MB sm 1 tm 75 m initialize(7)
+ME
+MB sm 1 tm 76 m initialize(7)
+ME
+MB sm 1 tm 77 m initialize(7)
+CM id 37 tid 37 eid 37 etid 37 c omnetpp::cMessage n "" pe -1
+BS id 37 tid 37 eid 37 etid 37 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 37 tid 37 eid 37 etid 37 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 38
+SH sm 77 sg 7
+ES t 0
+ME
+MB sm 1 tm 78 m initialize(7)
+CM id 39 tid 39 eid 39 etid 39 c omnetpp::cMessage n "" pe -1
+BS id 39 tid 39 eid 39 etid 39 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 39 tid 39 eid 39 etid 39 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 40
+SH sm 78 sg 3
+ES t 0
+ME
+MB sm 1 tm 43 m initialize(7)
+ME
+MB sm 1 tm 88 m initialize(7)
+ME
+MB sm 1 tm 89 m initialize(7)
+ME
+MB sm 1 tm 45 m initialize(7)
+ME
+MB sm 1 tm 46 m initialize(7)
+ME
+MB sm 1 tm 47 m initialize(7)
+ME
+MB sm 1 tm 48 m initialize(7)
+ME
+MB sm 1 tm 90 m initialize(7)
+ME
+MB sm 1 tm 91 m initialize(7)
+ME
+MB sm 1 tm 92 m initialize(7)
+ME
+MB sm 1 tm 104 m initialize(7)
+ME
+MB sm 1 tm 105 m initialize(7)
+ME
+MB sm 1 tm 114 m initialize(7)
+ME
+MB sm 1 tm 107 m initialize(7)
+ME
+MB sm 1 tm 108 m initialize(7)
+ME
+MB sm 1 tm 110 m initialize(7)
+ME
+MB sm 1 tm 112 m initialize(7)
+ME
+MB sm 1 tm 118 m initialize(7)
+ME
+MB sm 1 tm 124 m initialize(7)
+ME
+MB sm 1 tm 129 m initialize(7)
+- DETAIL (IPv4NodeConfigurator)World.eNodeB[1].networkLayer.configurator: Configuring network interface World.eNodeB[1].wlan.
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+- DETAIL (IPv4NodeConfigurator)World.eNodeB[1].networkLayer.configurator: Configuring network interface World.eNodeB[1].pppIf.
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+- DETAIL (IPv4NodeConfigurator)World.eNodeB[1].networkLayer.configurator: Configuring network interface World.eNodeB[1].x2ppp0.
+MB sm 129 tm 90 m ""
+ME
+MB sm 129 tm 90 m ""
+ME
+ME
+MB sm 1 tm 130 m initialize(7)
+ME
+MB sm 1 tm 131 m initialize(7)
+ME
+MB sm 1 tm 132 m initialize(7)
+CM id 41 tid 41 eid 41 etid 41 c omnetpp::cMessage n "" pe -1
+BS id 41 tid 41 eid 41 etid 41 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 41 tid 41 eid 41 etid 41 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 42
+SH sm 132 sg 7
+ES t 0
+ME
+MB sm 1 tm 133 m initialize(7)
+CM id 43 tid 43 eid 43 etid 43 c omnetpp::cMessage n "" pe -1
+BS id 43 tid 43 eid 43 etid 43 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 43 tid 43 eid 43 etid 43 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 44
+SH sm 133 sg 3
+ES t 0
+ME
+MB sm 1 tm 98 m initialize(7)
+ME
+MB sm 1 tm 143 m initialize(7)
+ME
+MB sm 1 tm 144 m initialize(7)
+ME
+MB sm 1 tm 100 m initialize(7)
+ME
+MB sm 1 tm 101 m initialize(7)
+ME
+MB sm 1 tm 102 m initialize(7)
+ME
+MB sm 1 tm 103 m initialize(7)
+ME
+MB sm 1 tm 159 m initialize(7)
+- DETAIL (IPv4NodeConfigurator)World.pgw.networkLayer.configurator: Configuring network interface World.pgw.ppp0.
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+- DETAIL (IPv4NodeConfigurator)World.pgw.networkLayer.configurator: Configuring network interface World.pgw.ppp1.
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+- DETAIL (IPv4NodeConfigurator)World.pgw.networkLayer.configurator: Configuring network interface World.pgw.pppInterface.
+MB sm 159 tm 147 m ""
+ME
+MB sm 159 tm 147 m ""
+ME
+ME
+MB sm 1 tm 160 m initialize(7)
+ME
+MB sm 1 tm 161 m initialize(7)
+ME
+MB sm 1 tm 162 m initialize(7)
+CM id 45 tid 45 eid 45 etid 45 c omnetpp::cMessage n "" pe -1
+BS id 45 tid 45 eid 45 etid 45 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 45 tid 45 eid 45 etid 45 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 46
+SH sm 162 sg 7
+ES t 0
+ME
+MB sm 1 tm 163 m initialize(7)
+CM id 47 tid 47 eid 47 etid 47 c omnetpp::cMessage n "" pe -1
+BS id 47 tid 47 eid 47 etid 47 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 47 tid 47 eid 47 etid 47 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 48
+SH sm 163 sg 3
+ES t 0
+ME
+MB sm 1 tm 146 m initialize(7)
+ME
+MB sm 1 tm 147 m initialize(7)
+ME
+MB sm 1 tm 173 m initialize(7)
+ME
+MB sm 1 tm 177 m initialize(7)
+ME
+MB sm 1 tm 183 m initialize(7)
+ME
+MB sm 1 tm 155 m initialize(7)
+ME
+MB sm 1 tm 189 m initialize(7)
+ME
+MB sm 1 tm 157 m initialize(7)
+ME
+MB sm 1 tm 158 m initialize(7)
+ME
+MB sm 1 tm 201 m initialize(7)
+- DETAIL (IPv4NodeConfigurator)World.server.networkLayer.configurator: Configuring network interface World.server.ppp0.
+MB sm 201 tm 196 m ""
+ME
+MB sm 201 tm 196 m ""
+ME
+ME
+MB sm 1 tm 202 m initialize(7)
+ME
+MB sm 1 tm 203 m initialize(7)
+ME
+MB sm 1 tm 204 m initialize(7)
+CM id 49 tid 49 eid 49 etid 49 c omnetpp::cMessage n "" pe -1
+BS id 49 tid 49 eid 49 etid 49 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 49 tid 49 eid 49 etid 49 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 50
+SH sm 204 sg 7
+ES t 0
+ME
+MB sm 1 tm 205 m initialize(7)
+CM id 51 tid 51 eid 51 etid 51 c omnetpp::cMessage n "" pe -1
+BS id 51 tid 51 eid 51 etid 51 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 51 tid 51 eid 51 etid 51 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 52
+SH sm 205 sg 3
+ES t 0
+ME
+MB sm 1 tm 195 m initialize(7)
+ME
+MB sm 1 tm 196 m initialize(7)
+ME
+MB sm 1 tm 211 m initialize(7)
+ME
+MB sm 1 tm 215 m initialize(7)
+ME
+MB sm 1 tm 230 m initialize(7)
+- DETAIL (IPv4NodeConfigurator)World.router.networkLayer.configurator: Configuring network interface World.router.ppp0.
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+- DETAIL (IPv4NodeConfigurator)World.router.networkLayer.configurator: Configuring network interface World.router.ppp1.
+MB sm 230 tm 222 m ""
+ME
+MB sm 230 tm 222 m ""
+ME
+ME
+MB sm 1 tm 231 m initialize(7)
+ME
+MB sm 1 tm 232 m initialize(7)
+ME
+MB sm 1 tm 233 m initialize(7)
+CM id 53 tid 53 eid 53 etid 53 c omnetpp::cMessage n "" pe -1
+BS id 53 tid 53 eid 53 etid 53 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 53 tid 53 eid 53 etid 53 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 54
+SH sm 233 sg 7
+ES t 0
+ME
+MB sm 1 tm 234 m initialize(7)
+CM id 55 tid 55 eid 55 etid 55 c omnetpp::cMessage n "" pe -1
+BS id 55 tid 55 eid 55 etid 55 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 55 tid 55 eid 55 etid 55 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 56
+SH sm 234 sg 3
+ES t 0
+ME
+MB sm 1 tm 221 m initialize(7)
+ME
+MB sm 1 tm 222 m initialize(7)
+ME
+MB sm 1 tm 242 m initialize(7)
+ME
+MB sm 1 tm 246 m initialize(7)
+ME
+MB sm 1 tm 252 m initialize(7)
+ME
+MB sm 1 tm 3 m initialize(8)
+ME
+MB sm 1 tm 33 m initialize(8)
+ME
+MB sm 1 tm 7 m initialize(8)
+ME
+MB sm 1 tm 8 m initialize(8)
+ME
+MB sm 1 tm 35 m initialize(8)
+ME
+MB sm 1 tm 36 m initialize(8)
+ME
+MB sm 1 tm 37 m initialize(8)
+ME
+MB sm 1 tm 49 m initialize(8)
+ME
+MB sm 1 tm 50 m initialize(8)
+ME
+MB sm 1 tm 59 m initialize(8)
+ME
+MB sm 1 tm 52 m initialize(8)
+ME
+MB sm 1 tm 53 m initialize(8)
+ME
+MB sm 1 tm 55 m initialize(8)
+ME
+MB sm 1 tm 57 m initialize(8)
+ME
+MB sm 1 tm 63 m initialize(8)
+ME
+MB sm 1 tm 69 m initialize(8)
+ME
+MB sm 1 tm 74 m initialize(8)
+- DETAIL (IPv4NodeConfigurator)World.eNodeB[0].networkLayer.configurator: Configuring routing table of World.eNodeB[0].
+MB sm 74 tm 36 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[0].routingTable: add route dest:192.168.0.2  gw:*  mask:255.255.255.255  metric:0 if:pppIf(192.168.0.1)  DIRECT MANUAL
+ME
+MB sm 74 tm 36 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[0].routingTable: add route dest:192.168.1.2  gw:*  mask:255.255.255.255  metric:0 if:x2ppp0(192.168.1.1)  DIRECT MANUAL
+ME
+MB sm 74 tm 36 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[0].routingTable: add route dest:192.168.2.2  gw:192.168.0.2  mask:255.255.255.255  metric:0 if:pppIf(192.168.0.1)  REMOTE MANUAL
+ME
+MB sm 74 tm 36 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[0].routingTable: add route dest:192.168.3.0  gw:192.168.0.2  mask:255.255.255.252  metric:0 if:pppIf(192.168.0.1)  REMOTE MANUAL
+ME
+MB sm 74 tm 36 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[0].routingTable: add route dest:192.168.4.0  gw:192.168.0.2  mask:255.255.255.0  metric:0 if:pppIf(192.168.0.1)  REMOTE MANUAL
+ME
+MB sm 74 tm 36 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[0].routingTable: add route dest:*  gw:192.168.1.2  mask:*  metric:0 if:x2ppp0(192.168.1.1)  REMOTE MANUAL
+ME
+ME
+MB sm 1 tm 75 m initialize(8)
+ME
+MB sm 1 tm 76 m initialize(8)
+ME
+MB sm 1 tm 77 m initialize(8)
+ME
+MB sm 1 tm 78 m initialize(8)
+ME
+MB sm 1 tm 43 m initialize(8)
+ME
+MB sm 1 tm 88 m initialize(8)
+ME
+MB sm 1 tm 89 m initialize(8)
+ME
+MB sm 1 tm 45 m initialize(8)
+ME
+MB sm 1 tm 46 m initialize(8)
+ME
+MB sm 1 tm 47 m initialize(8)
+ME
+MB sm 1 tm 48 m initialize(8)
+ME
+MB sm 1 tm 90 m initialize(8)
+ME
+MB sm 1 tm 91 m initialize(8)
+ME
+MB sm 1 tm 92 m initialize(8)
+ME
+MB sm 1 tm 104 m initialize(8)
+ME
+MB sm 1 tm 105 m initialize(8)
+ME
+MB sm 1 tm 114 m initialize(8)
+ME
+MB sm 1 tm 107 m initialize(8)
+ME
+MB sm 1 tm 108 m initialize(8)
+ME
+MB sm 1 tm 110 m initialize(8)
+ME
+MB sm 1 tm 112 m initialize(8)
+ME
+MB sm 1 tm 118 m initialize(8)
+ME
+MB sm 1 tm 124 m initialize(8)
+ME
+MB sm 1 tm 129 m initialize(8)
+- DETAIL (IPv4NodeConfigurator)World.eNodeB[1].networkLayer.configurator: Configuring routing table of World.eNodeB[1].
+MB sm 129 tm 91 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[1].routingTable: add route dest:192.168.0.2  gw:192.168.2.2  mask:255.255.255.255  metric:0 if:pppIf(192.168.2.1)  REMOTE MANUAL
+ME
+MB sm 129 tm 91 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[1].routingTable: add route dest:192.168.1.1  gw:*  mask:255.255.255.255  metric:0 if:x2ppp0(192.168.1.2)  DIRECT MANUAL
+ME
+MB sm 129 tm 91 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[1].routingTable: add route dest:192.168.2.2  gw:*  mask:255.255.255.255  metric:0 if:pppIf(192.168.2.1)  DIRECT MANUAL
+ME
+MB sm 129 tm 91 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[1].routingTable: add route dest:192.168.3.0  gw:192.168.2.2  mask:255.255.255.252  metric:0 if:pppIf(192.168.2.1)  REMOTE MANUAL
+ME
+MB sm 129 tm 91 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[1].routingTable: add route dest:192.168.4.0  gw:192.168.2.2  mask:255.255.255.0  metric:0 if:pppIf(192.168.2.1)  REMOTE MANUAL
+ME
+MB sm 129 tm 91 m addRoute(...)
+- INFO (IPv4RoutingTable)World.eNodeB[1].routingTable: add route dest:*  gw:192.168.1.1  mask:*  metric:0 if:x2ppp0(192.168.1.2)  REMOTE MANUAL
+ME
+ME
+MB sm 1 tm 130 m initialize(8)
+ME
+MB sm 1 tm 131 m initialize(8)
+ME
+MB sm 1 tm 132 m initialize(8)
+ME
+MB sm 1 tm 133 m initialize(8)
+ME
+MB sm 1 tm 98 m initialize(8)
+ME
+MB sm 1 tm 143 m initialize(8)
+ME
+MB sm 1 tm 144 m initialize(8)
+ME
+MB sm 1 tm 100 m initialize(8)
+ME
+MB sm 1 tm 101 m initialize(8)
+ME
+MB sm 1 tm 102 m initialize(8)
+ME
+MB sm 1 tm 103 m initialize(8)
+ME
+MB sm 1 tm 159 m initialize(8)
+- DETAIL (IPv4NodeConfigurator)World.pgw.networkLayer.configurator: Configuring routing table of World.pgw.
+MB sm 159 tm 146 m addRoute(...)
+- INFO (IPv4RoutingTable)World.pgw.routingTable: add route dest:10.0.0.2  gw:192.168.2.1  mask:255.255.255.255  metric:0 if:ppp1(192.168.2.2)  REMOTE MANUAL
+ME
+MB sm 159 tm 146 m addRoute(...)
+- INFO (IPv4RoutingTable)World.pgw.routingTable: add route dest:192.168.0.1  gw:*  mask:255.255.255.255  metric:0 if:ppp0(192.168.0.2)  DIRECT MANUAL
+ME
+MB sm 159 tm 146 m addRoute(...)
+- INFO (IPv4RoutingTable)World.pgw.routingTable: add route dest:192.168.1.2  gw:192.168.2.1  mask:255.255.255.255  metric:0 if:ppp1(192.168.2.2)  REMOTE MANUAL
+ME
+MB sm 159 tm 146 m addRoute(...)
+- INFO (IPv4RoutingTable)World.pgw.routingTable: add route dest:192.168.2.1  gw:*  mask:255.255.255.255  metric:0 if:ppp1(192.168.2.2)  DIRECT MANUAL
+ME
+MB sm 159 tm 146 m addRoute(...)
+- INFO (IPv4RoutingTable)World.pgw.routingTable: add route dest:192.168.3.2  gw:*  mask:255.255.255.255  metric:0 if:pppInterface(192.168.3.1)  DIRECT MANUAL
+ME
+MB sm 159 tm 146 m addRoute(...)
+- INFO (IPv4RoutingTable)World.pgw.routingTable: add route dest:192.168.4.0  gw:192.168.3.2  mask:255.255.255.0  metric:0 if:pppInterface(192.168.3.1)  REMOTE MANUAL
+ME
+MB sm 159 tm 146 m addRoute(...)
+- INFO (IPv4RoutingTable)World.pgw.routingTable: add route dest:*  gw:192.168.0.1  mask:*  metric:0 if:ppp0(192.168.0.2)  REMOTE MANUAL
+ME
+ME
+MB sm 1 tm 160 m initialize(8)
+ME
+MB sm 1 tm 161 m initialize(8)
+ME
+MB sm 1 tm 162 m initialize(8)
+ME
+MB sm 1 tm 163 m initialize(8)
+ME
+MB sm 1 tm 146 m initialize(8)
+ME
+MB sm 1 tm 147 m initialize(8)
+ME
+MB sm 1 tm 173 m initialize(8)
+ME
+MB sm 1 tm 177 m initialize(8)
+ME
+MB sm 1 tm 183 m initialize(8)
+ME
+MB sm 1 tm 155 m initialize(8)
+ME
+MB sm 1 tm 189 m initialize(8)
+ME
+MB sm 1 tm 157 m initialize(8)
+ME
+MB sm 1 tm 158 m initialize(8)
+ME
+MB sm 1 tm 201 m initialize(8)
+- DETAIL (IPv4NodeConfigurator)World.server.networkLayer.configurator: Configuring routing table of World.server.
+MB sm 201 tm 195 m addRoute(...)
+- INFO (IPv4RoutingTable)World.server.routingTable: add route dest:192.168.4.0  gw:*  mask:255.255.255.0  metric:0 if:ppp0(192.168.4.1)  DIRECT MANUAL
+ME
+MB sm 201 tm 195 m addRoute(...)
+- INFO (IPv4RoutingTable)World.server.routingTable: add route dest:*  gw:192.168.4.2  mask:*  metric:0 if:ppp0(192.168.4.1)  REMOTE MANUAL
+ME
+ME
+MB sm 1 tm 202 m initialize(8)
+ME
+MB sm 1 tm 203 m initialize(8)
+ME
+MB sm 1 tm 204 m initialize(8)
+ME
+MB sm 1 tm 205 m initialize(8)
+ME
+MB sm 1 tm 195 m initialize(8)
+ME
+MB sm 1 tm 196 m initialize(8)
+ME
+MB sm 1 tm 211 m initialize(8)
+ME
+MB sm 1 tm 215 m initialize(8)
+ME
+MB sm 1 tm 230 m initialize(8)
+- DETAIL (IPv4NodeConfigurator)World.router.networkLayer.configurator: Configuring routing table of World.router.
+MB sm 230 tm 221 m addRoute(...)
+- INFO (IPv4RoutingTable)World.router.routingTable: add route dest:192.168.3.1  gw:*  mask:255.255.255.255  metric:0 if:ppp1(192.168.3.2)  DIRECT MANUAL
+ME
+MB sm 230 tm 221 m addRoute(...)
+- INFO (IPv4RoutingTable)World.router.routingTable: add route dest:192.168.4.0  gw:*  mask:255.255.255.0  metric:0 if:ppp0(192.168.4.2)  DIRECT MANUAL
+ME
+MB sm 230 tm 221 m addRoute(...)
+- INFO (IPv4RoutingTable)World.router.routingTable: add route dest:*  gw:192.168.3.1  mask:*  metric:0 if:ppp1(192.168.3.2)  REMOTE MANUAL
+ME
+ME
+MB sm 1 tm 231 m initialize(8)
+ME
+MB sm 1 tm 232 m initialize(8)
+ME
+MB sm 1 tm 233 m initialize(8)
+ME
+MB sm 1 tm 234 m initialize(8)
+ME
+MB sm 1 tm 221 m initialize(8)
+ME
+MB sm 1 tm 222 m initialize(8)
+ME
+MB sm 1 tm 242 m initialize(8)
+ME
+MB sm 1 tm 246 m initialize(8)
+ME
+MB sm 1 tm 252 m initialize(8)
+ME
+MB sm 1 tm 3 m initialize(9)
+ME
+MB sm 1 tm 33 m initialize(9)
+ME
+MB sm 1 tm 7 m initialize(9)
+ME
+MB sm 1 tm 8 m initialize(9)
+ME
+MB sm 1 tm 35 m initialize(9)
+ME
+MB sm 1 tm 36 m initialize(9)
+ME
+MB sm 1 tm 37 m initialize(9)
+ME
+MB sm 1 tm 49 m initialize(9)
+MB sm 49 tm 35 m ""
+ME
+ME
+MB sm 1 tm 50 m initialize(9)
+ME
+MB sm 1 tm 59 m initialize(9)
+ME
+MB sm 1 tm 52 m initialize(9)
+ME
+MB sm 1 tm 53 m initialize(9)
+ME
+MB sm 1 tm 55 m initialize(9)
+MB sm 55 tm 90 m ""
+ME
+ME
+MB sm 1 tm 57 m initialize(9)
+ME
+MB sm 1 tm 63 m initialize(9)
+ME
+MB sm 1 tm 69 m initialize(9)
+ME
+MB sm 1 tm 74 m initialize(9)
+ME
+MB sm 1 tm 75 m initialize(9)
+ME
+MB sm 1 tm 76 m initialize(9)
+ME
+MB sm 1 tm 77 m initialize(9)
+ME
+MB sm 1 tm 78 m initialize(9)
+ME
+MB sm 1 tm 43 m initialize(9)
+CM id 57 tid 57 eid 57 etid 57 c omnetpp::cMessage n "" pe -1
+BS id 57 tid 57 eid 57 etid 57 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 57 tid 57 eid 57 etid 57 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 58
+SH sm 43 sg 7
+SH sm 42 sg 3145728
+ES t 0
+ME
+MB sm 1 tm 88 m initialize(9)
+ME
+MB sm 1 tm 89 m initialize(9)
+ME
+MB sm 1 tm 45 m initialize(9)
+CM id 59 tid 59 eid 59 etid 59 c omnetpp::cMessage n "" pe -1
+BS id 59 tid 59 eid 59 etid 59 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 59 tid 59 eid 59 etid 59 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 60
+SH sm 45 sg 7
+SH sm 42 sg 3145729
+ES t 0
+ME
+MB sm 1 tm 46 m initialize(9)
+ME
+MB sm 1 tm 47 m initialize(9)
+ME
+MB sm 1 tm 48 m initialize(9)
+ME
+MB sm 1 tm 90 m initialize(9)
+ME
+MB sm 1 tm 91 m initialize(9)
+ME
+MB sm 1 tm 92 m initialize(9)
+ME
+MB sm 1 tm 104 m initialize(9)
+MB sm 104 tm 90 m ""
+ME
+ME
+MB sm 1 tm 105 m initialize(9)
+ME
+MB sm 1 tm 114 m initialize(9)
+ME
+MB sm 1 tm 107 m initialize(9)
+ME
+MB sm 1 tm 108 m initialize(9)
+ME
+MB sm 1 tm 110 m initialize(9)
+MB sm 110 tm 35 m ""
+ME
+ME
+MB sm 1 tm 112 m initialize(9)
+ME
+MB sm 1 tm 118 m initialize(9)
+ME
+MB sm 1 tm 124 m initialize(9)
+ME
+MB sm 1 tm 129 m initialize(9)
+ME
+MB sm 1 tm 130 m initialize(9)
+ME
+MB sm 1 tm 131 m initialize(9)
+ME
+MB sm 1 tm 132 m initialize(9)
+ME
+MB sm 1 tm 133 m initialize(9)
+ME
+MB sm 1 tm 98 m initialize(9)
+CM id 61 tid 61 eid 61 etid 61 c omnetpp::cMessage n "" pe -1
+BS id 61 tid 61 eid 61 etid 61 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 61 tid 61 eid 61 etid 61 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 62
+SH sm 98 sg 7
+SH sm 97 sg 3145728
+ES t 0
+ME
+MB sm 1 tm 143 m initialize(9)
+ME
+MB sm 1 tm 144 m initialize(9)
+ME
+MB sm 1 tm 100 m initialize(9)
+CM id 63 tid 63 eid 63 etid 63 c omnetpp::cMessage n "" pe -1
+BS id 63 tid 63 eid 63 etid 63 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 63 tid 63 eid 63 etid 63 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 64
+SH sm 100 sg 7
+SH sm 97 sg 3145729
+ES t 0
+ME
+MB sm 1 tm 101 m initialize(9)
+ME
+MB sm 1 tm 102 m initialize(9)
+ME
+MB sm 1 tm 103 m initialize(9)
+ME
+MB sm 1 tm 159 m initialize(9)
+ME
+MB sm 1 tm 160 m initialize(9)
+ME
+MB sm 1 tm 161 m initialize(9)
+ME
+MB sm 1 tm 162 m initialize(9)
+ME
+MB sm 1 tm 163 m initialize(9)
+ME
+MB sm 1 tm 146 m initialize(9)
+ME
+MB sm 1 tm 147 m initialize(9)
+ME
+MB sm 1 tm 173 m initialize(9)
+ME
+MB sm 1 tm 177 m initialize(9)
+ME
+MB sm 1 tm 183 m initialize(9)
+ME
+MB sm 1 tm 155 m initialize(9)
+ME
+MB sm 1 tm 189 m initialize(9)
+ME
+MB sm 1 tm 157 m initialize(9)
+CM id 65 tid 65 eid 65 etid 65 c omnetpp::cMessage n "" pe -1
+BS id 65 tid 65 eid 65 etid 65 c inet::RegisterTransportProtocolCommand n "" pe 0
+CL id 65 tid 65 eid 65 etid 65 c inet::RegisterTransportProtocolCommand n "" pe 0 cid 66
+SH sm 157 sg 7
+SH sm 145 sg 3145728
+ES t 0
+ME
+MB sm 1 tm 158 m initialize(9)
+ME
+MB sm 1 tm 201 m initialize(9)
+ME
+MB sm 1 tm 202 m initialize(9)
+ME
+MB sm 1 tm 203 m initialize(9)
+ME
+MB sm 1 tm 204 m initialize(9)
+ME
+MB sm 1 tm 205 m initialize(9)
+ME
+MB sm 1 tm 195 m initialize(9)
+ME
+MB sm 1 tm 196 m initialize(9)
+ME
+MB sm 1 tm 211 m initialize(9)
+ME
+MB sm 1 tm 215 m initialize(9)
+ME
+MB sm 1 tm 230 m initialize(9)
+ME
+MB sm 1 tm 231 m initialize(9)
+ME
+MB sm 1 tm 232 m initialize(9)
+ME
+MB sm 1 tm 233 m initialize(9)
+ME
+MB sm 1 tm 234 m initialize(9)
+ME
+MB sm 1 tm 221 m initialize(9)
+ME
+MB sm 1 tm 222 m initialize(9)
+ME
+MB sm 1 tm 242 m initialize(9)
+ME
+MB sm 1 tm 246 m initialize(9)
+ME
+MB sm 1 tm 252 m initialize(9)
+ME
+MB sm 1 tm 3 m initialize(10)
+ME
+MB sm 1 tm 33 m initialize(10)
+ME
+MB sm 1 tm 7 m initialize(10)
+ME
+MB sm 1 tm 8 m initialize(10)
+ME
+MB sm 1 tm 35 m initialize(10)
+ME
+MB sm 1 tm 36 m initialize(10)
+ME
+MB sm 1 tm 37 m initialize(10)
+ME
+MB sm 1 tm 49 m initialize(10)
+ME
+MB sm 1 tm 50 m initialize(10)
+ME
+MB sm 1 tm 59 m initialize(10)
+ME
+MB sm 1 tm 52 m initialize(10)
+ME
+MB sm 1 tm 53 m initialize(10)
+ME
+MB sm 1 tm 55 m initialize(10)
+ME
+MB sm 1 tm 57 m initialize(10)
+ME
+MB sm 1 tm 63 m initialize(10)
+ME
+MB sm 1 tm 69 m initialize(10)
+ME
+MB sm 1 tm 74 m initialize(10)
+ME
+MB sm 1 tm 75 m initialize(10)
+ME
+MB sm 1 tm 76 m initialize(10)
+ME
+MB sm 1 tm 77 m initialize(10)
+ME
+MB sm 1 tm 78 m initialize(10)
+ME
+MB sm 1 tm 43 m initialize(10)
+ME
+MB sm 1 tm 88 m initialize(10)
+ME
+MB sm 1 tm 89 m initialize(10)
+ME
+MB sm 1 tm 45 m initialize(10)
+ME
+MB sm 1 tm 46 m initialize(10)
+ME
+MB sm 1 tm 47 m initialize(10)
+ME
+MB sm 1 tm 48 m initialize(10)
+ME
+MB sm 1 tm 90 m initialize(10)
+ME
+MB sm 1 tm 91 m initialize(10)
+ME
+MB sm 1 tm 92 m initialize(10)
+ME
+MB sm 1 tm 104 m initialize(10)
+ME
+MB sm 1 tm 105 m initialize(10)
+ME
+MB sm 1 tm 114 m initialize(10)
+ME
+MB sm 1 tm 107 m initialize(10)
+ME
+MB sm 1 tm 108 m initialize(10)
+ME
+MB sm 1 tm 110 m initialize(10)
+ME
+MB sm 1 tm 112 m initialize(10)
+ME
+MB sm 1 tm 118 m initialize(10)
+ME
+MB sm 1 tm 124 m initialize(10)
+ME
+MB sm 1 tm 129 m initialize(10)
+ME
+MB sm 1 tm 130 m initialize(10)
+ME
+MB sm 1 tm 131 m initialize(10)
+ME
+MB sm 1 tm 132 m initialize(10)
+ME
+MB sm 1 tm 133 m initialize(10)
+ME
+MB sm 1 tm 98 m initialize(10)
+ME
+MB sm 1 tm 143 m initialize(10)
+ME
+MB sm 1 tm 144 m initialize(10)
+ME
+MB sm 1 tm 100 m initialize(10)
+ME
+MB sm 1 tm 101 m initialize(10)
+ME
+MB sm 1 tm 102 m initialize(10)
+ME
+MB sm 1 tm 103 m initialize(10)
+ME
+MB sm 1 tm 159 m initialize(10)
+ME
+MB sm 1 tm 160 m initialize(10)
+ME
+MB sm 1 tm 161 m initialize(10)
+ME
+MB sm 1 tm 162 m initialize(10)
+ME
+MB sm 1 tm 163 m initialize(10)
+ME
+MB sm 1 tm 146 m initialize(10)
+ME
+MB sm 1 tm 147 m initialize(10)
+ME
+MB sm 1 tm 173 m initialize(10)
+ME
+MB sm 1 tm 177 m initialize(10)
+ME
+MB sm 1 tm 183 m initialize(10)
+ME
+MB sm 1 tm 155 m initialize(10)
+ME
+MB sm 1 tm 189 m initialize(10)
+ME
+MB sm 1 tm 157 m initialize(10)
+ME
+MB sm 1 tm 158 m initialize(10)
+ME
+MB sm 1 tm 201 m initialize(10)
+ME
+MB sm 1 tm 202 m initialize(10)
+ME
+MB sm 1 tm 203 m initialize(10)
+ME
+MB sm 1 tm 204 m initialize(10)
+ME
+MB sm 1 tm 205 m initialize(10)
+ME
+MB sm 1 tm 195 m initialize(10)
+ME
+MB sm 1 tm 196 m initialize(10)
+ME
+MB sm 1 tm 211 m initialize(10)
+ME
+MB sm 1 tm 215 m initialize(10)
+ME
+MB sm 1 tm 230 m initialize(10)
+ME
+MB sm 1 tm 231 m initialize(10)
+ME
+MB sm 1 tm 232 m initialize(10)
+ME
+MB sm 1 tm 233 m initialize(10)
+ME
+MB sm 1 tm 234 m initialize(10)
+ME
+MB sm 1 tm 221 m initialize(10)
+ME
+MB sm 1 tm 222 m initialize(10)
+ME
+MB sm 1 tm 242 m initialize(10)
+ME
+MB sm 1 tm 246 m initialize(10)
+ME
+MB sm 1 tm 252 m initialize(10)
+ME
+MB sm 1 tm 3 m initialize(11)
+ME
+MB sm 1 tm 33 m initialize(11)
+ME
+MB sm 1 tm 7 m initialize(11)
+ME
+MB sm 1 tm 8 m initialize(11)
+ME
+MB sm 1 tm 35 m initialize(11)
+ME
+MB sm 1 tm 36 m initialize(11)
+ME
+MB sm 1 tm 37 m initialize(11)
+ME
+MB sm 1 tm 49 m initialize(11)
+ME
+MB sm 1 tm 50 m initialize(11)
+ME
+MB sm 1 tm 59 m initialize(11)
+ME
+MB sm 1 tm 52 m initialize(11)
+ME
+MB sm 1 tm 53 m initialize(11)
+ME
+MB sm 1 tm 55 m initialize(11)
+ME
+MB sm 1 tm 57 m initialize(11)
+ME
+MB sm 1 tm 63 m initialize(11)
+ME
+MB sm 1 tm 69 m initialize(11)
+ME
+MB sm 1 tm 74 m initialize(11)
+ME
+MB sm 1 tm 75 m initialize(11)
+ME
+MB sm 1 tm 76 m initialize(11)
+ME
+MB sm 1 tm 77 m initialize(11)
+ME
+MB sm 1 tm 78 m initialize(11)
+ME
+MB sm 1 tm 43 m initialize(11)
+ME
+MB sm 1 tm 88 m initialize(11)
+ME
+MB sm 1 tm 89 m initialize(11)
+ME
+MB sm 1 tm 45 m initialize(11)
+ME
+MB sm 1 tm 46 m initialize(11)
+ME
+MB sm 1 tm 47 m initialize(11)
+ME
+MB sm 1 tm 48 m initialize(11)
+ME
+MB sm 1 tm 90 m initialize(11)
+ME
+MB sm 1 tm 91 m initialize(11)
+ME
+MB sm 1 tm 92 m initialize(11)
+ME
+MB sm 1 tm 104 m initialize(11)
+ME
+MB sm 1 tm 105 m initialize(11)
+ME
+MB sm 1 tm 114 m initialize(11)
+ME
+MB sm 1 tm 107 m initialize(11)
+ME
+MB sm 1 tm 108 m initialize(11)
+ME
+MB sm 1 tm 110 m initialize(11)
+ME
+MB sm 1 tm 112 m initialize(11)
+ME
+MB sm 1 tm 118 m initialize(11)
+ME
+MB sm 1 tm 124 m initialize(11)
+ME
+MB sm 1 tm 129 m initialize(11)
+ME
+MB sm 1 tm 130 m initialize(11)
+ME
+MB sm 1 tm 131 m initialize(11)
+ME
+MB sm 1 tm 132 m initialize(11)
+ME
+MB sm 1 tm 133 m initialize(11)
+ME
+MB sm 1 tm 98 m initialize(11)
+ME
+MB sm 1 tm 143 m initialize(11)
+ME
+MB sm 1 tm 144 m initialize(11)
+ME
+MB sm 1 tm 100 m initialize(11)
+ME
+MB sm 1 tm 101 m initialize(11)
+ME
+MB sm 1 tm 102 m initialize(11)
+ME
+MB sm 1 tm 103 m initialize(11)
+ME
+MB sm 1 tm 159 m initialize(11)
+ME
+MB sm 1 tm 160 m initialize(11)
+ME
+MB sm 1 tm 161 m initialize(11)
+ME
+MB sm 1 tm 162 m initialize(11)
+ME
+MB sm 1 tm 163 m initialize(11)
+ME
+MB sm 1 tm 146 m initialize(11)
+ME
+MB sm 1 tm 147 m initialize(11)
+ME
+MB sm 1 tm 173 m initialize(11)
+ME
+MB sm 1 tm 177 m initialize(11)
+ME
+MB sm 1 tm 183 m initialize(11)
+ME
+MB sm 1 tm 155 m initialize(11)
+ME
+MB sm 1 tm 189 m initialize(11)
+ME
+MB sm 1 tm 157 m initialize(11)
+ME
+MB sm 1 tm 158 m initialize(11)
+ME
+MB sm 1 tm 201 m initialize(11)
+ME
+MB sm 1 tm 202 m initialize(11)
+ME
+MB sm 1 tm 203 m initialize(11)
+ME
+MB sm 1 tm 204 m initialize(11)
+ME
+MB sm 1 tm 205 m initialize(11)
+ME
+MB sm 1 tm 195 m initialize(11)
+ME
+MB sm 1 tm 196 m initialize(11)
+ME
+MB sm 1 tm 211 m initialize(11)
+ME
+MB sm 1 tm 215 m initialize(11)
+ME
+MB sm 1 tm 230 m initialize(11)
+ME
+MB sm 1 tm 231 m initialize(11)
+ME
+MB sm 1 tm 232 m initialize(11)
+ME
+MB sm 1 tm 233 m initialize(11)
+ME
+MB sm 1 tm 234 m initialize(11)
+ME
+MB sm 1 tm 221 m initialize(11)
+ME
+MB sm 1 tm 222 m initialize(11)
+ME
+MB sm 1 tm 242 m initialize(11)
+ME
+MB sm 1 tm 246 m initialize(11)
+ME
+MB sm 1 tm 252 m initialize(11)
+ME
+MB sm 1 tm 3 m initialize(12)
+ME
+MB sm 1 tm 33 m initialize(12)
+ME
+MB sm 1 tm 7 m initialize(12)
+ME
+MB sm 1 tm 8 m initialize(12)
+ME
+MB sm 1 tm 35 m initialize(12)
+ME
+MB sm 1 tm 36 m initialize(12)
+ME
+MB sm 1 tm 37 m initialize(12)
+ME
+MB sm 1 tm 49 m initialize(12)
+ME
+MB sm 1 tm 50 m initialize(12)
+ME
+MB sm 1 tm 59 m initialize(12)
+ME
+MB sm 1 tm 52 m initialize(12)
+ME
+MB sm 1 tm 53 m initialize(12)
+ME
+MB sm 1 tm 55 m initialize(12)
+ME
+MB sm 1 tm 57 m initialize(12)
+ME
+MB sm 1 tm 63 m initialize(12)
+ME
+MB sm 1 tm 69 m initialize(12)
+ME
+MB sm 1 tm 74 m initialize(12)
+ME
+MB sm 1 tm 75 m initialize(12)
+ME
+MB sm 1 tm 76 m initialize(12)
+ME
+MB sm 1 tm 77 m initialize(12)
+ME
+MB sm 1 tm 78 m initialize(12)
+ME
+MB sm 1 tm 43 m initialize(12)
+ME
+MB sm 1 tm 88 m initialize(12)
+CM id 67 tid 67 eid 67 etid 67 c omnetpp::cMessage n GetSocketOptions k 22 pe -1
+CM id 68 tid 68 eid 68 etid 68 c omnetpp::cMessage n getOptions pe -1
+BS id 67 tid 67 eid 67 etid 67 c omnetpp::cPacket n GetSocketOptions k 22 pe 0
+CL id 67 tid 67 eid 67 etid 67 c omnetpp::cPacket n GetSocketOptions k 22 pe 0 cid 69
+SH sm 88 sg 3
+SH sm 44 sg 2621440
+ES t 0
+MB sm 88 tm 90 m ""
+ME
+ME
+MB sm 1 tm 89 m initialize(12)
+- INFO (X2AppServer)World.eNodeB[0].x2App[0].server: sockstate=NOT_BOUND
+CM id 70 tid 70 eid 70 etid 70 c omnetpp::cMessage n GetSocketOptions k 22 pe -1
+CM id 71 tid 71 eid 71 etid 71 c omnetpp::cMessage n getOptions pe -1
+BS id 70 tid 70 eid 70 etid 70 c omnetpp::cPacket n GetSocketOptions k 22 pe 0
+CL id 70 tid 70 eid 70 etid 70 c omnetpp::cPacket n GetSocketOptions k 22 pe 0 cid 72
+SH sm 89 sg 3
+SH sm 44 sg 2621441
+ES t 0
+CM id 73 tid 73 eid 73 etid 73 c omnetpp::cMessage n "" pe -1
+- INFO (X2AppServer)World.eNodeB[0].x2App[0].server: Assoc 3: PassiveOPEN to SCTP from SCTPSocket:listen()
+CM id 74 tid 74 eid 74 etid 74 c omnetpp::cMessage n PassiveOPEN k 2 pe -1
+BS id 74 tid 74 eid 74 etid 74 c omnetpp::cMessage n PassiveOPEN k 2 pe 0
+CL id 74 tid 74 eid 74 etid 74 c omnetpp::cMessage n PassiveOPEN k 2 pe 0 cid 75
+SH sm 89 sg 3
+SH sm 44 sg 2621441
+ES t 0
+- INFO (X2AppServer)World.eNodeB[0].x2App[0].server: SCTPServer::initialized listen port=5000
+ME
+MB sm 1 tm 45 m initialize(12)
+ME
+MB sm 1 tm 46 m initialize(12)
+ME
+MB sm 1 tm 47 m initialize(12)
+CM id 76 tid 76 eid 76 etid 76 c omnetpp::cMessage n BIND k 1 pe -1
+BS id 76 tid 76 eid 76 etid 76 c omnetpp::cMessage n BIND k 1 pe 0
+CL id 76 tid 76 eid 76 etid 76 c omnetpp::cMessage n BIND k 1 pe 0 cid 77
+SH sm 47 sg 1
+ES t 0
+- INFO (GtpUserSimplified)World.eNodeB[0].gtpUser: GtpUserSimplified::selectOwnerType - setting owner type to ENODEB
+ME
+MB sm 1 tm 48 m initialize(12)
+CM id 78 tid 78 eid 78 etid 78 c omnetpp::cMessage n BIND k 1 pe -1
+BS id 78 tid 78 eid 78 etid 78 c omnetpp::cMessage n BIND k 1 pe 0
+CL id 78 tid 78 eid 78 etid 78 c omnetpp::cMessage n BIND k 1 pe 0 cid 79
+SH sm 48 sg 1
+ES t 0
+ME
+MB sm 1 tm 90 m initialize(12)
+ME
+MB sm 1 tm 91 m initialize(12)
+ME
+MB sm 1 tm 92 m initialize(12)
+ME
+MB sm 1 tm 104 m initialize(12)
+ME
+MB sm 1 tm 105 m initialize(12)
+ME
+MB sm 1 tm 114 m initialize(12)
+ME
+MB sm 1 tm 107 m initialize(12)
+ME
+MB sm 1 tm 108 m initialize(12)
+ME
+MB sm 1 tm 110 m initialize(12)
+ME
+MB sm 1 tm 112 m initialize(12)
+ME
+MB sm 1 tm 118 m initialize(12)
+ME
+MB sm 1 tm 124 m initialize(12)
+ME
+MB sm 1 tm 129 m initialize(12)
+ME
+MB sm 1 tm 130 m initialize(12)
+ME
+MB sm 1 tm 131 m initialize(12)
+ME
+MB sm 1 tm 132 m initialize(12)
+ME
+MB sm 1 tm 133 m initialize(12)
+ME
+MB sm 1 tm 98 m initialize(12)
+ME
+MB sm 1 tm 143 m initialize(12)
+CM id 80 tid 80 eid 80 etid 80 c omnetpp::cMessage n GetSocketOptions k 22 pe -1
+CM id 81 tid 81 eid 81 etid 81 c omnetpp::cMessage n getOptions pe -1
+BS id 80 tid 80 eid 80 etid 80 c omnetpp::cPacket n GetSocketOptions k 22 pe 0
+CL id 80 tid 80 eid 80 etid 80 c omnetpp::cPacket n GetSocketOptions k 22 pe 0 cid 82
+SH sm 143 sg 3
+SH sm 99 sg 2621440
+ES t 0
+MB sm 143 tm 35 m ""
+ME
+ME
+MB sm 1 tm 144 m initialize(12)
+- INFO (X2AppServer)World.eNodeB[1].x2App[0].server: sockstate=NOT_BOUND
+CM id 83 tid 83 eid 83 etid 83 c omnetpp::cMessage n GetSocketOptions k 22 pe -1
+CM id 84 tid 84 eid 84 etid 84 c omnetpp::cMessage n getOptions pe -1
+BS id 83 tid 83 eid 83 etid 83 c omnetpp::cPacket n GetSocketOptions k 22 pe 0
+CL id 83 tid 83 eid 83 etid 83 c omnetpp::cPacket n GetSocketOptions k 22 pe 0 cid 85
+SH sm 144 sg 3
+SH sm 99 sg 2621441
+ES t 0
+CM id 86 tid 86 eid 86 etid 86 c omnetpp::cMessage n "" pe -1
+- INFO (X2AppServer)World.eNodeB[1].x2App[0].server: Assoc 4: PassiveOPEN to SCTP from SCTPSocket:listen()
+CM id 87 tid 87 eid 87 etid 87 c omnetpp::cMessage n PassiveOPEN k 2 pe -1
+BS id 87 tid 87 eid 87 etid 87 c omnetpp::cMessage n PassiveOPEN k 2 pe 0
+CL id 87 tid 87 eid 87 etid 87 c omnetpp::cMessage n PassiveOPEN k 2 pe 0 cid 88
+SH sm 144 sg 3
+SH sm 99 sg 2621441
+ES t 0
+- INFO (X2AppServer)World.eNodeB[1].x2App[0].server: SCTPServer::initialized listen port=5000
+ME
+MB sm 1 tm 100 m initialize(12)
+ME
+MB sm 1 tm 101 m initialize(12)
+ME
+MB sm 1 tm 102 m initialize(12)
+CM id 89 tid 89 eid 89 etid 89 c omnetpp::cMessage n BIND k 1 pe -1
+BS id 89 tid 89 eid 89 etid 89 c omnetpp::cMessage n BIND k 1 pe 0
+CL id 89 tid 89 eid 89 etid 89 c omnetpp::cMessage n BIND k 1 pe 0 cid 90
+SH sm 102 sg 1
+ES t 0
+- INFO (GtpUserSimplified)World.eNodeB[1].gtpUser: GtpUserSimplified::selectOwnerType - setting owner type to ENODEB
+ME
+MB sm 1 tm 103 m initialize(12)
+CM id 91 tid 91 eid 91 etid 91 c omnetpp::cMessage n BIND k 1 pe -1
+BS id 91 tid 91 eid 91 etid 91 c omnetpp::cMessage n BIND k 1 pe 0
+CL id 91 tid 91 eid 91 etid 91 c omnetpp::cMessage n BIND k 1 pe 0 cid 92
+SH sm 103 sg 1
+ES t 0
+ME
+MB sm 1 tm 159 m initialize(12)
+ME
+MB sm 1 tm 160 m initialize(12)
+ME
+MB sm 1 tm 161 m initialize(12)
+ME
+MB sm 1 tm 162 m initialize(12)
+ME
+MB sm 1 tm 163 m initialize(12)
+ME
+MB sm 1 tm 146 m initialize(12)
+ME
+MB sm 1 tm 147 m initialize(12)
+ME
+MB sm 1 tm 173 m initialize(12)
+ME
+MB sm 1 tm 177 m initialize(12)
+ME
+MB sm 1 tm 183 m initialize(12)
+ME
+MB sm 1 tm 155 m initialize(12)
+ME
+MB sm 1 tm 189 m initialize(12)
+ME
+MB sm 1 tm 157 m initialize(12)
+ME
+MB sm 1 tm 158 m initialize(12)
+CM id 93 tid 93 eid 93 etid 93 c omnetpp::cMessage n BIND k 1 pe -1
+BS id 93 tid 93 eid 93 etid 93 c omnetpp::cMessage n BIND k 1 pe 0
+CL id 93 tid 93 eid 93 etid 93 c omnetpp::cMessage n BIND k 1 pe 0 cid 94
+SH sm 158 sg 1
+ES t 0
+- INFO (GtpUserSimplified)World.pgw.gtp_user: GtpUserSimplified::selectOwnerType - setting owner type to PGW
+ME
+MB sm 1 tm 201 m initialize(12)
+ME
+MB sm 1 tm 202 m initialize(12)
+ME
+MB sm 1 tm 203 m initialize(12)
+ME
+MB sm 1 tm 204 m initialize(12)
+ME
+MB sm 1 tm 205 m initialize(12)
+ME
+MB sm 1 tm 195 m initialize(12)
+ME
+MB sm 1 tm 196 m initialize(12)
+ME
+MB sm 1 tm 211 m initialize(12)
+ME
+MB sm 1 tm 215 m initialize(12)
+ME
+MB sm 1 tm 230 m initialize(12)
+ME
+MB sm 1 tm 231 m initialize(12)
+ME
+MB sm 1 tm 232 m initialize(12)
+ME
+MB sm 1 tm 233 m initialize(12)
+ME
+MB sm 1 tm 234 m initialize(12)
+ME
+MB sm 1 tm 221 m initialize(12)
+ME
+MB sm 1 tm 222 m initialize(12)
+ME
+MB sm 1 tm 242 m initialize(12)
+ME
+MB sm 1 tm 246 m initialize(12)
+ME
+MB sm 1 tm 252 m initialize(12)
+ME
+MB sm 1 tm 3 m initialize(13)
+- INFO (Ieee80211ScalarRadioMedium)World.radioMedium: Initialized (inet::physicallayer::RadioMedium)radioMedium, propagation = { ConstantSpeedPropagation, ignoreMovementDuringTransmission = 1, ignoreMovementDuringPropagation = 1, ignoreMovementDuringReception = 1, propagationSpeed = 2.99792e+08 mps }, pathLoss = { FreeSpacePathLoss, alpha = 2, systemLoss = 1 }, analogModel = { ScalarAnalogModel }, obstacleLoss = nullptr, backgroundNoise = { IsotropicScalarBackgroundNoise, power = 1e-14 W }, mediumLimitCache = { RadioMediumLimits, minConstraintArea = (nan, nan, nan), maxConstraintArea = (nan, nan, nan), maxSpeed = nan mps, maxTransmissionPower = nan W, minInterferencePower = nan W, minReceptionPower = nan W, maxAntennaGain = nan, minInterferenceTime = -9223372.036854775808, maxTransmissionDuration = -9223372.036854775808, maxCommunicationRange = nan m, maxInterferenceRange = nan m }, neighborCache = nullptr, communicationCache = { VectorCommunicationCache }
+ME
+MB sm 1 tm 33 m initialize(13)
+ME
+MB sm 1 tm 8 m initialize(13)
+ME
+MB sm 1 tm 35 m initialize(13)
+ME
+MB sm 1 tm 36 m initialize(13)
+ME
+MB sm 1 tm 37 m initialize(13)
+ME
+MB sm 1 tm 50 m initialize(13)
+ME
+MB sm 1 tm 59 m initialize(13)
+ME
+MB sm 1 tm 52 m initialize(13)
+ME
+MB sm 1 tm 53 m initialize(13)
+ME
+MB sm 1 tm 55 m initialize(13)
+ME
+MB sm 1 tm 57 m initialize(13)
+ME
+MB sm 1 tm 63 m initialize(13)
+ME
+MB sm 1 tm 69 m initialize(13)
+ME
+MB sm 1 tm 74 m initialize(13)
+ME
+MB sm 1 tm 75 m initialize(13)
+ME
+MB sm 1 tm 76 m initialize(13)
+ME
+MB sm 1 tm 77 m initialize(13)
+ME
+MB sm 1 tm 78 m initialize(13)
+ME
+MB sm 1 tm 43 m initialize(13)
+ME
+MB sm 1 tm 88 m initialize(13)
+ME
+MB sm 1 tm 89 m initialize(13)
+ME
+MB sm 1 tm 45 m initialize(13)
+ME
+MB sm 1 tm 46 m initialize(13)
+ME
+MB sm 1 tm 47 m initialize(13)
+ME
+MB sm 1 tm 48 m initialize(13)
+ME
+MB sm 1 tm 90 m initialize(13)
+ME
+MB sm 1 tm 91 m initialize(13)
+ME
+MB sm 1 tm 92 m initialize(13)
+ME
+MB sm 1 tm 105 m initialize(13)
+ME
+MB sm 1 tm 114 m initialize(13)
+ME
+MB sm 1 tm 107 m initialize(13)
+ME
+MB sm 1 tm 108 m initialize(13)
+ME
+MB sm 1 tm 110 m initialize(13)
+ME
+MB sm 1 tm 112 m initialize(13)
+ME
+MB sm 1 tm 118 m initialize(13)
+ME
+MB sm 1 tm 124 m initialize(13)
+ME
+MB sm 1 tm 129 m initialize(13)
+ME
+MB sm 1 tm 130 m initialize(13)
+ME
+MB sm 1 tm 131 m initialize(13)
+ME
+MB sm 1 tm 132 m initialize(13)
+ME
+MB sm 1 tm 133 m initialize(13)
+ME
+MB sm 1 tm 98 m initialize(13)
+ME
+MB sm 1 tm 143 m initialize(13)
+ME
+MB sm 1 tm 144 m initialize(13)
+ME
+MB sm 1 tm 100 m initialize(13)
+ME
+MB sm 1 tm 101 m initialize(13)
+ME
+MB sm 1 tm 102 m initialize(13)
+ME
+MB sm 1 tm 103 m initialize(13)
+ME
+MB sm 1 tm 159 m initialize(13)
+ME
+MB sm 1 tm 160 m initialize(13)
+ME
+MB sm 1 tm 161 m initialize(13)
+ME
+MB sm 1 tm 162 m initialize(13)
+ME
+MB sm 1 tm 163 m initialize(13)
+ME
+MB sm 1 tm 146 m initialize(13)
+ME
+MB sm 1 tm 147 m initialize(13)
+ME
+MB sm 1 tm 173 m initialize(13)
+ME
+MB sm 1 tm 177 m initialize(13)
+ME
+MB sm 1 tm 183 m initialize(13)
+ME
+MB sm 1 tm 155 m initialize(13)
+ME
+MB sm 1 tm 189 m initialize(13)
+ME
+MB sm 1 tm 157 m initialize(13)
+ME
+MB sm 1 tm 158 m initialize(13)
+ME
+MB sm 1 tm 201 m initialize(13)
+ME
+MB sm 1 tm 202 m initialize(13)
+ME
+MB sm 1 tm 203 m initialize(13)
+ME
+MB sm 1 tm 204 m initialize(13)
+ME
+MB sm 1 tm 205 m initialize(13)
+ME
+MB sm 1 tm 195 m initialize(13)
+ME
+MB sm 1 tm 196 m initialize(13)
+ME
+MB sm 1 tm 211 m initialize(13)
+ME
+MB sm 1 tm 215 m initialize(13)
+ME
+MB sm 1 tm 230 m initialize(13)
+ME
+MB sm 1 tm 231 m initialize(13)
+ME
+MB sm 1 tm 232 m initialize(13)
+ME
+MB sm 1 tm 233 m initialize(13)
+ME
+MB sm 1 tm 234 m initialize(13)
+ME
+MB sm 1 tm 221 m initialize(13)
+ME
+MB sm 1 tm 222 m initialize(13)
+ME
+MB sm 1 tm 242 m initialize(13)
+ME
+MB sm 1 tm 246 m initialize(13)
+ME
+MB sm 1 tm 252 m initialize(13)
+ME
+MS id 35 d "t=3 interfaces;is=s;p=50,75;i=block/table"
+MS id 36 d "t=routerId: 192.168.1.1\n9+0 routes;is=s;p=50,125;i=block/table"
+MS id 62 d "t=q rcvd: 0\nq dropped: 0;q=l2queue;p=42,161;i=block/queue"
+MS id 63 d "t=10Gbps\nrcv:0 snt:0;p=98,207;i=block/rxtx"
+MS id 68 d "t=q rcvd: 0\nq dropped: 0;q=l2queue;p=42,161;i=block/queue"
+MS id 69 d "t=10Gbps\nrcv:0 snt:0

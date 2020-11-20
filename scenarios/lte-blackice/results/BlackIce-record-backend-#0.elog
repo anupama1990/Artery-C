@@ -1,0 +1,435 @@
+E # 0 t 0 m 1 ce -1 msg -1
+SB v 1285 rid BlackIce-record-backend-0-20191224-15:12:43-16917 b 1000
+KF p -1 c "" s ""
+MC id 1 c omnetpp::cModule t artery.lte.World n World cm 1
+MS id 1 d ""
+MC id 2 c omnetpp::cModule t traci.Manager pid 1 n traci cm 1
+MS id 2 d p=20,20;i=block/network2;is=s
+MC id 3 c inet::physicallayer::RadioMedium t inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium pid 1 n radioMedium cm 1
+MS id 3 d p=60,20;i=misc/sun_s
+MC id 4 c artery::Storyboard t artery.storyboard.Storyboard pid 1 n storyboard
+MS id 4 d p=140,20;i=block/blackboard;is=s
+CM id 0 tid 0 eid 0 etid 0 c omnetpp::cMessage n "insert static node" pe -1
+MC id 5 c artery::StaticNodeManager t artery.StaticNodeManager pid 1 n staticNodes
+MS id 5 d p=20,40;i=block/network2;is=s
+MC id 6 c LteChannelControl t lte.world.radio.LteChannelControl pid 1 n channelControl
+MS id 6 d p=140,20;i=misc/sun
+MC id 7 c LteBinder t lte.corenetwork.binder.LteBinder pid 1 n binder
+MS id 7 d p=140,60;i=block/cogwheel
+MC id 8 c inet::IPv4NetworkConfigurator t inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator pid 1 n configurator
+MS id 8 d p=60,60;i=block/cogwheel_s
+MC id 9 c omnetpp::cModule t lte.corenetwork.nodes.eNodeB pid 1 n eNodeB[0] cm 1
+GC m 9 g 0 n ppp$i o 0
+GC m 9 g 1 n ppp$o o 1
+GC m 9 g 2 n radioIn o 0
+GC m 9 g 6 n control_IN o 0
+MS id 9 d p=297,199;i=device/antennatower;bgb=814,437
+MC id 10 c omnetpp::cModule t lte.corenetwork.nodes.eNodeB pid 1 n eNodeB[1] cm 1
+GC m 10 g 0 n ppp$i o 0
+GC m 10 g 1 n ppp$o o 1
+GC m 10 g 2 n radioIn o 0
+GC m 10 g 6 n control_IN o 0
+MS id 10 d p=297,199;i=device/antennatower;bgb=814,437
+MC id 11 c omnetpp::cModule t lte.epc.PgwStandardSimplified pid 1 n pgw cm 1
+GC m 11 g 6 n filterGate$i o 0
+GC m 11 g 7 n filterGate$o o 1
+MS id 11 d p=369,120;i=device/mainframe;bgb=920,462
+MC id 12 c omnetpp::cModule t inet.node.inet.StandardHost pid 1 n server cm 1
+MS id 12 d is=n;p=220,20;i=device/server;bgb=1156,582
+MC id 13 c omnetpp::cModule t inet.node.inet.Router pid 1 n router cm 1
+MS id 13 d p=220,60;i=device/smallrouter;bgb=,448
+GC m 9 g 3145728 n x2$i i 0 o 0
+GC m 9 g 3670016 n x2$o i 0 o 1
+GC m 10 g 3145728 n x2$i i 0 o 0
+GC m 10 g 3670016 n x2$o i 0 o 1
+CC sm 9 sg 3670016 dm 10 dg 3145728
+CS sm 9 sg 3670016 d ""
+CC sm 10 sg 3670016 dm 9 dg 3145728
+CS sm 10 sg 3670016 d ""
+GC m 11 g 2097152 n pppg$i i 0 o 0
+GC m 11 g 2621440 n pppg$o i 0 o 1
+CC sm 11 sg 2621440 dm 9 dg 0
+CS sm 11 sg 2621440 d ""
+CC sm 9 sg 1 dm 11 dg 2097152
+CS sm 9 sg 1 d ""
+GC m 11 g 2097153 n pppg$i i 1 o 0
+GC m 11 g 2621441 n pppg$o i 1 o 1
+CC sm 11 sg 2621441 dm 10 dg 0
+CS sm 11 sg 2621441 d ""
+CC sm 10 sg 1 dm 11 dg 2097153
+CS sm 10 sg 1 d ""
+GC m 12 g 2097152 n pppg$i i 0 o 0
+GC m 12 g 2621440 n pppg$o i 0 o 1
+GC m 13 g 2097152 n pppg$i i 0 o 0
+GC m 13 g 2621440 n pppg$o i 0 o 1
+CC sm 12 sg 2621440 dm 13 dg 2097152
+CS sm 12 sg 2621440 d ""
+CC sm 13 sg 2621440 dm 12 dg 2097152
+CS sm 13 sg 2621440 d ""
+GC m 13 g 2097153 n pppg$i i 1 o 0
+GC m 13 g 2621441 n pppg$o i 1 o 1
+CC sm 13 sg 2621441 dm 11 dg 6
+CS sm 13 sg 2621441 d ""
+CC sm 11 sg 7 dm 13 dg 2097153
+CS sm 11 sg 7 d ""
+MC id 24 c traci::Core t traci.Core pid 2 n core
+MS id 24 d ""
+MC id 25 c traci::PosixLauncher t traci.PosixLauncher pid 2 n launcher
+MS id 25 d ""
+MC id 26 c traci::BasicSubscriptionManager t traci.BasicSubscriptionManager pid 2 n subscriptions
+MS id 26 d ""
+MC id 27 c traci::BasicNodeManager t traci.BasicNodeManager pid 2 n nodes
+MS id 27 d ""
+MC id 28 c traci::BasicModuleMapper t traci.BasicModuleMapper pid 2 n mapper
+MS id 28 d ""
+MC id 29 c inet::physicallayer::ConstantSpeedPropagation t inet.physicallayer.propagation.ConstantSpeedPropagation pid 3 n propagation cm 1
+MS id 29 d p=100,50;i=block/timer
+MC id 30 c inet::physicallayer::ScalarAnalogModel t inet.physicallayer.analogmodel.packetlevel.ScalarAnalogModel pid 3 n analogModel cm 1
+MS id 30 d p=100,150;i=block/tunnel
+MC id 31 c inet::physicallayer::IsotropicScalarBackgroundNoise t inet.physicallayer.backgroundnoise.IsotropicScalarBackgroundNoise pid 3 n backgroundNoise cm 1
+MS id 31 d p=100,250;i=block/mac
+MC id 32 c inet::physicallayer::FreeSpacePathLoss t inet.physicallayer.pathloss.FreeSpacePathLoss pid 3 n pathLoss cm 1
+MS id 32 d p=300,50;i=block/control
+MC id 33 c inet::physicallayer::MediumLimitCache t inet.physicallayer.common.packetlevel.MediumLimitCache pid 3 n mediumLimitCache cm 1
+MS id 33 d p=500,50;i=block/table2
+MC id 34 c inet::physicallayer::VectorCommunicationCache t inet.physicallayer.communicationcache.VectorCommunicationCache pid 3 n communicationCache cm 1
+MS id 34 d p=500,250;i=block/table2
+MC id 35 c inet::InterfaceTable t inet.networklayer.common.InterfaceTable pid 9 n interfaceTable
+MS id 35 d is=s;p=50,75;i=block/table
+MC id 36 c inet::IPv4RoutingTable t inet.networklayer.ipv4.IPv4RoutingTable pid 9 n routingTable
+MS id 36 d is=s;p=50,125;i=block/table
+MC id 37 c inet::StationaryMobility t inet.mobility.static.StationaryMobility pid 9 n mobility
+MS id 37 d is=s;p=50,175;i=block/cogwheel
+MC id 38 c LteCellInfo t lte.corenetwork.lteCellInfo.LteCellInfo pid 9 n cellInfo
+MS id 38 d is=s;p=50,225;i=block/control
+MC id 39 c omnetpp::cModule t lte.stack.LteNicEnbD2D pid 9 n lteNic cm 1
+GC m 39 g 0 n EUTRAN_RRC_Sap$i o 0
+GC m 39 g 1 n EUTRAN_RRC_Sap$o o 1
+GC m 39 g 2 n upperLayerIn o 0
+GC m 39 g 5 n upperLayerOut o 1
+GC m 39 g 6 n upperLayerNonIpIn o 0
+GC m 39 g 9 n upperLayerNonIpOut o 1
+GC m 39 g 10 n radioIn o 0
+GC m 39 g 14 n control_IN o 0
+MS id 39 d p=250,407;i=block/ifcard;bgb=808.19196,583.29596;bgl=3
+MC id 40 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 9 n pppIf cm 1
+GC m 40 g 0 n upperLayerIn o 0
+GC m 40 g 3 n upperLayerOut o 1
+GC m 40 g 4 n phys$i o 0
+GC m 40 g 5 n phys$o o 1
+MS id 40 d p=501,363;i=block/ifcard;bgb=214,249;bgl=53
+MC id 41 c omnetpp::cModule t inet.linklayer.ppp.PPPInterface pid 9 n x2ppp[0] cm 1
+GC m 41 g 0 n upperLayerIn o 0
+GC m 41 g 3 n upperLayerOut o 1
+GC m 41 g 4 n phys$i o 0
+GC m 41 g 5 n phys$o o 1
+MS id 41 d p=683,363;i=block/ifcard;bgb=214,249;bgl=53
+MC id 42 c omnetpp::cModule t inet.networklayer.ipv4.IPv4NetworkLayer pid 9 n networkLayer cm 1
+GC m 42 g 12 n igmpIn o 0
+GC m 42 g 15 n igmpOut o 1
+MS id 42 d q=queue;p=501,269;i=block/fork
+MC id 43 c inet::UDP t inet.transportlayer.udp.UDP pid 9 n udp
+GC m 43 g 2 n ipIn o 0
+GC m 43 g 7 n ipOut o 1
+MS id 43 d p=501,148;i=block/transport
+MC id 44 c omnetpp::cModule t lte.x2.LteX2App pid 9 n x2App[0] cm 1
+GC m 44 g 4 n x2ManagerIn o 0
+GC m 44 g 7 n x2ManagerOut o 1
+MS id 44 d p=155,48,row;i=block/app;bgb=258,148
+GC m 44 g 1048576 n sctpIn i 0 o 0
+GC m 44 g 1048577 n sctpIn i 1 o 0
+GC m 44 g 2621440 n sctpOut i 0 o 1
+GC m 44 g 2621441 n sctpOut i 1 o 1
+MC id 45 c inet::sctp::SCTP t inet.transportlayer.sctp.SCTP pid 9 n sctp
+GC m 45 g 2 n from_ip o 0
+GC m 45 g 7 n to_ip o 1
+MS id 45 d p=275,148;i=block/wheelbarrow
+MC id 46 c TrafficFlowFilterSimplified t lte.epc.TrafficFlowFilterSimplified pid 9 n trafficFlowFilter
+GC m 46 g 0 n internetFilterGateIn o 0
+GC m 46 g 3 n gtpUserGateOut o 1
+MS id 46 d p=330,48;i=block/filter
+MC id 47 c GtpUserSimplified t lte.epc.gtp.GtpUserSimplified pid 9 n gtpUser
+GC m 47 g 1 n udpOut o 1
+GC m 47 g 2 n udpIn o 0
+GC m 47 g 4 n trafficFlowFilterGate o 0
+GC m 47 g 7 n pppGate o 1
+MS id 47 d p=434,48;i=block/tunnel
+MC id 48 c GtpUserX2 t lte.epc.gtp.GtpUserX2 pid 9 n gtpUserX2
+GC m 48 g 1 n udpOut o 1
+GC m 48 g 2 n udpIn o 0
+GC m 48 g 5 n lteStackOut o 1
+GC m 48 g 6 n lteStackIn o 0
+MS id 48 d p=410,363;i=block/tunnel
+CC sm 9 sg 2 dm 39 dg 10
+CC sm 9 sg 6 dm 39 dg 14
+CC sm 39 sg 5 dm 46 dg 0
+CC sm 47 sg 7 dm 39 dg 2
+CC sm 46 sg 3 dm 47 dg 4
+GC m 43 g 1048576 n appIn i 0 o 0
+CC sm 47 sg 1 dm 43 dg 1048576
+GC m 43 g 3670016 n appOut i 0 o 1
+CC sm 43 sg 3670016 dm 47 dg 2
+CC sm 40 sg 5 dm 9 dg 1
+CC sm 9 sg 0 dm 40 dg 4
+GC m 42 g 1048576 n ifIn i 0 o 0
+CC sm 40 sg 3 dm 42 dg 1048576
+GC m 42 g 2621440 n ifOut i 0 o 1
+CC sm 42 sg 2621440 dm 40 dg 0
+GC m 39 g 7340032 n x2$i i 0 o 0
+GC m 39 g 7864320 n x2$o i 0 o 1
+CC sm 48 sg 5 dm 39 dg 7340032
+CC sm 39 sg 7864320 dm 48 dg 6
+GC m 43 g 1048577 n appIn i 1 o 0
+CC sm 48 sg 1 dm 43 dg 1048577
+GC m 43 g 3670017 n appOut i 1 o 1
+CC sm 43 sg 3670017 dm 48 dg 2
+CC sm 41 sg 5 dm 9 dg 3670016
+CC sm 9 sg 3145728 dm 41 dg 4
+GC m 42 g 1048577 n ifIn i 1 o 0
+CC sm 41 sg 3 dm 42 dg 1048577
+GC m 42 g 2621441 n ifOut i 1 o 1
+CC sm 42 sg 2621441 dm 41 dg 0
+GC m 45 g 1048576 n from_appl i 0 o 0
+CC sm 44 sg 2621440 dm 45 dg 1048576
+GC m 45 g 3670016 n to_appl i 0 o 1
+CC sm 45 sg 3670016 dm 44 dg 1048576
+GC m 45 g 1048577 n from_appl i 1 o 0
+CC sm 44 sg 2621441 dm 45 dg 1048577
+GC m 45 g 3670017 n to_appl i 1 o 1
+CC sm 45 sg 3670017 dm 44 dg 1048577
+GC m 39 g 7340033 n x2$i i 1 o 0
+GC m 39 g 7864321 n x2$o i 1 o 1
+CC sm 39 sg 7864321 dm 44 dg 4
+CC sm 44 sg 7 dm 39 dg 7340033
+GC m 42 g 3145728 n transportIn i 0 o 0
+CC sm 43 sg 7 dm 42 dg 3145728
+GC m 42 g 4718592 n transportOut i 0 o 1
+CC sm 42 sg 4718592 dm 43 dg 2
+GC m 42 g 3145729 n transportIn i 1 o 0
+CC sm 45 sg 7 dm 42 dg 3145729
+GC m 42 g 4718593 n transportOut i 1 o 1
+CC sm 42 sg 4718593 dm 45 dg 2
+MC id 49 c LteRrcEnb t lte.control.LteRrcEnb pid 39 n control
+GC m 49 g 0 n PDCP_control$i o 0
+GC m 49 g 1 n PDCP_control$o o 1
+GC m 49 g 2 n TM_control$i o 0
+GC m 49 g 3 n TM_control$o o 1
+GC m 49 g 4 n AM_control$i o 0
+GC m 49 g 5 n AM_control$o o 1
+GC m 49 g 6 n UM_control$i o 0
+GC m 49 g 7 n UM_control$o o 1
+GC m 49 g 8 n PHY_control$i o 0
+GC m 49 g 9 n PHY_control$o o 1
+GC m 49 g 10 n MAC_control$i o 0
+GC m 49 g 11 n MAC_control$o o 1
+GC m 49 g 12 n control_IN o 0
+MS id 49 d p=66.304,141.568
+MC id 50 c IP2lte t lte.corenetwork.lteip.IP2lte pid 39 n ip2lte
+GC m 50 g 0 n upperLayerIn o 0
+GC m 50 g 3 n upperLayerOut o 1
+GC m 50 g 4 n stackLte$i o 0
+GC m 50 g 5 n stackLte$o o 1
+MS id 50 d p=155.90399,167.552;i=block/layer
+MC id 51 c LtePdcpRrcEnbD2D t lte.stack.pdcp_rrc.LtePdcpRrcEnbD2D pid 39 n pdcpRrc
+GC m 51 g 0 n DataPortIpIn o 0
+GC m 51 g 2 n DataPortNonIpIn o 0
+GC m 51 g 5 n DataPortIpOut o 1
+GC m 51 g 7 n DataPortNonIpOut o 1
+GC m 51 g 8 n EUTRAN_RRC_Sap$i o 0
+GC m 51 g 9 n EUTRAN_RRC_Sap$o o 1
+GC m 51 g 10 n control$i o 0
+GC m 51 g 11 n control$o o 1
+GC m 51 g 12 n TM_Sap$i o 0
+GC m 51 g 13 n TM_Sap$o o 1
+GC m 51 g 14 n UM_Sap$i o 0
+GC m 51 g 15 n UM_Sap$o o 1
+GC m 51 g 16 n AM_Sap$i o 0
+GC m 51 g 17 n AM_Sap$o o 1
+MS id 51 d p=150.528,234.752;i=block/fork
+MC id 52 c omnetpp::cModule t lte.stack.rlc.LteRlc pid 39 n rlc cm 1
+GC m 52 g 0 n TM_Sap$i o 0
+GC m 52 g 1 n TM_Sap$o o 1
+GC m 52 g 2 n UM_Sap$i o 0
+GC m 52 g 3 n UM_Sap$o o 1
+GC m 52 g 4 n AM_Sap$i o 0
+GC m 52 g 5 n AM_Sap$o o 1
+GC m 52 g 6 n TM_control$i o 0
+GC m 52 g 7 n TM_control$o o 1
+GC m 52 g 8 n AM_control$i o 0
+GC m 52 g 9 n AM_control$o o 1
+GC m 52 g 10 n UM_control$i o 0
+GC m 52 g 11 n UM_control$o o 1
+GC m 52 g 12 n MAC_to_RLC o 0
+GC m 52 g 15 n RLC_to_MAC o 1
+MS id 52 d p=155.90399,327.03998;i=block/transport
+MC id 53 c LteMacEnbD2D t lte.stack.mac.LteMacEnbD2D pid 39 n mac
+GC m 53 g 0 n RLC_to_MAC o 0
+GC m 53 g 3 n MAC_to_RLC o 1
+GC m 53 g 4 n PHY_to_MAC o 0
+GC m 53 g 7 n MAC_to_PHY o 1
+GC m 53 g 8 n control$i o 0
+GC m 53 g 9 n control$o o 1
+MS id 53 d p=155.90399,396.92798;i=block/mac
+MC id 54 c LtePhyEnbD2D t lte.stack.phy.LtePhyEnbD2D pid 39 n phy
+GC m 54 g 0 n upperGateIn o 0
+GC m 54 g 3 n upperGateOut o 1
+GC m 54 g 4 n radioIn o 0
+GC m 54 g 6 n control$i o 0
+GC m 54 g 7 n control$o o 1
+MS id 54 d p=150.528,486.52798;i=block/wrxtx
+MC id 55 c LteRealisticChannelModel t lte.stack.phy.ChannelModel.LteRealisticChannelModel pid 39 n channelModel
+MS id 55 d p=44.8,389.75998
+CC sm 50 sg 3 dm 39 dg 5
+CC sm 39 sg 2 dm 50 dg 0
+CC sm 50 sg 5 dm 51 dg 0
+CC sm 51 sg 5 dm 50 dg 4
+CC sm 51 sg 7 dm 39 dg 9
+CC sm 39 sg 6 dm 51 dg 2
+CC sm 39 sg 0 dm 51 dg 8
+CC sm 51 sg 9 dm 39 dg 1
+CC sm 51 sg 15 dm 52 dg 2
+CC sm 52 sg 3 dm 51 dg 14
+CC sm 51 sg 17 dm 52 dg 4
+CC sm 52 sg 5 dm 51 dg 16
+CC sm 51 sg 13 dm 52 dg 0
+CC sm 52 sg 1 dm 51 dg 12
+CC sm 52 sg 15 dm 53 dg 0
+CC sm 53 sg 3 dm 52 dg 12
+CC sm 53 sg 7 dm 54 dg 0
+CC sm 54 sg 3 dm 53 dg 4
+CC sm 39 sg 10 dm 54 dg 4
+CC sm 49 sg 1 dm 51 dg 10
+CC sm 51 sg 11 dm 49 dg 0
+CC sm 49 sg 3 dm 52 dg 6
+CC sm 52 sg 7 dm 49 dg 2
+CC sm 49 sg 5 dm 52 dg 8
+CC sm 52 sg 9 dm 49 dg 4
+CC sm 49 sg 7 dm 52 dg 10
+CC sm 52 sg 11 dm 49 dg 6
+CC sm 49 sg 9 dm 54 dg 6
+CC sm 54 sg 7 dm 49 dg 8
+CC sm 49 sg 11 dm 53 dg 8
+CC sm 53 sg 9 dm 49 dg 10
+CC sm 39 sg 14 dm 49 dg 12
+MC id 56 c LteX2Manager t lte.x2.LteX2Manager pid 39 n x2Manager
+GC m 56 g 4 n x2Gtp$i o 0
+GC m 56 g 5 n x2Gtp$o o 1
+MS id 56 d p=60,227,row;i=block/cogwheel
+MC id 57 c LteHandoverManager t lte.stack.handoverManager.LteHandoverManager pid 39 n handoverManager
+GC m 57 g 0 n x2ManagerIn o 0
+GC m 57 g 3 n x2ManagerOut o 1
+MS id 57 d p=60,142,row;i=block/cogwheel
+GC m 56 g 1048576 n dataPort$i i 0 o 0
+GC m 56 g 1572864 n dataPort$o i 0 o 1
+CC sm 56 sg 1572864 dm 57 dg 0
+CC sm 57 sg 3 dm 56 dg 1048576
+CC sm 39 sg 7340032 dm 56 dg 4
+CC sm 56 sg 5 dm 39 dg 7864320
+GC m 56 g 2097152 n x2$i i 0 o 0
+GC m 56 g 2621440 n x2$o i 0 o 1
+CC sm 39 sg 7340033 dm 56 dg 2097152
+CC sm 56 sg 2621440 dm 39 dg 7864321
+MC id 58 c D2DModeSelectionBase t lte.stack.d2dModeSelection.D2DModeSelectionBase pid 39 n d2dModeSelection
+MS id 58 d p=60,68,row
+MC id 59 c LteRlcTm t lte.stack.rlc.LteRlcTm pid 52 n tm
+GC m 59 g 0 n TM_Sap_up$i o 0
+GC m 59 g 1 n TM_Sap_up$o o 1
+GC m 59 g 2 n TM_Sap_down$i o 0
+GC m 59 g 3 n TM_Sap_down$o o 1
+GC m 59 g 4 n TM_control$i o 0
+GC m 59 g 5 n TM_control$o o 1
+MS id 59 d p=100,100;i=block/wheelbarrow
+MC id 60 c LteRlcUmD2D t lte.stack.rlc.LteRlcUmD2D pid 52 n um
+GC m 60 g 0 n UM_Sap_up$i o 0
+GC m 60 g 1 n UM_Sap_up$o o 1
+GC m 60 g 2 n UM_Sap_down$i o 0
+GC m 60 g 3 n UM_Sap_down$o o 1
+GC m 60 g 4 n UM_control$i o 0
+GC m 60 g 5 n UM_control$o o 1
+MS id 60 d p=200,100;i=block/wheelbarrow
+MC id 61 c LteRlcAm t lte.stack.rlc.LteRlcAm pid 52 n am
+GC m 61 g 0 n AM_Sap_up$i o 0
+GC m 61 g 1 n AM_Sap_up$o o 1
+GC m 61 g 2 n AM_Sap_down$i o 0
+GC m 61 g 3 n AM_Sap_down$o o 1
+GC m 61 g 4 n AM_control$i o 0
+GC m 61 g 5 n AM_control$o o 1
+MS id 61 d p=300,100;i=block/wheelbarrow
+MC id 62 c LteRlcMux t lte.stack.rlc.LteRlcMux pid 52 n mux
+GC m 62 g 0 n TM_Sap$i o 0
+GC m 62 g 1 n TM_Sap$o o 1
+GC m 62 g 2 n UM_Sap$i o 0
+GC m 62 g 3 n UM_Sap$o o 1
+GC m 62 g 4 n AM_Sap$i o 0
+GC m 62 g 5 n AM_Sap$o o 1
+GC m 62 g 6 n MAC_to_RLC o 0
+GC m 62 g 9 n RLC_to_MAC o 1
+MS id 62 d p=200,200;i=block/classifier
+CC sm 59 sg 1 dm 52 dg 1
+CC sm 52 sg 0 dm 59 dg 0
+CC sm 60 sg 1 dm 52 dg 3
+CC sm 52 sg 2 dm 60 dg 0
+CC sm 61 sg 1 dm 52 dg 5
+CC sm 52 sg 4 dm 61 dg 0
+CC sm 59 sg 3 dm 62 dg 0
+CC sm 62 sg 1 dm 59 dg 2
+CC sm 60 sg 3 dm 62 dg 2
+CC sm 62 sg 3 dm 60 dg 2
+CC sm 61 sg 3 dm 62 dg 4
+CC sm 62 sg 5 dm 61 dg 2
+CC sm 52 sg 12 dm 62 dg 6
+CC sm 62 sg 9 dm 52 dg 15
+CC sm 59 sg 5 dm 52 dg 7
+CC sm 52 sg 6 dm 59 dg 4
+CC sm 60 sg 5 dm 52 dg 11
+CC sm 52 sg 10 dm 60 dg 4
+CC sm 61 sg 5 dm 52 dg 9
+CC sm 52 sg 8 dm 61 dg 4
+MC id 63 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 40 n queue
+GC m 63 g 0 n in o 0
+GC m 63 g 3 n out o 1
+MS id 63 d q=l2queue;p=42,161;i=block/queue
+MC id 64 c inet::PPP t inet.linklayer.ppp.PPP pid 40 n ppp
+GC m 64 g 0 n netwIn o 0
+GC m 64 g 3 n netwOut o 1
+GC m 64 g 4 n phys$i o 0
+GC m 64 g 5 n phys$o o 1
+MS id 64 d p=98,207;i=block/rxtx
+CC sm 40 sg 0 dm 63 dg 0
+CS sm 40 sg 0 d m=n
+CC sm 63 sg 3 dm 64 dg 0
+CC sm 40 sg 4 dm 64 dg 4
+CS sm 40 sg 4 d m=s
+CC sm 64 sg 5 dm 40 dg 5
+CS sm 64 sg 5 d m=s
+CC sm 64 sg 3 dm 40 dg 3
+CS sm 64 sg 3 d m=n
+MC id 69 c inet::DropTailQueue t inet.common.queue.DropTailQueue pid 41 n queue
+GC m 69 g 0 n in o 0
+GC m 69 g 3 n out o 1
+MS id 69 d q=l2queue;p=42,161;i=block/queue
+MC id 70 c inet::PPP t inet.linklayer.ppp.PPP pid 41 n ppp
+GC m 70 g 0 n netwIn o 0
+GC m 70 g 3 n netwOut o 1
+GC m 70 g 4 n phys$i o 0
+GC m 70 g 5 n phys$o o 1
+MS id 70 d p=98,207;i=block/rxtx
+CC sm 41 sg 0 dm 69 dg 0
+CS sm 41 sg 0 d m=n
+CC sm 69 sg 3 dm 70 dg 0
+CC sm 41 sg 4 dm 70 dg 4
+CS sm 41 sg 4 d m=s
+CC sm 70 sg 5 dm 41 dg 5
+CS sm 70 sg 5 d m=s
+CC sm 70 sg 3 dm 41 dg 3
+CS sm 70 sg 3 d m=n
+MC id 75 c inet::IPv4NodeConfigurator t inet.networklayer.configurator.ipv4.IPv4NodeConfigurator pid 42 n configurator
+MS id 75 d p=39,158;i=block/cogwheel_s
+MC id 76 c inet::IPv4 t inet.networklayer.ipv4.IPv4 pid 42 n ip
+GC m 76 g 4 n arpIn o 0
+GC m 76 g 7 n arpOut o 1
+MS id 76 d q=queue;p=85,95;i=block/routing
+GC m 76 g 5242880 n queueIn i 0 o 0
+GC m 76 g 5242881 n queueIn i 1 o 0
+GC m 76 g 6815744 n queueOut i 0 o 1
+GC m 76 g

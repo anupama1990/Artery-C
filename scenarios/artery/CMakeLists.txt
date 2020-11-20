@@ -1,0 +1,13 @@
+add_opp_run(example CONFIG omnetpp.ini)
+add_opp_test(example SUFFIX inet CONFIG inet SIMTIME_LIMIT 20s)
+add_opp_test(example SUFFIX security CONFIG inet_security SIMTIME_LIMIT 20s)
+add_opp_test(example SUFFIX inet-mco CONFIG inet_mco SIMTIME_LIMIT 20s)
+add_opp_test(example SUFFIX inet-mixed-vehicles CONFIG inet_multiple_vehicle_types SIMTIME_LIMIT 20s)
+add_opp_test(example SUFFIX inet-nakagami CONFIG inet_nakagami SIMTIME_LIMIT 20s)
+add_opp_test(example SUFFIX inet-rsu CONFIG inet_rsu SIMTIME_LIMIT 20s)
+add_opp_test(example SUFFIX veins CONFIG veins SIMTIME_LIMIT 20s)
+add_opp_test(example SUFFIX veins-rsu CONFIG veins_rsu SIMTIME_LIMIT 20s)
+
+if(WITH_ENVMOD)
+    add_opp_test(example SUFFIX envmod CONFIG envmod SIMTIME_LIMIT 20s)
+endif()

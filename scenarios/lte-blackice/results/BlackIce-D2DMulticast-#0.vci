@@ -1,0 +1,98 @@
+                                                                
+version 2
+run BlackIce-D2DMulticast-0-20191220-19:43:22-25919
+attr configname BlackIce-D2DMulticast
+attr datetime 20191220-19:43:22
+attr experiment BlackIce-D2DMulticast
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network artery.lte.World
+attr processid 25919
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param *.eNodeB[*].nicType "\"LteNicEnbD2D\""
+param *.node[*].nicType "\"LteNicUeD2D\""
+param **.amcMode "\"D2D\""
+param **.d2dCqi 7
+param **.usePreconfiguredTxParams true
+param *.server.numUdpApss 0
+param *.node[*].numUdpApps 1
+param *.node[*].udpApp[0].typename "\"BlackIceWarnerD2D\""
+param *.node[*].udpApp[0].middlewareModule "\"^.middleware\""
+param *.node[*].udpApp[0].mcastAddress "\"224.0.0.23\""
+param *.node[*].configurator.mcastGroups "\"224.0.0.23\""
+param *.traci.core.version -1
+param *.traci.launcher.typename "\"PosixLauncher\""
+param *.traci.launcher.sumocfg "\"grid.sumocfg\""
+param *.channelControl.pMax 10W
+param *.channelControl.alpha 1.0
+param *.channelControl.carrierFrequency "2.1 GHz"
+param *.configurator.config "xmldoc(\"lte_network.xml\")"
+param *.numLteBaseStations 2
+param *.eNodeB[*].lteNic.phy.feedbackComputation "xmldoc(\"lte_channel.xml\")"
+param *.eNodeB[*].lteNic.phy.channelModel "xmldoc(\"lte_channel.xml\")"
+param *.eNodeB[*].lteNic.phy.dynamicCellAssociation true
+param *.eNodeB[*].lteNic.phy.enableHandover true
+param *.eNodeB[*].cellInfo.broadcastMessageInterval "0.5 s"
+param *.eNodeB[*].sctp.nagleEnabled false
+param *.eNodeB[*].sctp.enableHeartbeats false
+param *.eNodeB[*].numX2Apps 1
+param *.eNodeB[*].x2App[*].server.localPort "5000 + ancestorIndex(1)"
+param *.eNodeB[0].x2App[0].client.connectAddress "\"eNodeB[1]%x2ppp0\""
+param *.eNodeB[1].x2App[0].client.connectAddress "\"eNodeB[0]%x2ppp0\""
+param *.eNodeB[0].mobility.initialX 125m
+param *.eNodeB[0].mobility.initialY 125m
+param *.eNodeB[1].mobility.initialX 875m
+param *.eNodeB[1].mobility.initialY 875m
+param *.node[*].lteNic.dlFbGen.feedbackComputation "xmldoc(\"lte_channel.xml\")"
+param *.node[*].lteNic.phy.channelModel "xmldoc(\"lte_channel.xml\")"
+param *.node[*].lteNic.phy.dynamicCellAssociation true
+param *.node[*].lteNic.phy.enableHandover true
+param *.node[*].masterId 1
+param *.node[*].macCellId 1
+param *.node[*].wlan[*].typename "\"VanetNic\""
+param *.node[*].wlan[*].radio.channelNumber 180
+param *.node[*].wlan[*].radio.carrierFrequency "5.9 GHz"
+param *.node[*].wlan[*].radio.transmitter.power "200 mW"
+param *.node[*].middleware.updateInterval "0.1 s"
+param *.node[*].middleware.datetime "\"2018-04-04 15:00:00\""
+param *.node[*].middleware.services "xml(\"<services />\")"
+param *.withStoryboard true
+param *.storyboard.python "\"blackice\""
+
+vector 0 World.eNodeB[0].pppIf.queue queueLength:vector ETV
+attr interpolationmode sample-hold
+attr title "queue length, vector"
+vector 1 World.eNodeB[0].pppIf.ppp txState:vector ETV
+attr interpolationmode sample-hold
+attr title "tx state, vector"
+vector 2 World.eNodeB[0].x2ppp[0].queue queueLength:vector ETV
+attr interpolationmode sample-hold
+attr title "queue length, vector"
+vector 3 World.eNodeB[0].x2ppp[0].ppp txState:vector ETV
+attr interpolationmode sample-hold
+attr title "tx state, vector"
+vector 4 World.eNodeB[1].pppIf.queue queueLength:vector ETV
+attr interpolationmode sample-hold
+attr title "queue length, vector"
+vector 5 World.eNodeB[1].pppIf.ppp txState:vector ETV
+attr interpolationmode sample-hold
+attr title "tx state, vector"
+vector 6 World.eNodeB[1].x2ppp[0].queue queueLength:vector ETV
+attr interpolationmode sample-hold
+attr title "queue length, vector"
+vector 7 World.eNodeB[1].x2ppp[0].ppp txState:vector ETV
+attr interpolationmode sample-hold
+attr title "tx state, vector"
+vector 8 World.pgw.ppp[0].queue queueLength:vector ETV
+attr interpolationmode sample-hold
+attr title "queue length, vector"
+vector 9 World.pgw.ppp[0].ppp txState:vector ETV
+attr interpolationmode sample-hold
+attr title "tx state, vector"
+vector 10 World
