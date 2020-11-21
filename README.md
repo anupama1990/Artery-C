@@ -50,33 +50,33 @@ To run the target:
 
 To build Artery-C in debug mode:
 	 
-	``mkdir build``\
-	``cd build``
-	``cmake ..``\
-	``ccmake .``\
-	Under ``CMAKE_BUILD_TYPE``, press enter and type ``Debug``\
+	mkdir build
+	cd build
+	cmake ..
+	ccmake .
+	Under ``CMAKE_BUILD_TYPE``, press enter and type ``Debug``
 	Press ``c`` to configure and ``g`` to generate and quit
 	
 To run the target:
-	``make debug_tunnel``
+	make debug_tunnel
 
 ## Installing and running SUMO with Artery-C
 
 First install the following dependencies:
-	``sudo apt-get install cmake python g++ libxerces-c-dev libfox-1.6-dev libgdal-dev libproj-dev libgl2ps-dev swig``
+	sudo apt-get install cmake python g++ libxerces-c-dev libfox-1.6-dev libgdal-dev libproj-dev libgl2ps-dev swig
 
 Install SUMO from source code:
 
-	``git clone --recursive https://github.com/eclipse/sumo``\
- 	``export SUMO_HOME="$PWD/sumo"``\
- 	``mkdir sumo/build/cmake-build && cd sumo/build/cmake-build``\
- 	``cmake ../..``\
- 	``make -j$(nproc)``
+	git clone --recursive https://github.com/eclipse/sumo
+ 	export SUMO_HOME="$PWD/sumo"
+ 	mkdir sumo/build/cmake-build && cd sumo/build/cmake-build
+ 	cmake ../..
+ 	make -j$(nproc)
 
 Installing ``SUMO-GUI`` related files with most recent version of SUMO (currently 1.7.10):
-	``sudo add-apt-repository ppa:sumo/stable``\
-	``sudo apt-get update``\
-	``sudo apt-get install sumo sumo-tools sumo-doc``
+	sudo add-apt-repository ppa:sumo/stable
+	sudo apt-get update
+	sudo apt-get install sumo sumo-tools sumo-doc
 
 Artery-C automatically starts SUMO when the target ``make run_tunnel`` or ``debug_tunnel`` is executed. If you want Artery-C to start SUMO with a graphical user interface, you can put the following line in your *omnetpp.ini*:
 
