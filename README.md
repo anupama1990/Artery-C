@@ -33,8 +33,8 @@ You might obtain more recent versions from their upstream repositories:
 The first step involves building the dependencies from the Artery-C's root directory. The ``Makefile`` contains rules for building all the dependencies by executing 
 	make all
 To build in debug mode:
-	make all MODE=debug
-	mkdir build
+	make all MODE=debug \
+	mkdir build\
 	cd build
 	ccmake .
 	Under CMAKE_BUILD_TYPE, press enter and type Debug
