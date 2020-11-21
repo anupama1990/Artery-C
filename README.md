@@ -22,6 +22,7 @@ Artery-C currently uses the following software packages (please note the specifi
 * OMNeT++ 5.6 
 * INET 3.6.5
 * Pybind 11
+* Debugging - GNU GDB 8.1.1
 
 
 Compatible versions of INET, Veins, Vanetza, and other components are managed as [git submodules](https://git-scm.com/docs/git-submodule) in the *extern* subdirectory.
@@ -44,7 +45,7 @@ To build Artery-C in release mode:
 	mkdir build
 	make -j4
 
-To run the target:
+To run the target "tunnel" in release mode:
 ``make run_tunnel``
 	
 
@@ -57,8 +58,10 @@ To build Artery-C in debug mode:
 	Under "CMAKE_BUILD_TYPE", press enter and type "Debug"
 	Press "c" to configure and "g" to generate and quit
 	
-To run the target:
+To run the target "tunnel" in debug mode:
 	``make debug_tunnel``
+
+This takes you to the GDB prompt - type ``run``. In the ``GDB`` prompt mode, you can further insert breakpoints in order to step into specific lines of code.
 
 ## Installing and running SUMO with Artery-C
 
