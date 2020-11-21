@@ -54,8 +54,8 @@ To build Artery-C in debug mode:
 	cd build
 	cmake ..
 	ccmake .
-	Under ``CMAKE_BUILD_TYPE``, press enter and type ``Debug``
-	Press ``c`` to configure and ``g`` to generate and quit
+	Under "CMAKE_BUILD_TYPE", press enter and type "Debug"
+	Press "c" to configure and "g" to generate and quit
 	
 To run the target:
 	make debug_tunnel
