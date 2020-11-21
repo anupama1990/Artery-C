@@ -1,6 +1,6 @@
-# Artery
+# Artery-C
 
-Artery enables V2X simulations based on ETSI ITS-G5 protocols like GeoNetworking and BTP.
+Artery-C enables V2X simulations based on ETSI ITS-G5 protocols like GeoNetworking and BTP.
 Single vehicles can be equipped with multiple ITS-G5 services through Artery's middleware, which also provides common Facilities for these services.
 
 Artery started as an extension of the [Veins framework](http://veins.car2x.org) but can be used independently nowadays.
@@ -14,7 +14,7 @@ SUMO 1.0 or later is required since its TraCI protocol is not compatible with ea
 Only [CMake](http://www.cmake.org) is the officially supported way for building Artery.
 
 Compatible versions of INET, Veins, Vanetza, and other components are managed as [git submodules](https://git-scm.com/docs/git-submodule) in the *extern* subdirectory.
-Please make sure to fetch these submodules when cloning our repository!
+Please make sure to fetch these submodules when cloning Artery-C repository!
 
     git clone --recurse-submodule https://github.com/riebl/artery.git
 
@@ -30,40 +30,17 @@ You might obtain more recent versions from their upstream repositories:
 
 
 ## Build instructions
-Veins and Vanetza need to be built before Artery itself.
-For this purpose, a *Makefile* is located in Artery's root directory.
-The following steps assume you have cloned the Artery repository on your (preferably Linux) machine and you have moved your terminal to this clone's directory.
-You can build all of these external project dependencies at once via the default `make all` target.
-
-### Veins
-Please make sure you have all dependencies of Veins installed and set up OMNeT++ beforehand.
-If you have any doubts, refer to the [Veins tutorial](http://veins.car2x.org/tutorial).
-The bundled version of Veins is then built with following steps:
-
-    cd extern/veins
-    ./configure
-    make
-
-Alternatively, you can also just invoke `make veins` in the root directory of Artery, which executes exactly these steps but saves you some typing.
-
-### Vanetza
-Similarly, you can simply call `make vanetza` in the root directory and it will try to build Vanetza for you in *extern/vanetza/build*.
-Of course, you need to install Vanetza's dependencies first.
-See the Vanetza [Readme](https://github.com/riebl/vanetza/blob/master/README.md) for details.
-
-### INET
-As the next step, you need to build INET. Make sure you are in the root directory of Artery and simply call `make inet` there.
-INET's build dependencies are listed in [its install manual](extern/inet/INSTALL).
-
-### Artery
-Are you still with us? Congratulations, you are almost done!
-
-    mkdir build
-    cd build
-    cmake ..
-    cmake --build .
-
-These steps create a *build* directory for Artery, configure the build directory and finally build Artery there.
+The first step involves building the dependencies from the Artery-C's root directory. The ``Makefile`` contains rules for building all the dependencies by executing 
+	make all
+To build in debug mode:
+	make all MODE=debug
+	mkdir build
+	cd build
+	ccmake .
+	Under CMAKE_BUILD_TYPE, press enter and type Debug
+	Press ``c`` to configure and ``g`` to generate and quit.
+	
+	
 
 ## Running Artery
 
