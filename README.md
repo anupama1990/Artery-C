@@ -31,25 +31,30 @@ You might obtain more recent versions from their upstream repositories:
 
 ## Build instructions
 The first step involves building the dependencies from the Artery-C's root directory. The ``Makefile`` contains rules for building all the dependencies by executing 
-	make all
-To build in debug mode:
-	make all MODE=debug \
-	mkdir build\
-	cd build
-	ccmake .
-	Under CMAKE_BUILD_TYPE, press enter and type Debug
-	Press ``c`` to configure and ``g`` to generate and quit.
+	``make all`` \
+	``mkdir build``\
+	``cd build``\
+	``mkdir build``\
+	``make -j4``\
+
+To run the target:\
+``make run_tunnel``\
 	
+
+To build specifically in debug mode:\
+	``make all MODE=debug`` \
+	``mkdir build``\
+	``cd build``
+	``ccmake .``
+	Under ``CMAKE_BUILD_TYPE``, press enter and type ``Debug``\
+	Press ``c`` to configure and ``g`` to generate and quit\
 	
+	To run the target:\
+``make debug_tunnel``\
 
-## Running Artery
+## How Artery-C starts SUMO
 
-When you have finished building Artery, you can give the shipped example a try to see if everything runs smoothly.
-With current Artery versions there is no need to start Veins' *sumo-launchd* script any more.
-Instead, Artery will start a SUMO instance on its own with appropriate parameters.
-You can start the example scenario of Artery (located in *scenarios/artery*) simply by calling the **run_example** target from Artery's root directory:
 
-    cmake --build build --target run_example
 
 Please make sure that *sumo* can be executed within in your environment because this is the default SUMO executable used by Artery.
 You can, however, specify which SUMO executable shall be used explicilty.
