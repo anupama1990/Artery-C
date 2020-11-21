@@ -39,10 +39,10 @@ The first step involves building the dependencies from the Artery-C's root direc
 
 To build Artery-C in release mode:
 
-	``mkdir build``
-	``cd build``
-	``mkdir build``
-	``make -j4``
+	mkdir build
+	cd build
+	mkdir build
+	make -j4
 
 To run the target:
 ``make run_tunnel``
