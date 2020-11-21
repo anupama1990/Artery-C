@@ -1,13 +1,14 @@
 # Artery-C
 
-Cellular Vehicle-to-X (Cellular V2X) is a communication technology that aims to facilitate the communication among vehicles and with the roadside infrastructure. Introduced with LTE Release 14,Cellular V2X enables device-to-device communication to support road safety and traffic efficiency applications. We present ``Artery-C``, a simulation framework for the performance evaluation of Cellular V2X protocols and V2X applications. Our simulator relies on the simulation framework ``SimuLTE`` and substantially extends it by implementing a dedicated sidelink interface, sidelink resource allocation modes along with control and user planes. Artery-C integrates seamlessly with Artery framework which enables the simulation of standardized V2X messages at the facilities layer as well as the coupling to the mobility simulator SUMO. A specific feature ofArtery-C is the support of dynamic switching between all modes of Cellular V2X.
+Cellular Vehicle-to-X (Cellular V2X) is a communication technology that aims to facilitate the communication among vehicles and with the roadside infrastructure. Introduced with LTE Release 14,Cellular V2X enables device-to-device communication to support road safety and traffic efficiency applications. We present ``Artery-C``, a simulation framework for the performance evaluation of Cellular V2X protocols and V2X applications. Our simulator relies on the simulation framework ``SimuLTE`` and substantially extends it by implementing a dedicated sidelink interface, sidelink resource allocation modes along with control and user planes. Artery-C integrates seamlessly with Artery framework which enables the simulation of standardized V2X messages at the facilities layer as well as the coupling to the mobility simulator SUMO. A specific feature of Artery-C is the support of dynamic switching between all modes of Cellular V2X.
 
 # Relevant Literature
-For further details about the salient featrues of Artery-C simulator and sidelink mode switching, please refer to the publications/documents stored here:
+For further details about the salient features of Artery-C simulator and sidelink mode switching, please refer to the publications/documents stored here:
 
 -[Documents](https://github.com/anupama1990/Documents.git)
 
 Further details on the implementation of Artery can be found here:
+
 -[Artery](https://github.com/riebl/artery.git)
 
 
@@ -26,7 +27,7 @@ Artery-C currently uses the following software packages (please note the specifi
 Compatible versions of INET, Veins, Vanetza, and other components are managed as [git submodules](https://git-scm.com/docs/git-submodule) in the *extern* subdirectory.
 It is recommended to clone the dependencies before building Artery-C.
 
-You might obtain more recent versions from their upstream repositories:
+More recent versions of *INET*, *Veins* and *Vanetza* can be downloaded here:
 
 - [INET](https://github.com/inet-framework/inet)
 - [Veins](https://github.com/sommer/veins)
@@ -34,8 +35,10 @@ You might obtain more recent versions from their upstream repositories:
 
 
 ## Build instructions
-The first step involves building the dependencies from the Artery-C's root directory. The ``Makefile`` contains rules for building all the dependencies by executing 
-	``make all`` \
+The first step involves building the dependencies from the Artery-C's root directory. The ``Makefile`` contains rules for building all the dependencies by executing ``make all`` (for release mode) and ``make all MODE=debug`` (for debug mode).
+
+To build Artery-C in release mode:
+
 	``mkdir build``\
 	``cd build``\
 	``mkdir build``\
@@ -45,11 +48,12 @@ To run the target:
 ``make run_tunnel``
 	
 
-To build specifically in debug mode:\
-	``make all MODE=debug`` \
+To build Artery-C in debug mode:
+	 
 	``mkdir build``\
 	``cd build``
-	``ccmake .``
+	``cmake ..``\
+	``ccmake .``\
 	Under ``CMAKE_BUILD_TYPE``, press enter and type ``Debug``\
 	Press ``c`` to configure and ``g`` to generate and quit
 	
