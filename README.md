@@ -74,6 +74,7 @@ Install SUMO from source code:
  	make -j$(nproc)
 
 Installing ``SUMO-GUI`` related files with most recent version of SUMO (currently 1.7.10):
+
 	sudo add-apt-repository ppa:sumo/stable
 	sudo apt-get update
 	sudo apt-get install sumo sumo-tools sumo-doc
