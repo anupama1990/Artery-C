@@ -58,7 +58,7 @@ To build Artery-C in debug mode:
 	Press "c" to configure and "g" to generate and quit
 	
 To run the target:
-	make debug_tunnel
+	``make debug_tunnel``
 
 ## Installing and running SUMO with Artery-C
 
