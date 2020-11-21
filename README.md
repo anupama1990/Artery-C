@@ -63,6 +63,7 @@ To run the target:
 ## Installing and running SUMO with Artery-C
 
 First install the following dependencies:
+
 	sudo apt-get install cmake python g++ libxerces-c-dev libfox-1.6-dev libgdal-dev libproj-dev libgl2ps-dev swig
 
 Install SUMO from source code:
