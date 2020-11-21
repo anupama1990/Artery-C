@@ -38,7 +38,7 @@ The first step involves building the dependencies from the Artery-C's root direc
 	``make -j4``
 
 To run the target:
-``make run_tunnel``\
+``make run_tunnel``
 	
 
 To build specifically in debug mode:\
@@ -49,8 +49,8 @@ To build specifically in debug mode:\
 	Under ``CMAKE_BUILD_TYPE``, press enter and type ``Debug``\
 	Press ``c`` to configure and ``g`` to generate and quit
 	
-	To run the target:
-``make debug_tunnel``
+To run the target:
+	``make debug_tunnel``
 
 ## How Artery-C starts SUMO
 
