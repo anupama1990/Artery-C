@@ -13,3 +13,6 @@
 [submodule "extern/veins"]
 	path = extern/veins
 	url = https://github.com/anupama1990/veins.git
+[submodule "scenarios/InTAS"]
+	path = scenarios/InTAS
+	url = https://github.com/silaslobo/InTAS.git
