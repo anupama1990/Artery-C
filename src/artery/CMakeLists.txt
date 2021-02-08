@@ -2,7 +2,7 @@ find_package(Boost 1.59 COMPONENTS date_time system REQUIRED)
 
 add_library(artery INTERFACE)
 add_library(core SHARED
-    StaticNodeManager.cc
+    
     application/CaObject.cc
     application/CaService.cc
     application/DenmObject.cc
@@ -28,17 +28,7 @@ add_library(core SHARED
     application/den/SuspendableUseCase.cc
     application/den/TrafficJamUseCase.cc
     application/den/UseCase.cc
-    networking/AccessInterface.cc
-    networking/DccEntityBase.cc
-    networking/FsmDccEntity.cc
-    networking/GeoNetPacket.cc
-    networking/LimericDccEntity.cc
-    networking/NoRateControlDccEntity.cc
-    networking/Router.cc
-    networking/Runtime.cc
-    networking/SecurityEntity.cc
-    networking/StationaryPositionProvider.cc
-    networking/VehiclePositionProvider.cc
+
     nic/ChannelLoadSampler.cc
 	nic/RadioDriver.cc
 nic/RadioDriverBase.cc  
@@ -83,24 +73,11 @@ endif()
 if(TARGET INET)
     message(STATUS "Enable INET integration")
     set_property(TARGET core APPEND PROPERTY SOURCES
+
         inet/AntennaMobility.cc
-        inet/ChannelLoadRx.cc
         inet/DistanceSwitchPathLoss.cc
         inet/InetRadioDriver.cc
-        inet/InetMobility.cc
-        inet/gemv2/LinkClassifier.cc
-        inet/gemv2/NLOSb.cc
-        inet/gemv2/NLOSf.cc
-        inet/gemv2/NLOSv.cc
-        inet/gemv2/ObstacleIndex.cc
-        inet/gemv2/PathLoss.cc
-        inet/gemv2/SmallScaleVariation.cc
-        inet/gemv2/VehicleIndex.cc
-        inet/gemv2/Visualizer.cc
-        inet/PowerLevelRx.cc
-        inet/VanetNakagamiFading.cc
-        inet/VanetRadio.cc
-        inet/VanetReceiver.cc
+        inet/VanetRx.cc
     )
     target_link_libraries(core PUBLIC INET)
 endif()
@@ -115,19 +92,20 @@ macro(add_artery_feature name)
     target_link_libraries(artery INTERFACE Artery::${name})
 endmacro()
 
-if(WITH_STORYBOARD)
-    add_subdirectory(storyboard)
-endif()
 
-if(WITH_TRANSFUSION)
-    add_subdirectory(transfusion)
-endif()
+#if(WITH_STORYBOARD)
+ #   add_subdirectory(storyboard)
+#endif()
 
-if(WITH_ENVMOD)
-    add_subdirectory(envmod)
-    set_property(SOURCE application/VehicleMiddleware.cc APPEND PROPERTY COMPILE_DEFINITIONS "WITH_ENVMOD")
-endif()
+#if(WITH_TRANSFUSION)
+  #  add_subdirectory(transfusion)
+#endif()
 
-if(WITH_TESTBED)
-    add_subdirectory(testbed)
-endif()
+#if(WITH_ENVMOD)
+#    add_subdirectory(envmod)
+#    set_property(SOURCE application/VehicleMiddleware.cc APPEND PROPERTY COMPILE_DEFINITIONS "WITH_ENVMOD")
+#endif()
+
+#if(WITH_TESTBED)
+ #   add_subdirectory(testbed)
+#endif()
