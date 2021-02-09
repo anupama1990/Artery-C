@@ -5,12 +5,8 @@ import inet.mobility.contract.IMobility;
 module PlainVehicle
 {
     parameters:
-        @display("i=block/process;is=vs");
+        @display("i=blocki/process;is=vs");
         @labels(node);
-
-        @statistic[posX](source="xCoord(mobilityPos(mobilityStateChanged))"; record=vector?);
-        @statistic[posY](source="yCoord(mobilityPos(mobilityStateChanged))"; record=vector?);
-
         mobility.visualRepresentation = "^";
 
     submodules:

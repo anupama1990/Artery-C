@@ -1,9 +1,8 @@
 package artery.inet;
 
-import artery.StaticNodeManager;
 import artery.storyboard.Storyboard;
 import inet.environment.contract.IPhysicalEnvironment;
-import inet.physicallayer.contract.packetlevel.IRadioMedium;
+import inet.physicallayer.wireless.common.contract.packetlevel.IRadioMedium;
 import traci.Manager;
 
 network World
@@ -12,8 +11,8 @@ network World
         bool withStoryboard = default(false);
         bool withPhysicalEnvironment = default(false);
         int numRoadSideUnits = default(0);
-        traci.mapper.vehicleType = default("artery.inet.Car");
-        traci.nodes.vehicleSinkModule = default(".mobility");
+        traci.mapper.objectType = default("artery.inet.Car");
+        traci.nodes.objectSinkModule = default(".mobility");
         storyboard.middlewareModule = default(".middleware");
 
     submodules:
@@ -41,11 +40,5 @@ network World
         rsu[numRoadSideUnits]: RSU {
             parameters:
                 mobility.initFromDisplayString = false;
-        }
-
-        staticNodes: StaticNodeManager {
-            parameters:
-                @display("p=20,40");
-                waitForTraCI = default(true);
         }
 }

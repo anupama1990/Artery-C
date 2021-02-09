@@ -10,24 +10,35 @@ namespace inet { class CanvasProjection; }
 namespace artery
 {
 
-class InetMobility : public inet::IMobility, public MobilityBase, public omnetpp::cSimpleModule
+class InetMobility : public inet::IMobility, public MobilityBase, public ControllableVehicle , public omnetpp::cSimpleModule
 {
 public:
+    // artery::MobilityBase
+    void initializeSink(traci::LiteAPI*, const std::string& id, const traci::Boundary&, std::shared_ptr<traci::VariableCache> cache) override;
+
     // inet::IMobility interface
-    double getMaxSpeed() const override;
-    inet::Coord getCurrentPosition() override;
-    inet::Coord getCurrentSpeed() override;
-    inet::EulerAngles getCurrentAngularPosition() override;
-    inet::EulerAngles getCurrentAngularSpeed() override;
-    inet::Coord getConstraintAreaMax() const override;
-    inet::Coord getConstraintAreaMin() const override;
+    virtual int getId() const override { return cSimpleModule::getId(); }
+    virtual double getMaxSpeed() const override;
+    virtual const inet::Coord& getCurrentPosition() override;
+    virtual const inet::Coord& getCurrentVelocity() override;
+    virtual const inet::Coord& getCurrentAcceleration() override;
+    virtual const inet::Quaternion& getCurrentAngularPosition() override;
+    virtual const inet::Quaternion& getCurrentAngularVelocity() override;
+    virtual const inet::Quaternion& getCurrentAngularAcceleration() override;
+    virtual const inet::Coord& getConstraintAreaMax() const override;
+    virtual const inet::Coord& getConstraintAreaMin() const override;
+
+    //
+    traci::MovingNodeController* getControllerBase() override {
+        return MobilityBase::getControllerBase();
+    }
 
     // omnetpp::cSimpleModule
     void initialize(int stage) override;
     int numInitStages() const override;
 
 protected:
-    virtual void updateVisualRepresentation();
+    void refreshDisplay() const override;
 
 private:
     void initialize(const Position& pos, Angle heading, double speed) override;
@@ -35,7 +46,10 @@ private:
 
     inet::Coord mPosition;
     inet::Coord mSpeed;
-    inet::EulerAngles mOrientation;
+    inet::Quaternion mOrientation;
+    inet::Coord mConstrainedAreaMin;
+    inet::Coord mConstrainedAreaMax;
+
     double mAntennaHeight = 0.0;
     omnetpp::cModule* mVisualRepresentation = nullptr;
     const inet::CanvasProjection* mCanvasProjection = nullptr;
