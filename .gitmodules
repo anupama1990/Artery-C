@@ -13,6 +13,3 @@
 [submodule "scenarios/InTAS"]
 	path = scenarios/InTAS
 	url = https://github.com/anupama1990/InTAS.git
-[submodule "extern/simulte"]
-	path = extern/simulte
-	url = https://github.com/anupama1990/simulte.git
