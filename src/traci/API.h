@@ -17,10 +17,11 @@ class ServerEndpoint;
 class API : public TraCIAPI
 {
 public:
+    virtual ~API() = default;
     using Version = std::pair<int, std::string>;
     Version getVersion() const;
-    TraCIGeoPosition convertGeo(const TraCIPosition&) const;
-    TraCIPosition convert2D(const TraCIGeoPosition&) const;
+    virtual TraCIGeoPosition convertGeo(const TraCIPosition&) const;
+    virtual TraCIPosition convert2D(const TraCIGeoPosition&) const;
 
     void connect(const ServerEndpoint&);
 };

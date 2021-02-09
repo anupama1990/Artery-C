@@ -12,7 +12,7 @@ class BasicModuleMapper : public ModuleMapper, public omnetpp::cSimpleModule
 {
 public:
     void initialize() override;
-    omnetpp::cModuleType* vehicle(NodeManager&, const std::string&) override;
+    omnetpp::cModuleType* getMovingObjectType(NodeManager&, const std::string&) override;
 
 protected:
     virtual bool equipVehicle();

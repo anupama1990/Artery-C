@@ -12,11 +12,11 @@ Define_Module(BasicModuleMapper)
 void BasicModuleMapper::initialize()
 {
     m_rng = getRNG(0);
-    m_type = cModuleType::get(par("vehicleType"));
+    m_type = cModuleType::get(par("objectType"));
     m_penetration = par("penetrationRate");
 }
 
-cModuleType* BasicModuleMapper::vehicle(NodeManager& manager, const std::string& id)
+cModuleType* BasicModuleMapper::getMovingObjectType(NodeManager& manager, const std::string& id)
 {
     return equipVehicle() ? m_type : nullptr;
 }

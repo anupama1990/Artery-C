@@ -10,6 +10,7 @@ class LiteAPI
 {
 public:
     LiteAPI(API& api) : m_api(api) {}
+    virtual ~LiteAPI() = default;
 
     TraCIGeoPosition convertGeo(const TraCIPosition& pos) const { return m_api.convertGeo(pos); }
     TraCIPosition convert2D(const TraCIGeoPosition& pos) const { return m_api.convert2D(pos); }

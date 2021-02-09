@@ -7,7 +7,7 @@ namespace traci
 
 API::Version API::getVersion() const
 {
-    using libsumo::CMD_GETVERSION;
+    using constants::CMD_GETVERSION;
 
     tcpip::Storage outMsg;
     outMsg.writeUnsignedByte(1 + 1);
@@ -17,7 +17,7 @@ API::Version API::getVersion() const
     tcpip::Storage inMsg;
     check_resultState(inMsg, CMD_GETVERSION);
     int cmdId = check_commandGetResult(inMsg, 0, -1, true);
-    if (cmdId != CMD_GETVERSION) {
+    if (cmdId != constants::CMD_GETVERSION) {
         throw tcpip::SocketException("#Error: rceived status response to command: " + toString(cmdId) + " but expected: " + toString(CMD_GETVERSION));
     }
 
@@ -29,16 +29,46 @@ API::Version API::getVersion() const
 
 TraCIGeoPosition API::convertGeo(const TraCIPosition& pos) const
 {
-    libsumo::TraCIPosition result = simulation.convertGeo(pos.x, pos.y, false);
+    using namespace constants;
+
+    tcpip::Storage addParams;
+    addParams.writeUnsignedByte(TYPE_COMPOUND);
+    addParams.writeInt(2);
+    addParams.writeUnsignedByte(POSITION_2D);
+    addParams.writeDouble(pos.x);
+    addParams.writeDouble(pos.y);
+    addParams.writeUnsignedByte(TYPE_UBYTE);
+    addParams.writeUnsignedByte(POSITION_LON_LAT);
+    send_commandGetVariable(CMD_GET_SIM_VARIABLE, POSITION_CONVERSION, "", &addParams);
+
+    tcpip::Storage inMsg;
+    processGET(inMsg, CMD_GET_SIM_VARIABLE, POSITION_LON_LAT);
     TraCIGeoPosition geo;
-    geo.longitude = result.x;
-    geo.latitude = result.y;
+    geo.longitude = inMsg.readDouble();
+    geo.latitude = inMsg.readDouble();
     return geo;
 }
 
 TraCIPosition API::convert2D(const TraCIGeoPosition& pos) const
 {
-    return simulation.convertGeo(pos.longitude, pos.latitude, true);
+    using namespace constants;
+
+    tcpip::Storage addParams;
+    addParams.writeUnsignedByte(TYPE_COMPOUND);
+    addParams.writeInt(2);
+    addParams.writeUnsignedByte(POSITION_LON_LAT);
+    addParams.writeDouble(pos.longitude);
+    addParams.writeDouble(pos.latitude);
+    addParams.writeUnsignedByte(TYPE_UBYTE);
+    addParams.writeUnsignedByte(POSITION_2D);
+    send_commandGetVariable(CMD_GET_SIM_VARIABLE, POSITION_CONVERSION, "", &addParams);
+
+    tcpip::Storage inMsg;
+    processGET(inMsg, CMD_GET_SIM_VARIABLE, POSITION_2D);
+    TraCIPosition xyPos;
+    xyPos.x = inMsg.readDouble();
+    xyPos.y = inMsg.readDouble();
+    return xyPos;
 }
 
 void API::connect(const ServerEndpoint& endpoint)

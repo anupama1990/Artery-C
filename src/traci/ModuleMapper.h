@@ -12,7 +12,7 @@ class NodeManager;
 class ModuleMapper
 {
 public:
-    virtual omnetpp::cModuleType* vehicle(NodeManager&, const std::string& id) = 0;
+    virtual omnetpp::cModuleType* getMovingObjectType(NodeManager&, const std::string& id) = 0;
     virtual ~ModuleMapper() = default;
 };
 

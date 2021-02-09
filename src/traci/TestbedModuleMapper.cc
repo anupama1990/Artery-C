@@ -13,9 +13,9 @@ void TestbedModuleMapper::initialize()
     BasicModuleMapper::initialize();
 }
 
-omnetpp::cModuleType* TestbedModuleMapper::vehicle(NodeManager& manager, const std::string& id)
+omnetpp::cModuleType* TestbedModuleMapper::getMovingObjectType(NodeManager& manager, const std::string& id)
 {
-    return m_twinId == id ? m_twinType : BasicModuleMapper::vehicle(manager, id);
+    return m_twinId == id ? m_twinType : BasicModuleMapper::getMovingObjectType(manager, id);
 }
 
 } /* namespace traci */

@@ -11,6 +11,7 @@ set(SOURCES
     Listener.cc
     LiteAPI.cc
     MultiTypeModuleMapper.cc
+    NodeManager.cc
     Position.cc
     PosixLauncher.cc
     TestbedModuleMapper.cc

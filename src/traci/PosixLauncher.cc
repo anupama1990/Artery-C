@@ -74,6 +74,12 @@ void PosixLauncher::finish()
     kill();
 }
 
+std::pair<API*, LiteAPI*> PosixLauncher::createAPI(){
+    API* api = new API();
+    LiteAPI* liteApi = new LiteAPI(*api);
+    return std::make_pair(api, liteApi);
+}
+
 ServerEndpoint PosixLauncher::launch()
 {
     if (m_port == 0) {

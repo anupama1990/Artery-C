@@ -16,4 +16,10 @@ ServerEndpoint ConnectLauncher::launch()
     return m_endpoint;
 }
 
+std::pair<API*, LiteAPI*> ConnectLauncher::createAPI(){
+    API* api = new API();
+    LiteAPI* liteApi = new LiteAPI(*api);
+    return std::make_pair(api, liteApi);
+}
+
 } // namespace traci

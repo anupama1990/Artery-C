@@ -1,11 +1,9 @@
 #ifndef BASICNODEMANAGER_H_XL6ISC2V
 #define BASICNODEMANAGER_H_XL6ISC2V
 
-#include "traci/Angle.h"
 #include "traci/Boundary.h"
 #include "traci/NodeManager.h"
 #include "traci/Listener.h"
-#include "traci/Position.h"
 #include "traci/SubscriptionManager.h"
 #include <omnetpp/ccomponent.h>
 #include <omnetpp/csimplemodule.h>
@@ -20,7 +18,7 @@ namespace traci
 class LiteAPI;
 class ModuleMapper;
 class VehicleCache;
-class VehicleSink;
+class MovingObjectSink;
 
 class BasicNodeManager : public NodeManager, public Listener, public omnetpp::cSimpleModule
 {
@@ -40,13 +38,10 @@ public:
      *
      * Each emitted vehicle update signal is accompanied by a VehicleObject (cObject details)
      */
-    class VehicleObject : public omnetpp::cObject
+    class VehicleObject : public NodeManager::MovingObject
     {
     public:
         virtual std::shared_ptr<VehicleCache> getCache() const = 0;
-        virtual const TraCIPosition& getPosition() const = 0;
-        virtual TraCIAngle getHeading() const = 0;
-        virtual double getSpeed() const = 0;
     };
 
 protected:
@@ -57,13 +52,13 @@ protected:
 
     virtual void addVehicle(const std::string&);
     virtual void removeVehicle(const std::string&);
-    virtual void updateVehicle(const std::string&, VehicleSink*);
+    virtual void updateVehicle(const std::string&, MovingObjectSink*);
     virtual omnetpp::cModule* createModule(const std::string&, omnetpp::cModuleType*);
     virtual omnetpp::cModule* addNodeModule(const std::string&, omnetpp::cModuleType*, NodeInitializer&);
     virtual void removeNodeModule(const std::string&);
     virtual omnetpp::cModule* getNodeModule(const std::string&);
-    virtual VehicleSink* getVehicleSink(omnetpp::cModule*);
-    virtual VehicleSink* getVehicleSink(const std::string&);
+    virtual MovingObjectSink* getVehicleSink(omnetpp::cModule*);
+    virtual MovingObjectSink* getVehicleSink(const std::string&);
 
 private:
     void traciInit() override;
@@ -75,10 +70,8 @@ private:
     Boundary m_boundary;
     SubscriptionManager* m_subscriptions;
     unsigned m_nodeIndex;
-    std::map<std::string, omnetpp::cModule*> m_nodes;
-    std::map<std::string, VehicleSink*> m_vehicles;
-    std::string m_vehicle_sink_module;
-    bool m_destroy_vehicles_on_crash;
+    std::map<std::string, MovingObjectSink*> m_vehicles;
+    std::string m_objectSinkModule;
 };
 
 } // namespace traci

@@ -15,6 +15,7 @@ public:
     PosixLauncher();
     ~PosixLauncher();
     ServerEndpoint launch() override;
+    virtual std::pair<API*, LiteAPI*> createAPI() override;
 
 protected:
     void initialize() override;

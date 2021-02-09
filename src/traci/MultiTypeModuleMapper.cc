@@ -41,7 +41,7 @@ void MultiTypeModuleMapper::parseVehicleTypes(const omnetpp::cXMLElement* vehicl
 	}
 }
 
-omnetpp::cModuleType* MultiTypeModuleMapper::vehicle(NodeManager& manager, const std::string& id)
+omnetpp::cModuleType* MultiTypeModuleMapper::getMovingObjectType(NodeManager& manager, const std::string& id)
 {
 	omnetpp::cModuleType* moduleType = nullptr;
 	const double dice = uniform(0.0, mCdfValue);
