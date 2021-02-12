@@ -13,3 +13,6 @@
 [submodule "extern/inet"]
 	path = extern/inet
 	url = https://github.com/anupama1990/inet.git
+[submodule "extern/veins"]
+	path = extern/veins
+	url = https://github.com/anupama1990/veins.git
