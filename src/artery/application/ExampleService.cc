@@ -41,8 +41,6 @@ ExampleService::~ExampleService()
 
 void ExampleService::indicate(const btp::DataIndication& ind, cPacket* packet, const NetworkInterface& net)
 {
-	Enter_Method("indicate");
-
 	if (packet->getByteLength() == 42) {
 		EV_INFO << "packet indication on channel " << net.channel << "\n";
 	}
@@ -67,7 +65,7 @@ void ExampleService::finish()
 
 void ExampleService::handleMessage(cMessage* msg)
 {
-	Enter_Method("handleMessage");
+
 
 	if (msg == m_self_msg) {
 		EV_INFO << "self message\n";
@@ -76,7 +74,7 @@ void ExampleService::handleMessage(cMessage* msg)
 
 void ExampleService::trigger()
 {
-	Enter_Method("trigger");
+
 
 	// use an ITS-AID reserved for testing purposes
 	static const vanetza::ItsAid example_its_aid = 16480;
@@ -108,7 +106,7 @@ void ExampleService::trigger()
 
 void ExampleService::receiveSignal(cComponent* source, simsignal_t signal, cObject*, cObject*)
 {
-	Enter_Method("receiveSignal");
+
 
 	if (signal == scSignalCamReceived) {
 		auto& vehicle = getFacilities().get_const<traci::VehicleController>();
