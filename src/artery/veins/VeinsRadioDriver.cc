@@ -1,13 +1,16 @@
+#include <inet/common/packet/Packet.h>
+#include <inet/common/packet/chunk/cPacketChunk.h>
 #include "artery/networking/GeoNetIndication.h"
 #include "artery/networking/GeoNetRequest.h"
 #include "artery/nic/RadioDriverProperties.h"
-#include "artery/veins/VeinsMacFrame.h"
 #include "artery/veins/VeinsRadioDriver.h"
 #include "veins/base/utils/FindModule.h"
 #include "veins/base/utils/SimpleAddress.h"
+#include "veins/modules/messages/BaseFrame1609_4_m.h"
 #include "veins/modules/utility/Consts80211p.h"
 
 using namespace omnetpp;
+using namespace veins;
 
 namespace artery
 {
@@ -16,12 +19,12 @@ Register_Class(VeinsRadioDriver)
 
 namespace {
 
-veins::LAddress::L2Type convert(const vanetza::MacAddress& mac)
+LAddress::L2Type convert(const vanetza::MacAddress& mac)
 {
     if (mac == vanetza::cBroadcastMacAddress) {
-        return veins::LAddress::L2BROADCAST();
+        return LAddress::L2BROADCAST();
     } else {
-        veins::LAddress::L2Type addr = 0;
+        LAddress::L2Type addr = 0;
         for (unsigned i = 0; i < mac.octets.size(); ++i) {
             addr <<= 8;
             addr |= mac.octets[i];
@@ -30,9 +33,9 @@ veins::LAddress::L2Type convert(const vanetza::MacAddress& mac)
     }
 }
 
-vanetza::MacAddress convert(veins::LAddress::L2Type addr)
+vanetza::MacAddress convert(LAddress::L2Type addr)
 {
-    if (veins::LAddress::isL2Broadcast(addr)) {
+    if (LAddress::isL2Broadcast(addr)) {
         return vanetza::cBroadcastMacAddress;
     } else {
         vanetza::MacAddress mac;
@@ -78,23 +81,21 @@ void VeinsRadioDriver::initialize()
     mLowerLayerOut = gate("lowerLayerOut");
     mLowerLayerIn = gate("lowerLayerIn");
 
-    mChannelLoadSampler.reset();
+    mChannelLoadMeasurements.reset();
     mChannelLoadReport = new cMessage("report channel load");
     mChannelLoadReportInterval = par("channelLoadReportInterval");
     scheduleAt(simTime() + mChannelLoadReportInterval, mChannelLoadReport);
 
     auto properties = new RadioDriverProperties();
     // Mac1609_4 uses index of host as MAC address
-    properties->LinkLayerAddress = convert(veins::LAddress::L2Type { mHost->getIndex() });
-    // Mac1609_4 can only be fixed to CCH at the moment
-    properties->ServingChannel = channel::CCH;
+    properties->LinkLayerAddress = vanetza::create_mac_address(mHost->getIndex());
     indicateProperties(properties);
 }
 
 void VeinsRadioDriver::handleMessage(cMessage* msg)
 {
     if (msg == mChannelLoadReport) {
-        double channel_load = mChannelLoadSampler.cbr();
+        double channel_load = mChannelLoadMeasurements.channel_load().value();
         emit(RadioDriverBase::ChannelLoadSignal, channel_load);
         scheduleAt(simTime() + mChannelLoadReportInterval, mChannelLoadReport);
     } else if (RadioDriverBase::isDataRequest(msg)) {
@@ -106,15 +107,16 @@ void VeinsRadioDriver::handleMessage(cMessage* msg)
     }
 }
 
-void VeinsRadioDriver::handleDataIndication(cMessage* packet)
+void VeinsRadioDriver::handleDataIndication(cMessage* msg)
 {
-    auto frame = check_and_cast<VeinsMacFrame*>(packet);
-    auto gn = frame->decapsulate();
+    auto wsm = check_and_cast<BaseFrame1609_4*>(msg);
+    auto gn = wsm->decapsulate();
     auto* indication = new GeoNetIndication();
-    indication->source = convert(frame->getSenderAddress());
-    indication->destination = convert(frame->getRecipientAddress());
+//    indication->source = convert(wsm->getSenderAddress());
+    indication->source = convert(LAddress::L2NULL()); //todo: new BaseFrame1609_4 does not provide source.
+    indication->destination = convert(wsm->getRecipientAddress());
     gn->setControlInfo(indication);
-    delete frame;
+    delete wsm;
 
     indicateData(gn);
 }
@@ -122,21 +124,26 @@ void VeinsRadioDriver::handleDataIndication(cMessage* packet)
 void VeinsRadioDriver::handleDataRequest(cMessage* packet)
 {
     auto request = check_and_cast<GeoNetRequest*>(packet->removeControlInfo());
-    auto frame = new VeinsMacFrame();
-    frame->encapsulate(check_and_cast<cPacket*>(packet));
-    frame->setSenderAddress(convert(request->source_addr));
-    frame->setRecipientAddress(convert(request->destination_addr));
-    frame->setUserPriority(user_priority(request->access_category));
-    frame->setChannelNumber(static_cast<int>(veins::Channel::cch));
+    auto wsm = new BaseFrame1609_4();
+    wsm->encapsulate(check_and_cast<cPacket*>(packet));
+    // todo BaseFrame1609_4 does not need source
+//    wsm->setSenderAddress(convert(request->source_addr));
+    wsm->setRecipientAddress(convert(request->destination_addr));
+    wsm->setUserPriority(user_priority(request->access_category));
+    wsm->setChannelNumber((int)Channel::cch);
 
     delete request;
-    send(frame, mLowerLayerOut);
+    send(wsm, mLowerLayerOut);
 }
 
 void VeinsRadioDriver::receiveSignal(omnetpp::cComponent*, omnetpp::simsignal_t signal, bool busy, omnetpp::cObject*)
 {
     ASSERT(signal == channelBusySignal);
-    mChannelLoadSampler.busy(busy);
+    if (busy) {
+        mChannelLoadMeasurements.busy();
+    } else {
+        mChannelLoadMeasurements.idle();
+    }
 }
 
 } // namespace artery

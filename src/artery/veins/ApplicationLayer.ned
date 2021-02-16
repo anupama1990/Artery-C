@@ -1,7 +1,7 @@
 package artery.veins;
 
 import artery.application.IMiddleware;
-import artery.networking.Vanetza;
+import artery.networking.IVanetza;
 import artery.nic.IRadioDriver;
 import org.car2x.veins.base.modules.IBaseApplLayer;
 
@@ -9,7 +9,7 @@ import org.car2x.veins.base.modules.IBaseApplLayer;
 module ApplicationLayer like IBaseApplLayer
 {
 	parameters:
-		int headerLength @unit("bit") = 0; // ignored
+		int headerLength @unit("bit") = 0B; // ignored
 
 	gates:
 		input lowerLayerIn;
@@ -21,13 +21,14 @@ module ApplicationLayer like IBaseApplLayer
 		radioDriver : RadioDriver {
 		}
 
-		vanetza: Vanetza {
+		vanetza: <default("Vanetza")> like IVanetza {
 			*.middlewareModule = absPath("^.middleware");
 			*.radioDriverModule = absPath("^.radioDriver");
 			runtime.datetime = middleware.datetime;
 		}
 
 		middleware : <default("VehicleMiddleware")> like IMiddleware {
+			routerModule = absPath("^.vanetza.router");
 		}
 
 	connections allowunconnected:

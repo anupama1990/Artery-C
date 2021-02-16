@@ -40,8 +40,8 @@ network World
 
         traci: Manager {
             parameters:
-                mapper.vehicleType = default("artery.veins.Car");
-                nodes.vehicleSinkModule = default(".mobility");
+                mapper.objectType = default("artery.veins.Car");
+                nodes.objectSinkModule = default(".mobility");
                 @display("p=20,20");
         }
 
