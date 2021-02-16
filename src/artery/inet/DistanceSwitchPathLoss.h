@@ -8,7 +8,7 @@
 #define ARTERY_DISTANCESWITCHPATHLOSS_H_G8PI60NO
 
 #include <inet/common/Units.h>
-#include <inet/physicallayer/contract/packetlevel/IPathLoss.h>
+#include <inet/physicallayer/wireless/common/contract/packetlevel/IPathLoss.h>
 
 namespace artery
 {
