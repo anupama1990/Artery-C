@@ -49,6 +49,7 @@ add_library(Artery::Core ALIAS core)
 
 generate_opp_message(utility/AsioData.msg TARGET core)
 generate_opp_message(nic/PoiRetrievalModule.msg TARGET core)
+
 set_target_properties(core PROPERTIES
     OUTPUT_NAME artery_core
     OMNETPP_LIBRARY ON
