@@ -55,7 +55,11 @@ AsioScheduler::AsioScheduler() : m_work(m_service), m_timer(m_service), m_state(
 {
 }
 
+#if OMNETPP_VERSION < 0x600
 std::string AsioScheduler::info() const
+#else
+std::string AsioScheduler::str() const
+#endif
 {
 	return std::string("Asio Scheduler (") + SimTime(1, steady_clock_resolution()).str() + " resolution)";
 }

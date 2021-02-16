@@ -32,7 +32,11 @@ class AsioScheduler : public omnetpp::cScheduler
 {
 	public:
 		AsioScheduler();
+#if OMNETPP_VERSION < 0x600
 		virtual std::string info() const override;
+#else
+		virtual std::string str() const override;
+#endif
 		std::unique_ptr<AsioTask> createTask(omnetpp::cModule&);
 		void cancelTask(AsioTask*);
 		void processTask(AsioTask*);
