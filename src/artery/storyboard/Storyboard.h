@@ -11,8 +11,9 @@
 #include "artery/storyboard/Vehicle.h"
 #include "artery/utility/Geometry.h"
 #include "traci/Boundary.h"
+#include "pybind11/pybind11.h"
 
-namespace pybind11 { class module; }
+// namespace pybind11 { class module; }
 
 namespace artery
 {
