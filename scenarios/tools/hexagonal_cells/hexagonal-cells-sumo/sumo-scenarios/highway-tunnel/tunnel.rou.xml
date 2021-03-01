@@ -1,0 +1,46 @@
+<routes>
+
+  <vType id="vtype0" accel="4" decel="2.5" sigma="0.5" length="2.5" minGap="2" maxSpeed="130" color="1,1,0"  depart = "0.02" departLane="0"  />
+   <route id="route0" edges="557620619 344716770 557620616 "/>
+   <flow id="flow0" type="vtype0" route="route0" period="1" number="2" />
+    
+   <vType id="vtype1" accel="4" decel="2.5" sigma="0.5" length="2.5" minGap="2" maxSpeed="130" color="1,1,0"  depart = "0.02" departLane="1"  />
+   <route id="route1" edges="557620619 344716770 557620616 "/>
+   <flow id="flow1" type="vtype1" route="route1" period="1" number="2" />
+   
+    <vType id="vtype2" accel="4" decel="2.5" sigma="0.5" length="2.5" minGap="2" maxSpeed="130" color="1,1,0"  depart = "0.02" departLane="1"  />
+   <route id="route2" edges="557620619 344716770 557620616 "/>
+   <flow id="flow2" type="vtype2" route="route2" period="1" number="2" />
+  
+    <vType id="vtype3" accel="4" decel="2.5" sigma="0.5" length="2.5" minGap="2" maxSpeed="130" color="1,1,0"  depart = "0.02" departLane="1"  />
+   <route id="route3" edges="557620619 344716770 557620616 "/>
+   <flow id="flow3" type="vtype3" route="route3" period="1" number="2" />
+   
+   <vType id="vtype4" accel="4" decel="2.5" sigma="0.5" length="2.5" minGap="2" maxSpeed="130" color="1,1,0"  depart = "0.02" departLane="0"  />
+   <route id="route4" edges="557620619 344716770 557620616 "/>
+   <flow id="flow4" type="vtype4" route="route4" period="1" number="2" />
+    
+   <vType id="vtype5" accel="4" decel="2.5" sigma="0.5" length="2.5" minGap="2" maxSpeed="130" color="1,1,0"  depart = "0.02" departLane="1"  />
+   <route id="route5" edges="557620619 344716770 557620616 "/>
+   <flow id="flow5" type="vtype5" route="route5" period="1" number="2" />
+   
+    <vType id="vtype6" accel="4" decel="2.5" sigma="0.5" length="2.5" minGap="2" maxSpeed="130" color="1,1,0"  depart = "0.02" departLane="1"  />
+   <route id="route6" edges="557620619 344716770  557620616"/>
+   <flow id="flow6" type="vtype6" route="route6" period="1" number="2" />
+  
+    <vType id="vtype7" accel="4" decel="2.5" sigma="0.5" length="2.5" minGap="2" maxSpeed="130" color="1,1,0"  depart = "0.02" departLane="1"  />
+   <route id="route7" edges="557620619 344716770 557620616 "/>
+   <flow id="flow7" type="vtype7" route="route7" period="1" number="2" />
+   
+       <vType id="vtype8" accel="4" decel="2.5" sigma="0.5" length="2.5" minGap="2" maxSpeed="130" color="1,1,0"  depart = "0.02" departLane="1"  />
+   <route id="route8" edges="557620619 344716770 557620616 "/>
+   <flow id="flow8" type="vtype8" route="route8" period="1" number="2" />
+  
+    <vType id="vtype9" accel="4" decel="2.5" sigma="0.5" length="2.5" minGap="2" maxSpeed="130" color="1,1,0"  depart = "0.02" departLane="1"  />
+   <route id="route9" edges="557620619 344716770 557620616 "/>
+   <flow id="flow9" type="vtype9" route="route9" period="1" number="2" />
+     
+    
+           
+</routes>
+
