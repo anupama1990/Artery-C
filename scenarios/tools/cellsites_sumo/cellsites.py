@@ -1,10 +1,10 @@
+CSV_CELLSITES = '../../InTAS/scenario/cellsites/cellsites.csv'
 SUMO_NET_XML = '../../InTAS/scenario/ingolstadt.net.xml'
-POI_ENB_XML = '../../InTAS/scenario/InTAS_poi.add.xml'
-POLY_CELL_XML = '../../InTAS/scenario/InTAS_cellsites.xml'
+XML_OUT = '../../InTAS/scenario/cellsites/cellsites.xml'
+OMNET_OUT = '../../InTAS/scenario/cellsites/cellsites_omnet.txt'
 
 CIRCUMRADIUS = 200
 ROTATION = 0
-
 
 import os, sys
 if 'SUMO_HOME' in os.environ:
@@ -13,29 +13,52 @@ if 'SUMO_HOME' in os.environ:
 else:   
     sys.exit("please declare environment variable 'SUMO_HOME'")
 
+import csv
+
+def read_csv(file):
+    with open(file, mode='r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        return list(csv_reader)
+
+
+flatfile = read_csv(CSV_CELLSITES)
+
+ENB_ID = 'Enb Id'
+CELLS = 'cells'
+
+X_COORD = 'x'
+Y_COORD = 'y'
+
+X_BOUNDARY = 'x_boundary'
+Y_BOUNDARY = 'y_boundary'
+
+LATITUDE = 'Latitude'
+LONGITUDE = 'Longitude'
+
+
+CELL_VERTICES = 'cell_vertices'
+CELL_CENTERS = 'cell_centers'
+CELL_BORDERS = 'cell_borders'
+
+enb_fields = [ENB_ID, 'District', LATITUDE, LONGITUDE, 'Provider', 'Bands']
+
+cell_fields = ['Cell Number', 'Cell Id', 'PCI', 'RSRP [dBm]', 'Uplink Freq [MHz]', 'Downlink Freq [MHz]', 'Freq band', 'Direction']
+
+def unify_enb(flatfile):
+    enbs = {}
+    for entry in flatfile:
+        enb_id = entry[ENB_ID]
+        if not enb_id in enbs:
+            enbs[enb_id] = {field:entry[field] for field in enb_fields}
+            enbs[enb_id][CELLS] = []
+        enbs[enb_id][CELLS].append({field:entry[field] for field in cell_fields})
+    return enbs
+
+enbs = unify_enb(flatfile)
+print(enbs)
+
 
 import sumolib
-
-# read in ENBs from POI additionals XML files
-from xml.dom import minidom
-
-def mDomAttrVal(element, attribute_name):
-    return element.attributes[attribute_name].value
-
-
-def loadEnbPositions(poi_path):
-    dom = minidom.parse(poi_path)
-
-    return [
-        (mDomAttrVal(enb, 'lon'), mDomAttrVal(enb, 'lat'))
-        for enb in dom.getElementsByTagName('poi') 
-        if mDomAttrVal(enb, 'type') == 'eNodeB'
-    ]
-
-
-enb_geo_positions = loadEnbPositions(POI_ENB_XML)
-print(enb_geo_positions)
-
 
 # conversion from latitude and longitude to SUMO carthesian
 net = sumolib.net.readNet(SUMO_NET_XML)
@@ -43,19 +66,20 @@ net = sumolib.net.readNet(SUMO_NET_XML)
 def geo2xy(lon, lat):
     return net.convertLonLat2XY(lon, lat)
 
+def coordinatesInBoundary(x, y):
+    xmin,_,_,ymax = net.getBoundary()
+    print(xmin)
+    print(ymax)
+    return x - xmin, ymax - y
 
-def convertGeo2Xy(geo_positions):
-    return [
-        (geo2xy(pos[0], pos[1]))
-        for pos in geo_positions
-    ]
+def convertCoordinates(enbs):
+    for k in enbs.keys():
+        enb = enbs[k]
+        enb[X_COORD], enb[Y_COORD] = geo2xy(float(enb[LONGITUDE]), float(enb[LATITUDE]))
+        enb[X_BOUNDARY], enb[Y_BOUNDARY] = coordinatesInBoundary(enb[X_COORD], enb[Y_COORD])
 
+convertCoordinates(enbs)
 
-enb_xy_positions = convertGeo2Xy(enb_geo_positions)
-print(enb_xy_positions)
-
-
-# create vertices of regular shapes
 import math
 
 def regularShape(num_vertices, position, circumradius, rotation):
@@ -76,28 +100,19 @@ def regularShape(num_vertices, position, circumradius, rotation):
 
 overlap_radius = ((CIRCUMRADIUS / 2) * math.sin(math.radians((120))) / math.sin(math.radians(30)))
 
+def createCellsite(enbs):
+    print(enbs)
+    for enb in enbs.values():
+        print('enb')
+        print(enb)
+        pos = (enb[X_COORD], enb[Y_COORD])
+        enb[CELL_CENTERS] = regularShape(3, pos, CIRCUMRADIUS / 2, ROTATION)
+        enb[CELL_BORDERS] = regularShape(6, pos, overlap_radius, ROTATION + 30)
+        enb[CELL_VERTICES] = [regularShape(6, cell, CIRCUMRADIUS / 2, ROTATION) for cell in enb[CELL_CENTERS]]
 
 
-def createCellsite(enb_xy_positions):
-    enb_hex_cells = []
-    center_points = []
-    cell_borders = []
-    for pos in enb_xy_positions:
-        cellcenters = regularShape(3, pos, CIRCUMRADIUS / 2, ROTATION)
-        cell_borders.append(regularShape(6, pos, overlap_radius, ROTATION + 30))
-        center_points.append(cellcenters)
-        for cell in cellcenters:
-            enb_hex_cells.append(regularShape(6, cell, CIRCUMRADIUS / 2, ROTATION))
-            # center_points.append(regularShape(6, cell, 10, 0))
-            
-        # hex_cells = [regularShape(6, cell, CIRCUMRADIUS / 4, ROTATION) for cell in cellcenters]
-        # enb_hex_cells.append(hex_cells)
-    return enb_hex_cells, center_points, cell_borders
+createCellsite(enbs)
 
-
-enb_hex_cells, center_points, cell_borders = createCellsite(enb_xy_positions)
-
-print(enb_hex_cells)
 
 def getLineVector(startpoint, endpoint):
     return substractVectors(endpoint, startpoint)  
@@ -129,77 +144,75 @@ def setSumoGenericParameter(parent, key, val):
 
 
 # Write Sumo polygon XML file #005a9b #3498DB #6ea1c6
-# 110,161,198
-# 0,90,155
 import xml.etree.ElementTree as ET
 
 def writeSumoPolygonFile(
-        path, polygons, centers, borders, root_element_name, id_prefix, type_name, 
-        # color='0.43137254902,0.631372549019,0.776470588235',  
+        path,
+        enbs,
+        root_element_name='additional',
         color='#3498DB',  
-        # color='red', 
         lineWidth='1' 
     ):
     root = ET.Element(root_element_name)
-    last_idx = 0
-    for idx, polygon in enumerate(polygons):
-        # go full circle 
-        polygon.append(polygon[0])
+    cell_idx = 0
+    for enb_idx, enb in enumerate(enbs.values()):
+        enb_info = ET.SubElement(root, 'poi')
+        enb_info.set('id',"Enb_" + str(cell_idx))
+        enb_info.set('type', "Enb")
+        enb_info.set('height', "10")
+        enb_info.set('width', "10")
+        enb_info.set('imgFile', '../../../images/enodeb.jpg')
+        enb_info.set('x', str(enb[X_COORD]))
+        enb_info.set('y', str(enb[Y_COORD]))
 
-        cell = ET.SubElement(root, 'poly')
-        cell.set('id',id_prefix + str(idx))
-        cell.set('type', type_name)
-        cell.set('color',color)
-        # cell.set('fill', 'true')
-        # cell.set('layer', '0')
+        [setSumoGenericParameter(enb_info, enbparam, enb[enbparam]) for enbparam in enb_fields]
 
-        cell.set('lineWidth', str(lineWidth))
-        sumo_2D_points =  [','.join(map(str, vertex)) for vertex in polygon]
 
-        cell.set('shape', ' '.join(sumo_2D_points))
-        last_idx = idx
+        for i in range(len(enb[CELL_CENTERS])):
+            polygon = enb[CELL_VERTICES][i]
+            # go full circle 
+            polygon.append(polygon[0])
 
-    last_idx = last_idx + 1
-    
-    for site in centers:
-        print('site')
-        print(site)
+            cell_shape = ET.SubElement(root, 'poly')
+            cell_shape.set('id','Cell_Outline' + str(cell_idx))
+            cell_shape.set('type', 'Cell_Outline')
+            cell_shape.set('color',color)
+            cell_shape.set('lineWidth', str(lineWidth))
+            sumo_2D_points =  [','.join(map(str, vertex)) for vertex in polygon]
 
-        for cell in site:
-            print(cell)
-            cellel = ET.SubElement(root, 'poi')
-            cellel.set('id',"Cell" + str(last_idx))
-            cellel.set('type', "Cell")
-            cellel.set('height', "10")
-            cellel.set('width', "10")
-            cellel.set('imgFile', '../../images/enodeb.jpg')
-            cellel.set('x', str(cell[0]))
-            cellel.set('y', str(cell[1]))
+            cell_shape.set('shape', ' '.join(sumo_2D_points))
+                        
+            cell_info = ET.SubElement(root, 'poi')
+            cell_info.set('id',"Cell_" + str(cell_idx))
+            cell_info.set('type', "Cell")
+            cell_info.set('height', "10")
+            cell_info.set('width', "10")
+            cell_info.set('imgFile', '../../../images/enodeb.jpg')
+            cell_info.set('x', str(enb[CELL_CENTERS][i][0]))
+            cell_info.set('y', str(enb[CELL_CENTERS][i][1]))
 
-            setSumoGenericParameter(cellel, 'cellID', 'Cell_' + str(last_idx))
-            setSumoGenericParameter(cellel, 'PCI', '202 (67/1)')
-            setSumoGenericParameter(cellel, 'Maximum Signal (RSRP)',	'-84 dBm')
-            setSumoGenericParameter(cellel, 'Uplink Freq',	'909.9 MHz')
-            setSumoGenericParameter(cellel, 'Downlink Freq',	'954.9 MHz')
-            setSumoGenericParameter(cellel, 'Freq Band',	'E-GSM (B8 FDD)')
-            last_idx = last_idx + 1
+            [setSumoGenericParameter(cell_info, cellparam, enb[CELLS][i][cellparam]) for cellparam in cell_fields]
 
-    
-    last_idx =last_idx + 1
-    for idx, border in enumerate(borders):
+            cell_idx = cell_idx + 1
+
+        
+        
+        # for idx, border in enumerate(borders):
+        border = enb[CELL_BORDERS]
         print("border")
         print(border)
+        border_idx = 0
         for start in range(0, len(border), 2):
             end = start + 2
             line = border[start:end]
             # go full circle 
             # line.append(line[0])
 
-            cell = ET.SubElement(root, 'poly')
-            cell.set('id','CellBorder' + str(last_idx))
-            cell.set('type', type_name)
-            cell.set('fill', 'true')
-            cell.set('color', '#6ea1c6')
+            border_shape = ET.SubElement(root, 'poly')
+            border_shape.set('id','CellsiteBorder_' + str(enb_idx) + str(border_idx))
+            border_shape.set('type', 'CellsiteBorder')
+            border_shape.set('fill', 'true')
+            border_shape.set('color', '#6ea1c6')
 
             print(line)
             print("line" + str(start))
@@ -212,13 +225,24 @@ def writeSumoPolygonFile(
             box.append(line[1])
             box.append(line[0])
             sumo_2D_points =  [','.join(map(str, vertex)) for vertex in box]
-            cell.set('shape', ' '.join(sumo_2D_points))
-            last_idx = last_idx + 1
+            border_shape.set('shape', ' '.join(sumo_2D_points))
+            border_idx = border_idx + 1
 
-    xml = ET.tostring(root)
-    file = open(path, "wb")
-    file.write(xml)
+        xml = ET.tostring(root)
+        file = open(path, "wb")
+        file.write(xml)
 
 
 
-writeSumoPolygonFile(POLY_CELL_XML, enb_hex_cells, center_points, cell_borders, 'EnbCells', 'EnbCell_', 'EnbCell')
+writeSumoPolygonFile(XML_OUT,enbs)
+
+
+
+def writeOmnet(enbs):
+    with open(OMNET_OUT, "w") as file:
+        for idx, enb in enumerate(enbs.values()):
+            file.write("*.eNodeB[{}].mobility.initialX = {}m\n".format(idx, enb[X_BOUNDARY]))
+            file.write("*.eNodeB[{}].mobility.initialY = {}m\n".format(idx, enb[Y_BOUNDARY]))
+
+
+writeOmnet(enbs)
