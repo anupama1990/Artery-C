@@ -82,15 +82,19 @@ convertCoordinates(enbs)
 
 import math
 
+
 def regularShape(num_vertices, position, circumradius, rotation):
     x, y = position
     vertex_step = 360 / num_vertices
     vertices = []
 
+    # make 0° point to North
+    rotation = rotation 
+
     for i in range(num_vertices):
         rad = math.radians(rotation)
-        rot_x = math.cos(rad)
-        rot_y = math.sin(rad)
+        rot_x = math.sin(rad)
+        rot_y = math.cos(rad)
         vertices.append(
             (rot_x * circumradius + x,
             rot_y * circumradius + y)
@@ -109,9 +113,14 @@ def createCellsite(enbs):
         enb[CELL_CENTERS] = regularShape(3, pos, CIRCUMRADIUS / 2, ROTATION)
         enb[CELL_BORDERS] = regularShape(6, pos, overlap_radius, ROTATION + 30)
         enb[CELL_VERTICES] = [regularShape(6, cell, CIRCUMRADIUS / 2, ROTATION) for cell in enb[CELL_CENTERS]]
+        print(enb[CELL_CENTERS])
+        print(enb[CELL_VERTICES])
 
 
 createCellsite(enbs)
+
+
+
 
 
 def getLineVector(startpoint, endpoint):
@@ -199,8 +208,8 @@ def writeSumoPolygonFile(
         
         # for idx, border in enumerate(borders):
         border = enb[CELL_BORDERS]
-        print("border")
-        print(border)
+        # print("border")
+        # print(border)
         border_idx = 0
         for start in range(0, len(border), 2):
             end = start + 2
@@ -214,8 +223,8 @@ def writeSumoPolygonFile(
             border_shape.set('fill', 'true')
             border_shape.set('color', '#6ea1c6')
 
-            print(line)
-            print("line" + str(start))
+            # print(line)
+            # print("line" + str(start))
 
             box = []
             orthonormal = getOrthogonal(getNormalized(getLineVector(line[0],line[1])))
@@ -246,3 +255,6 @@ def writeOmnet(enbs):
 
 
 writeOmnet(enbs)
+
+
+print(regularShape(3, (0,0), 9, ROTATION))
