@@ -135,6 +135,9 @@ def add_vectors(u, v):
 def substract_vectors(u, v):
     return [ u[i]-v[i] for i in range(len(u)) ]
 
+def multiply_scalar(vec, s):
+    return [v * s for v in vec]
+
 def dot_product_vectors(u, v):
     return sum(u[i]*v[i] for i in range(len(u)))
 
@@ -162,9 +165,10 @@ def write_sumo_xml(
         path,
         enbs,
         root_element_name='additional',
-        # color='#3498DB',  
-        color='#FF4500',  
-        lineWidth='1' 
+        # color='#3498DB', 
+        color = 'blue',
+        # color='#FF4500',  
+        lineWidth='1.5' 
     ):
     root = ET.Element(root_element_name)
     cell_idx = 0
@@ -175,8 +179,8 @@ def write_sumo_xml(
         else:
             cell_color = 'grey'
         enb_info = ET.SubElement(root, 'poi')
-        enb_info.set('id',"Enb_" + str(cell_idx))
-        enb_info.set('type', "Enb")
+        enb_info.set('id',"eNB_" + str(cell_idx))
+        enb_info.set('type', "eNB")
         enb_info.set('height', "10")
         enb_info.set('width', "10")
         enb_info.set('imgFile', '../../../images/enodeb.jpg')
@@ -247,7 +251,8 @@ def write_sumo_xml(
                         orthonormal = get_orthonormal(lines[idx],lines[idx - 1])
                     else:
                         orthonormal = get_orthonormal(lines[idx + 1], lines[idx])
-                    line_shape.append(add_vectors(lines[idx], orthonormal))
+                    line_shape.append(add_vectors(lines[idx],multiply_scalar(orthonormal, 2.75)))
+                    
                 
                 line_shape.append(line_shape[0])
 
