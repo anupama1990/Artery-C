@@ -158,6 +158,11 @@ def set_sumo_generic_parameter(parent, key, val):
     param.set('value',val)
 
 
+def get_covered_lane_ids(net, cellcenter, coverage_radius):
+    lanes = net.getNeighboringLanes(cellcenter[0], cellcenter[1], coverage_radius)
+    lane_ids = tuple(lane[0].getID() for lane in lanes)
+    return lane_ids
+
 # Write Sumo polygon XML file #005a9b #3498DB #6ea1c6
 import xml.etree.ElementTree as ET
 
@@ -196,14 +201,18 @@ def write_sumo_xml(
             # go full circle 
             polygon.append(polygon[0])
 
-            cell_shape = ET.SubElement(root, 'poly')
-            cell_shape.set('id','Cell_Outline' + str(cell_idx))
-            cell_shape.set('type', 'Cell_Outline')
-            cell_shape.set('color', cell_color)
-            cell_shape.set('lineWidth', str(lineWidth))
+            cell_poly = ET.SubElement(root, 'poly')
+            cell_poly.set('id','Cell_Hexagon_' + str(cell_idx))
+            cell_poly.set('type', 'Cell_Hexagon')
+            cell_poly.set('color', cell_color)
+            cell_poly.set('lineWidth', str(lineWidth))
             sumo_2D_points =  [','.join(map(str, vertex)) for vertex in polygon]
-
-            cell_shape.set('shape', ' '.join(sumo_2D_points))
+            cell_poly.set('shape', ' '.join(sumo_2D_points))
+            set_sumo_generic_parameter(
+                cell_poly, 'laneIdList', 
+                ','.join(get_covered_lane_ids(net, enb[CELL_CENTERS][i], CIRCUMRADIUS/2))
+            )
+            
                         
             cell_info = ET.SubElement(root, 'poi')
             cell_info.set('id',"Cell_" + str(cell_idx))
@@ -270,6 +279,8 @@ def write_sumo_xml(
 
 
 write_sumo_xml(XML_OUT,enbs)
+
+
 
 
 def split_external_enbs(enbs):
