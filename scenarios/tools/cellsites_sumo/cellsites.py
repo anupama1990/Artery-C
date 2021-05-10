@@ -47,7 +47,7 @@ CELL_BORDERS = 'cell_borders'
 
 
 
-enb_fields = [ENB_ID, 'District', LATITUDE, LONGITUDE, PROVIDER, 'Bands', ORIENTATION, ACTIVE]
+enb_fields = [ENB_ID, 'District', LATITUDE, LONGITUDE, PROVIDER, 'Bands', ORIENTATION, ACTIVE, 'Sidelink', 'Duplex mode', 'Interface']
 
 cell_fields = ['Cell Number', 'Cell Id', 'PCI', 'RSRP [dBm]', 'Uplink Freq [MHz]', 'Downlink Freq [MHz]', 'Freq band']
 
@@ -186,8 +186,8 @@ def write_sumo_xml(
         enb_info = ET.SubElement(root, 'poi')
         enb_info.set('id',"eNB_" + str(cell_idx))
         enb_info.set('type', "eNB")
-        enb_info.set('height', "10")
-        enb_info.set('width', "10")
+        enb_info.set('height', "15")
+        enb_info.set('width', "15")
         enb_info.set('imgFile', '../../../images/enodeb.jpg')
         enb_info.set('color', 'white')
         enb_info.set('x', str(enb[X_COORD]))
@@ -217,8 +217,8 @@ def write_sumo_xml(
             cell_info = ET.SubElement(root, 'poi')
             cell_info.set('id',"Cell_" + str(cell_idx))
             cell_info.set('type', "Cell")
-            cell_info.set('height', "10")
-            cell_info.set('width', "10")
+            cell_info.set('height', "15")
+            cell_info.set('width', "15")
             cell_info.set('imgFile', '../../../images/enodeb.jpg')
             cell_info.set('color', cell_color)
             cell_info.set('x', str(enb[CELL_CENTERS][i][0]))
