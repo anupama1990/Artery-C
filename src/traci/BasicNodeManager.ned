@@ -12,6 +12,7 @@ simple BasicNodeManager like NodeManager
         @signal[traci.vehicle.remove](type=string);
         string coreModule;
         string mapperModule;
-        string objectSinkModule;
+        string vehicleSinkModule;
         string subscriptionsModule;
+        bool destroyVehiclesOnCrash = default(false);
 }
