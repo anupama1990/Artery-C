@@ -13,7 +13,7 @@ add_library(core SHARED
     application/ItsG5Service.cc
     application/LocalDynamicMap.cc
     application/Middleware.cc
-    application/MultiChannelPolicy.cc
+    
     application/NetworkInterface.cc
     application/NetworkInterfaceTable.cc
     application/StationaryMiddleware.cc
@@ -22,18 +22,27 @@ add_library(core SHARED
     application/TransportDispatcher.cc
     application/VehicleDataProvider.cc
     application/VehicleMiddleware.cc
-    application/XmlMultiChannelPolicy.cc
-    application/den/ImpactReductionUseCase.cc
+    application/MiddlewareBase.cc
+    application/MovingNodeDataProvider.cc
     application/den/Memory.cc
-    application/den/SuspendableUseCase.cc
-    application/den/TrafficJamUseCase.cc
     application/den/UseCase.cc
-
+	networking/AccessInterface.cc
+    networking/DccEntityBase.cc
+    networking/FsmDccEntity.cc
+    networking/GeoNetPacket.cc
+    networking/LimericDccEntity.cc
+    networking/Router.cc
+    networking/Runtime.cc
+    networking/SecurityEntity.cc
+    networking/StationaryPositionProvider.cc
+    networking/VehiclePositionProvider.cc
     nic/ChannelLoadSampler.cc
 	nic/RadioDriver.cc
-nic/RadioDriverBase.cc  
-  nic/ChannelLoadMeasurements.cc
+	nic/RadioDriverBase.cc  
+    nic/ChannelLoadMeasurements.cc
     traci/MobilityBase.cc
+    traci/MovingNodeController.cc
+    traci/ControllableVehicle.cc
     traci/VehicleController.cc
     traci/VehicleType.cc
     utility/AsioScheduler.cc
@@ -61,22 +70,23 @@ target_link_libraries(core PUBLIC opp_interface)
 target_link_libraries(core PUBLIC traci)
 target_link_libraries(core PUBLIC Vanetza::vanetza)
 INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/extern/simulte/src")
-if(TARGET veins)
-    message(STATUS "Enable Veins integration")
-    set_property(TARGET core APPEND PROPERTY SOURCES
-        veins/VeinsConnectionManager.cc
-        veins/VeinsMobility.cc
-        veins/VeinsObstacleControl.cc
-        veins/VeinsRadioDriver.cc)
+#if(TARGET veins)
+ #   message(STATUS "Enable Veins integration")
+  #  set_property(TARGET core APPEND PROPERTY SOURCES
+   #     veins/VeinsConnectionManager.cc
+    #    veins/VeinsMobility.cc
+     #   veins/VeinsObstacleControl.cc
+      #  veins/VeinsRadioDriver.cc)
+   # target_link_libraries(core PUBLIC veins)
+#endif()
     target_link_libraries(core PUBLIC veins)
-endif()
-
 if(TARGET INET)
     message(STATUS "Enable INET integration")
     set_property(TARGET core APPEND PROPERTY SOURCES
 
         inet/AntennaMobility.cc
         inet/DistanceSwitchPathLoss.cc
+        inet/InetMobility.cc
         inet/InetRadioDriver.cc
         inet/VanetRx.cc
     )

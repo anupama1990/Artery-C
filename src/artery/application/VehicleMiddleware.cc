@@ -24,6 +24,7 @@ void VehicleMiddleware::initialize(int stage)
         initializeVehicleController(par("mobilityModule"));
         initializeStationType(mVehicleController->getVehicleClass());
         getFacilities().register_const(&mVehicleDataProvider);
+        getFacilities().registerConst(static_cast<MovingNodeDataProvider*>(&mVehicleDataProvider));
         mVehicleDataProvider.update(mVehicleController);
 
         Identity identity;
@@ -80,6 +81,8 @@ void VehicleMiddleware::initializeVehicleController(cPar& mobilityPar)
 	auto mobility = inet::getModuleFromPar<ControllableVehicle>(mobilityPar, findHost());
 	mVehicleController = mobility->getVehicleController();
 	ASSERT(mVehicleController);
+
+    getFacilities().register_mutable(mobility->getControllerBase());
 	getFacilities().register_mutable(mVehicleController);
 }
 

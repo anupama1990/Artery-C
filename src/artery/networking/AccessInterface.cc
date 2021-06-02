@@ -5,6 +5,9 @@
 #include <omnetpp/checkandcast.h>
 #include <omnetpp/csimplemodule.h>
 #include <omnetpp/simutil.h>
+#if OMNETPP_VERSION >= 0x600
+  #include <omnetpp/ccontextswitcher.h>
+#endif
 
 using vanetza::access::DataRequest;
 using vanetza::ChunkPacket;

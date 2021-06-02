@@ -1,12 +1,9 @@
 package artery.lte;
 
-import inet.applications.contract.ITCPApp;
-import inet.applications.contract.IUDPApp;
+
 import inet.networklayer.configurator.ipv4.HostAutoConfigurator;
 import inet.networklayer.contract.IRoutingTable;
 import inet.networklayer.contract.INetworkLayer;
-import inet.transportlayer.tcp.TCP;
-import inet.transportlayer.udp.UDP;
 import lte.stack.LteNicUeD2D;
 import inet.networklayer.common.InterfaceTable;
 import artery.nic.RadioDriver;
@@ -16,18 +13,25 @@ import inet.networklayer.common.InterfaceTable;
 import inet.mobility.contract.IMobility;
 import inet.node.inet.INetworkNode;
 import lte.apps.nonip.AlertNonIp;
+import artery.inet.Mobility;
+import inet.networklayer.ipv4.Ipv4RoutingTable;
+import inet.transportlayer.contract.ITcp;
+import inet.transportlayer.contract.IUdp;
+import inet.transportlayer.contract.ISctp;
+import inet.common.MessageDispatcher;
+import inet.common.packet.recorder.PcapRecorder;
+import inet.linklayer.contract.IExternalInterface;
+import inet.applications.contract.IApp;
 
-
-
-module Car
+module Car 
 {
     parameters:
         @display("i=block/wrxtx;is=vs;bgb=788,631");
         @networkNode;
         @labels(node,lte-node,wireless-node);
         // INET network layer
-        *.routingTableModule = default(absPath(".routingTable"));
         *.interfaceTableModule = default(absPath(".interfaceTable"));
+        *.routingTableModule = default(absPath(".routingTable"));
         mobility.visualRepresentation = "^";
         bool ipTraffic;
         // LTE NIC
@@ -38,6 +42,17 @@ module Car
         // application
         int numUdpApps = default(0);
         int numTcpApps = default(0);
+        int numApps = default(0);
+        bool hasIpv4 = default(true);
+        bool hasUdp = default(firstAvailableOrEmpty("Udp") != "");
+        bool hasTcp = default(firstAvailableOrEmpty("Tcp", "TcpLwip", "TcpNsc") != "");
+        bool hasSctp = default(false);
+        
+        //# Ext Interface
+        bool enableExtInterface = default(false);
+        string extHostAddress = default("");
+        
+        int numPcapRecorders = default(0); // no of PcapRecorders
         
     gates:
         input lteRadioIn @directIn;
@@ -61,6 +76,7 @@ module Car
         middleware: VehicleMiddleware {
             parameters:
                 @display("p=250,261");
+                routerModule = ".vanetza.router";
                 mobilityModule = ".mobility";
         }
         
@@ -68,7 +84,7 @@ module Car
         //        nonipapp: AlertNonIp {
         //            @display("p=518.16003,431.80002");
         //        }
-        mobility: <default("artery.inet.Mobility")> like IMobility {
+        mobility: Mobility  {
             parameters:
                 @display("p=50,200");
         }
@@ -78,66 +94,118 @@ module Car
                 @display("p=519,307");
                 nodeType = "UE";
         }
-        
-        
-        configurator: HostAutoConfigurator {
-                @display("p=50,25");
-        }
+            
+       
         interfaceTable: InterfaceTable {
             parameters:
                 @display("p=50,300");
         }
-        routingTable: <default("IPv4RoutingTable")> like IRoutingTable {
-                @display("p=50,125");
+        routingTable:Ipv4RoutingTable{
+        }
+            
+        ipv4: <default("Ipv4NetworkLayer")> like INetworkLayer  {
+            parameters:
+                @display("p=375,376;q=queue");
         }
         
         
-        networkLayer: <default("IPv4NetworkLayer")> like INetworkLayer {
-                @display("p=519,184");
+        // transport layer
+        udp: <default(firstAvailableOrEmpty("Udp"))> like IUdp if hasUdp {
+            parameters:
+                @display("p=375,226");
         }
-        
-        udpApp[numUdpApps]: <> like IUDPApp {
-                @display("p=462,33,col,-100");
+        tcp: <default(firstAvailableOrEmpty("Tcp", "TcpLwip", "TcpNsc"))> like ITcp if hasTcp {
+            parameters:
+                @display("p=525,226");
         }
-        
-        udp: UDP if numUdpApps > 0 {
-                @display("p=462,103");
+        sctp: <default(firstAvailableOrEmpty("Sctp"))> like ISctp if hasSctp {
+            parameters:
+                @display("p=675,226");
         }
-        
-        tcpApp[numTcpApps]: <> like ITCPApp {
-                @display("p=595,33,col,-100");
+        // application layer
+        app[numApps]: <> like IApp {
+            @display("p=375,76,row,140");
         }
-        
-        tcp: TCP if numTcpApps > 0 {
-                @display("p=595,103");
+
+        // message dispatcher for SAP between application and transport layer
+        at: MessageDispatcher {
+            parameters:
+                @display("p=550,146;b=600,5,,,,1");
         }
-        
+        // message dispatcher for SAP between transport and network layer
+        tn: MessageDispatcher {
+            parameters:
+                @display("p=550,296;b=600,5,,,,1");
+        }
+        // message dispatcher for SAP to link layer
+        nl: MessageDispatcher {
+            parameters:
+                @display("p=550,446;b=600,5,,,,1");
+        }
+                
+        ext: <default("ExtInterface")> like IExternalInterface if enableExtInterface {
+            parameters:
+                @display("p=110.664,406.116,row,10;q=txQueue;i=block/ifcard");
+        }
+
+        pcapRecorder[numPcapRecorders]: PcapRecorder {
+            @display("p=53,350,r,10");
+        }
     connections allowunconnected:
         lteNic.radioIn <-- lteRadioIn; //user plane
         lteNic.control_IN <-- control_IN; //control plane
         
         //#IP traffic
         //if ipTraffic==true {
-        networkLayer.ifOut++ --> lteNic.upperLayerIn;
-        networkLayer.ifIn++ <-- lteNic.upperLayerOut;
+       nl.out++ --> lteNic.upperLayerIn;
+       nl.in++ <-- lteNic.upperLayerOut;
         // }
-        for i=0..numUdpApps-1 {
-                udpApp[i].udpOut --> udp.appIn++;
-                udpApp[i].udpIn <-- udp.appOut++;
+//# 
+        //# Internal Tcp/Udp applications connections with transport layer
+        //#
+
+        for i=0..numApps-1 {
+            app[i].socketOut --> at.in++;
+            app[i].socketIn <-- at.out++;
         }
-        
-        udp.ipOut --> networkLayer.transportIn++ if numUdpApps > 0;
-        udp.ipIn <-- networkLayer.transportOut++ if numUdpApps > 0;
-        
-        for i=0..numTcpApps-1 {
-                tcpApp[i].tcpOut --> tcp.appIn++;
-                tcpApp[i].tcpIn <-- tcp.appOut++;
-        }
-        
-        // if ipTraffic==true {
-        tcp.ipOut --> networkLayer.transportIn++ if numTcpApps > 0;
-        tcp.ipIn <-- networkLayer.transportout++ if numTcpApps > 0;
-        
+
+        at.out++ --> udp.appIn if hasUdp;
+        at.in++ <-- udp.appOut if hasUdp;
+
+        at.out++ --> tcp.appIn if hasTcp;
+        at.in++ <-- tcp.appOut if hasTcp;
+
+        at.out++ --> sctp.appIn if hasSctp;
+        at.in++ <-- sctp.appOut if hasSctp;
+
+        //# 
+		//# Internal transport layer connections to network layer
+		//# 
+
+        udp.ipOut --> tn.in++ if hasUdp;
+        udp.ipIn <-- tn.out++ if hasUdp;
+
+        tcp.ipOut --> tn.in++ if hasTcp;
+        tcp.ipIn <-- tn.out++ if hasTcp;
+
+        sctp.ipOut --> tn.in++ if hasSctp;
+        tn.out++ --> sctp.ipIn if hasSctp;
+
+        ipv4.ifIn <-- nl.out++ if hasIpv4;
+        ipv4.ifOut --> nl.in++ if hasIpv4;
+
+        ipv4.transportIn <-- tn.out++ if hasIpv4;
+        ipv4.transportOut --> tn.in++ if hasIpv4;
+
+        tn.out++ --> nl.in++;
+        tn.in++ <-- nl.out++;
+
+        //#
+        //# Connections between Ext interface and IP layer 
+        //#
+        nl.out++ --> ext.upperLayerIn if enableExtInterface;
+        nl.in++ <-- ext.upperLayerOut if enableExtInterface;
+
         //}
         //#Non-IP traffic
         // if ipTraffic == false {

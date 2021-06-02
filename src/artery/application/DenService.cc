@@ -32,6 +32,17 @@ DenService::DenService() :
 {
 }
 
+DenService::~DenService(){
+
+    std::list<artery::den::UseCase*>::iterator i = mUseCases.begin();
+    while (i != mUseCases.end())
+    {
+        (*i)->callFinish();
+        (*i)->deleteModule();
+        i = mUseCases.erase(i);
+    }
+}
+
 void DenService::initialize()
 {
     ItsG5BaseService::initialize();
@@ -74,7 +85,7 @@ void DenService::receiveSignal(cComponent*, simsignal_t signal, cObject* obj, cO
     if (signal == storyboardSignal) {
         StoryboardSignal* storyboardSignalObj = check_and_cast<StoryboardSignal*>(obj);
         for (auto& use_case : mUseCases) {
-            use_case.handleStoryboardTrigger(*storyboardSignalObj);
+            use_case->handleStoryboardTrigger(*storyboardSignalObj);
         }
     }
 }
@@ -91,7 +102,7 @@ void DenService::indicate(const vanetza::btp::DataIndication& indication, std::u
         emit(denmReceivedSignal, &obj);
 
         for (auto& use_case : mUseCases) {
-            use_case.indicate(obj);
+            use_case->indicate(obj);
         }
     }
 }
@@ -101,7 +112,7 @@ void DenService::trigger()
     mMemory->drop();
 
     for (auto& use_case : mUseCases) {
-        use_case.check();
+        use_case->check();
     }
 }
 

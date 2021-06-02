@@ -1,20 +1,22 @@
+
 #ifndef ARTERY_INETMOBILITY_H_SKZPGILS
 #define ARTERY_INETMOBILITY_H_SKZPGILS
 
 #include "artery/traci/MobilityBase.h"
 #include <inet/mobility/contract/IMobility.h>
 #include <omnetpp/csimplemodule.h>
-
+#include "artery/traci/ControllableObject.h"
+#include "artery/traci/MovingNodeController.h"
 namespace inet { class CanvasProjection; }
 
 namespace artery
 {
 
-class InetMobility : public inet::IMobility, public MobilityBase, public ControllableVehicle , public omnetpp::cSimpleModule
+class InetMobility : public inet::IMobility, public MobilityBase,  public omnetpp::cSimpleModule
 {
 public:
     // artery::MobilityBase
-    void initializeSink(traci::LiteAPI*, const std::string& id, const traci::Boundary&, std::shared_ptr<traci::VariableCache> cache) override;
+    void initializeSink(traci::LiteAPI*, const std::string& id, const traci::Boundary&, std::shared_ptr<traci::VariableCache> cache) ;
 
     // inet::IMobility interface
     virtual int getId() const override { return cSimpleModule::getId(); }

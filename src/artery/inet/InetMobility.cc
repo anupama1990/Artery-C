@@ -27,7 +27,7 @@ void InetMobility::initialize(int stage)
     if (stage == inet::INITSTAGE_LOCAL) {
         mVisualRepresentation = inet::findModuleFromPar<cModule>(par("visualRepresentation"), this);
         mAntennaHeight = par("antennaHeight");
-        WATCH(mObjectId);
+        WATCH(mVehicleId);
         WATCH(mPosition);
         WATCH(mSpeed);
         WATCH(mOrientation);
@@ -47,7 +47,7 @@ void InetMobility::initializeSink(traci::LiteAPI* api, const std::string& id, co
     ASSERT(cache->getId() == id);
     ASSERT(&cache->getLiteAPI() == api);
     mTraci = api;
-    mObjectId= id;
+    mVehicleId= id;
     mNetBoundary = boundary;
 
     const auto& max = mNetBoundary.upperRightPosition();
@@ -56,11 +56,11 @@ void InetMobility::initializeSink(traci::LiteAPI* api, const std::string& id, co
     const auto& min = mNetBoundary.lowerLeftPosition();
     mConstrainedAreaMin = inet::Coord { min.x, min.y, min.z };
 
-    std::shared_ptr<traci::VehicleCache> vehicleCache =  std::dynamic_pointer_cast<traci::VehicleCache> (cache);
+    /*std::shared_ptr<traci::VehicleCache> vehicleCache =  std::dynamic_pointer_cast<traci::VehicleCache> (cache);
     if (!vehicleCache){
         //todo
     }
-    mController.reset(new traci::VehicleController(vehicleCache));
+    mController.reset(new traci::VehicleController(vehicleCache));*/
 }
 
 double InetMobility::getMaxSpeed() const

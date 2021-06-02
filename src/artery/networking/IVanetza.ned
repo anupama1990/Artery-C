@@ -13,8 +13,11 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package artery.application;
+package artery.networking;
 
-simple ExampleService like ItsG5Service
-{
+moduleinterface IVanetza{
+    
+    gates:
+    inout radioDriverData;
+    input radioDriverProperties;
 }

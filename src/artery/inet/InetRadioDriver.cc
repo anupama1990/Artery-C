@@ -96,16 +96,16 @@ void InetRadioDriver::handleDataRequest(cMessage* msg)
 
 	auto up_tag = packet->addTag<inet::UserPriorityReq>();
 	switch (request->access_category) {
-		case vanetza::AccessCategory::VO:
+		case vanetza::access::AccessCategory::VO:
 			up_tag->setUserPriority(7);
 			break;
-		case vanetza::AccessCategory::VI:
+		case vanetza::access::AccessCategory::VI:
 			up_tag->setUserPriority(5);
 			break;
-		case vanetza::AccessCategory::BE:
+		case vanetza::access::AccessCategory::BE:
 			up_tag->setUserPriority(3);
 			break;
-		case vanetza::AccessCategory::BK:
+		case vanetza::access::AccessCategory::BK:
 			up_tag->setUserPriority(1);
 			break;
 		default:

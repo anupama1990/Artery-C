@@ -5,6 +5,7 @@
 #include <veins/base/modules/BaseMobility.h>
 #include <veins/base/utils/Coord.h>
 
+using namespace traci;
 namespace artery
 {
 
@@ -19,12 +20,6 @@ private:
 
     // artery::MobilityBase
     void initializeSink(traci::LiteAPI*, const std::string& id, const traci::Boundary&, std::shared_ptr<traci::VariableCache> cache) override;
-
-
-
-    traci::MovingNodeController* getControllerBase() override {
-        return MobilityBase::getControllerBase();
-    }
 
     veins::Coord mPosition;
     veins::Coord mDirection;

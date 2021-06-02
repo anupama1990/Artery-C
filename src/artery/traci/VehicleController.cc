@@ -6,7 +6,7 @@
 #include <boost/units/systems/si/velocity.hpp>
 
 namespace si = boost::units::si;
-
+using namespace libsumo;
 namespace traci
 {
 
@@ -37,7 +37,7 @@ const std::string& VehicleController::getNodeId() const {
 
 std::string VehicleController::getTypeId() const
 {
-    return m_cache->get<VAR_TYPE>();
+    return m_cache->get<libsumo::VAR_TYPE>();
 
 }
 

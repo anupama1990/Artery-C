@@ -12,6 +12,7 @@
 #include <omnetpp/csimplemodule.h>
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/member.hpp>
+#include <boost/multi_index/mem_fun.hpp>
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/optional/optional.hpp>
 
@@ -25,6 +26,7 @@ public:
     static const omnetpp::simsignal_t removeSignal;
 
     void initialize() override;
+    using omnetpp::cIListener::finish;  // [-Woverloaded-virtual]
     void finish() override;
     void receiveSignal(omnetpp::cComponent*, omnetpp::simsignal_t, omnetpp::cObject*, omnetpp::cObject*) override;
 
@@ -42,6 +44,7 @@ public:
 
     struct traci {};
     struct application {};
+    struct mac {};
 
 private:
     boost::multi_index_container<Identity,
@@ -51,7 +54,10 @@ private:
                 boost::multi_index::member<Identity, std::string, &Identity::traci>>,
             boost::multi_index::ordered_non_unique<
                 boost::multi_index::tag<application>,
-                boost::multi_index::member<Identity, uint32_t, &Identity::application>>
+                boost::multi_index::member<Identity, uint32_t, &Identity::application>>,
+            boost::multi_index::ordered_non_unique<
+                boost::multi_index::tag<mac>,
+                boost::multi_index::const_mem_fun<Identity, vanetza::MacAddress, &Identity::mid>>
         >> mIdentities;
 };
 

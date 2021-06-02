@@ -141,4 +141,3 @@ using Ring = boost::geometry::model::ring<Point, true, false>;
 } // namespace artery
 
 #endif /* GEOMETRY_H_W8CYK9GM */
-

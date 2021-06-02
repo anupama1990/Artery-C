@@ -3,7 +3,7 @@
 
 #include <omnetpp/cobject.h>
 #include <vanetza/access/data_request.hpp>
-#include <vanetza/geonet/data_request.hpp>
+
 namespace artery
 {
 
@@ -14,9 +14,6 @@ class GeoNetRequest : public omnetpp::cObject, public vanetza::access::DataReque
         {
         }
 };
-
-
-
 
 } // namespace artery
 

@@ -10,29 +10,13 @@
 #include "artery/nic/RadioDriverProperties.h"
 #include "artery/utility/InitStages.h"
 #include "artery/utility/PointerCheck.h"
-#include <boost/units/cmath.hpp>
-#include <boost/units/io.hpp>
 #include <inet/common/ModuleAccess.h>
 #include <vanetza/btp/header.hpp>
 #include <vanetza/btp/header_conversion.hpp>
 #include <vanetza/geonet/data_confirm.hpp>
+#include <vanetza/units/time.hpp>
 
-namespace vanetza {
-namespace geonet {
-
-static inline std::ostream& operator<<(std::ostream& os, const vanetza::geonet::LongPositionVector& epv)
-{
-    using namespace boost::units;
-    os << "\n"
-        << "latitude: \t" << abs(epv.position().latitude) << (epv.latitude.value() < 0 ? " S" : " N") << "\n"
-        << "longitude: \t" << abs(epv.position().longitude) << (epv.longitude.value() < 0 ? " W" : " E") << "\n"
-        << "heading: \t" << vanetza::units::GeoAngle { epv.heading };
-    return os;
-}
-
-} // namespace geonet
-} // namespace vanetza
-
+using namespace vanetza::units::si;
 
 namespace artery
 {
@@ -54,7 +38,7 @@ void Router::initialize(int stage)
         mRadioDriver = inet::getModuleFromPar<RadioDriverBase>(par("radioDriverModule"), this);
         mRadioDriverDataIn = gate("radioDriverData");
         mRadioDriverPropertiesIn = gate("radioDriverProperties");
-        mSecurityEntity = inet::findModuleFromPar<SecurityEntity>(par("securityModule"), this, false);
+        mSecurityEntity = inet::findModuleFromPar<SecurityEntity>(par("securityModule"), this);
     } else if (stage == InitStages::Self) {
         // initialize MIB (will check for existence of security entity)
         initializeManagementInformationBase(mMIB);
@@ -70,20 +54,17 @@ void Router::initialize(int stage)
             mRouter->set_security_entity(mSecurityEntity);
         }
 
+        // pass BTP-B messages to middleware which will dispatch them to its services
+        using vanetza::geonet::UpperProtocol;
+        mRouter->set_transport_handler(UpperProtocol::BTP_B, &mMiddleware->getTransportInterface());
+
         // bind router to DCC entity
         auto dccEntity = inet::findModuleFromPar<IDccEntity>(par("dccModule"), this);
         mRouter->set_access_interface(notNullPtr(dccEntity->getRequestInterface()));
         mRouter->set_dcc_field_generator(dccEntity->getGeonetFieldGenerator()); // nullptr is okay
 
-        // pass BTP-B messages to transport layer dispatcher in network interface
-        using vanetza::geonet::UpperProtocol;
-        mNetworkInterface = std::make_shared<NetworkInterface>(*this, *dccEntity, mMiddleware->getTransportDispatcher());
-        mRouter->set_transport_handler(UpperProtocol::BTP_B, &mNetworkInterface->getTransportHandler());
-
-        // finally, register new network interface at middleware
-        mMiddleware->registerNetworkInterface(mNetworkInterface);
-
-        omnetpp::createWatch("EPV", mRouter->get_local_position_vector());
+        using vanetza::dcc::TransmitRateThrottle;
+        mMiddleware->getFacilities().register_mutable<TransmitRateThrottle>(dccEntity->getTransmitRateThrottle());
     }
 }
 
@@ -113,9 +94,8 @@ void Router::handleMessage(omnetpp::cMessage* msg)
         auto addr = generateAddress(properties->LinkLayerAddress);
         mRouter->set_address(addr);
         Identity identity;
-        identity.geonet.insert({mNetworkInterface, addr});
+        identity.geonet = addr;
         emit(Identity::changeSignal, Identity::ChangeGeoNetAddress, &identity);
-        mNetworkInterface->channel = properties->ServingChannel;
     } else {
         error("Do not know how to handle received message");
     }
@@ -125,10 +105,14 @@ void Router::handleMessage(omnetpp::cMessage* msg)
 
 void Router::initializeManagementInformationBase(vanetza::geonet::ManagementInformationBase& mib)
 {
-    mib.itsGnDefaultTrafficClass.tc_id(3); // send BEACONs with DP3
-    mib.itsGnIsMobile = par("isMobile");
+    mib.itsGnDefaultTrafficClass.tc_id(par("itsGnDefaultTrafficClass").intValue()); // send BEACONs with DP3
+    mib.vanetzaDisableBeaconing = par("vanetzaDisableBeaconing").boolValue();
     mib.itsGnSecurity = (mSecurityEntity != nullptr);
     mib.vanetzaDeferInitialBeacon = par("deferInitialBeacon");
+    mib.itsGnIsMobile = par("isMobile").boolValue();
+    mib.itsGnBeaconServiceRetransmitTimer = par("itsGnBeaconServiceRetransmitTimer").doubleValue()*second;
+    mib.itsGnBeaconServiceMaxJitter = par("itsGnBeaconServiceMaxJitter").doubleValue()*second;
+
 }
 
 void Router::request(const vanetza::btp::DataRequestB& request, std::unique_ptr<vanetza::DownPacket> packet)

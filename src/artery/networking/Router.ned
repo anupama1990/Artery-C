@@ -12,9 +12,13 @@ simple Router
         string runtimeModule;
         string securityModule;
 
-        bool deferInitialBeacon = default(true);
+		// Management Information Base (MIB)
+		int itsGnDefaultTrafficClass = default(3);
+		bool vanetzaDisableBeaconing = default(false); 
+		bool deferInitialBeacon = default(true);
         bool isMobile = default(true);
-
+        double itsGnBeaconServiceRetransmitTimer @unit(s) = default(3.0s);
+    	double itsGnBeaconServiceMaxJitter @unit(s) = default(0.75s);
     gates:
         input radioDriverData;
         input radioDriverProperties;

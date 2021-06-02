@@ -1,8 +1,9 @@
 package artery.networking;
 
-import artery.dcc.IDccEntity;
+import artery.networking.IVanetza;
+import artery.networking.IDccEntity;
 
-module Vanetza
+module Vanetza like IVanetza
 {
     parameters:
         *.dccModule = absPath(".dcc");

@@ -8,7 +8,7 @@ import inet.linklayer.contract.IWirelessInterface;
 import inet.mobility.contract.IMobility;
 import inet.networklayer.common.InterfaceTable;
 
-module Car extends PlainVehicle like INetworkNode
+module Car like INetworkNode
 {
     parameters:
         @display("i=block/wrxtx;is=vs");

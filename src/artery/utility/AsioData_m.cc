@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by nedtool 6.0 from /home/hegde/Workspace/PhD/v2xframework/Artery-C/src/artery/nic/PoiRetrievalModule.msg.
+// Generated file, do not edit! Created by nedtool 6.0 from /home/hegde/Workspace/PhD/v2xframework/Artery-C/src/artery/utility/AsioData.msg.
 //
 
 // Disable warnings about unused variables, empty switch stmts, etc:
@@ -26,7 +26,7 @@
 
 #include <iostream>
 #include <sstream>
-#include "PoiRetrievalModule_m.h"
+#include "AsioData_m.h"
 
 namespace omnetpp {
 
@@ -148,7 +148,6 @@ void doParsimUnpacking(omnetpp::cCommBuffer *, T& t)
 
 }  // namespace omnetpp
 
-namespace artery {
 
 // forward
 template<typename T, typename A>
@@ -179,48 +178,77 @@ inline std::ostream& operator<<(std::ostream& out, const std::vector<T,A>& vec)
     return out;
 }
 
-PoiRetrievalModule_Base::PoiRetrievalModule_Base(const char *name, short kind) : ::omnetpp::cPacket(name,kind)
+Register_Class(AsioData)
+
+AsioData::AsioData(const char *name, short kind) : ::omnetpp::cMessage(name,kind)
 {
+    this->Length = 0;
 }
 
-PoiRetrievalModule_Base::PoiRetrievalModule_Base(const PoiRetrievalModule_Base& other) : ::omnetpp::cPacket(other)
+AsioData::AsioData(const AsioData& other) : ::omnetpp::cMessage(other)
 {
     copy(other);
 }
 
-PoiRetrievalModule_Base::~PoiRetrievalModule_Base()
+AsioData::~AsioData()
 {
 }
 
-PoiRetrievalModule_Base& PoiRetrievalModule_Base::operator=(const PoiRetrievalModule_Base& other)
+AsioData& AsioData::operator=(const AsioData& other)
 {
     if (this==&other) return *this;
-    ::omnetpp::cPacket::operator=(other);
+    ::omnetpp::cMessage::operator=(other);
     copy(other);
     return *this;
 }
 
-void PoiRetrievalModule_Base::copy(const PoiRetrievalModule_Base& other)
+void AsioData::copy(const AsioData& other)
 {
+    this->Buffer = other.Buffer;
+    this->Length = other.Length;
 }
 
-void PoiRetrievalModule_Base::parsimPack(omnetpp::cCommBuffer *b) const
+void AsioData::parsimPack(omnetpp::cCommBuffer *b) const
 {
-    ::omnetpp::cPacket::parsimPack(b);
+    ::omnetpp::cMessage::parsimPack(b);
+    doParsimPacking(b,this->Buffer);
+    doParsimPacking(b,this->Length);
 }
 
-void PoiRetrievalModule_Base::parsimUnpack(omnetpp::cCommBuffer *b)
+void AsioData::parsimUnpack(omnetpp::cCommBuffer *b)
 {
-    ::omnetpp::cPacket::parsimUnpack(b);
+    ::omnetpp::cMessage::parsimUnpack(b);
+    doParsimUnpacking(b,this->Buffer);
+    doParsimUnpacking(b,this->Length);
 }
 
-class PoiRetrievalModuleDescriptor : public omnetpp::cClassDescriptor
+AsioBuffer& AsioData::getBuffer()
+{
+    return this->Buffer;
+}
+
+void AsioData::setBuffer(const AsioBuffer& Buffer)
+{
+    this->Buffer = Buffer;
+}
+
+int AsioData::getLength() const
+{
+    return this->Length;
+}
+
+void AsioData::setLength(int Length)
+{
+    this->Length = Length;
+}
+
+class AsioDataDescriptor : public omnetpp::cClassDescriptor
 {
   private:
     mutable const char **propertynames;
   public:
-    PoiRetrievalModuleDescriptor();
-    virtual ~PoiRetrievalModuleDescriptor();
+    AsioDataDescriptor();
+    virtual ~AsioDataDescriptor();
 
     virtual bool doesSupport(omnetpp::cObject *obj) const override;
     virtual const char **getPropertyNames() const override;
@@ -244,27 +272,27 @@ class PoiRetrievalModuleDescriptor : public omnetpp::cClassDescriptor
     virtual void setFieldStructValuePointer(void *object, int field, int i, void *ptr) const override;
 };
 
-Register_ClassDescriptor(PoiRetrievalModuleDescriptor)
+Register_ClassDescriptor(AsioDataDescriptor)
 
-PoiRetrievalModuleDescriptor::PoiRetrievalModuleDescriptor() : omnetpp::cClassDescriptor("artery::PoiRetrievalModule", "omnetpp::cPacket")
+AsioDataDescriptor::AsioDataDescriptor() : omnetpp::cClassDescriptor("AsioData", "omnetpp::cMessage")
 {
     propertynames = nullptr;
 }
 
-PoiRetrievalModuleDescriptor::~PoiRetrievalModuleDescriptor()
+AsioDataDescriptor::~AsioDataDescriptor()
 {
     delete[] propertynames;
 }
 
-bool PoiRetrievalModuleDescriptor::doesSupport(omnetpp::cObject *obj) const
+bool AsioDataDescriptor::doesSupport(omnetpp::cObject *obj) const
 {
-    return dynamic_cast<PoiRetrievalModule_Base *>(obj)!=nullptr;
+    return dynamic_cast<AsioData *>(obj)!=nullptr;
 }
 
-const char **PoiRetrievalModuleDescriptor::getPropertyNames() const
+const char **AsioDataDescriptor::getPropertyNames() const
 {
     if (!propertynames) {
-        static const char *names[] = { "customize",  nullptr };
+        static const char *names[] = {  nullptr };
         omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
         const char **basenames = basedesc ? basedesc->getPropertyNames() : nullptr;
         propertynames = mergeLists(basenames, names);
@@ -272,20 +300,19 @@ const char **PoiRetrievalModuleDescriptor::getPropertyNames() const
     return propertynames;
 }
 
-const char *PoiRetrievalModuleDescriptor::getProperty(const char *propertyname) const
+const char *AsioDataDescriptor::getProperty(const char *propertyname) const
 {
-    if (!strcmp(propertyname,"customize")) return "true";
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     return basedesc ? basedesc->getProperty(propertyname) : nullptr;
 }
 
-int PoiRetrievalModuleDescriptor::getFieldCount() const
+int AsioDataDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 0+basedesc->getFieldCount() : 0;
+    return basedesc ? 2+basedesc->getFieldCount() : 2;
 }
 
-unsigned int PoiRetrievalModuleDescriptor::getFieldTypeFlags(int field) const
+unsigned int AsioDataDescriptor::getFieldTypeFlags(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -293,10 +320,14 @@ unsigned int PoiRetrievalModuleDescriptor::getFieldTypeFlags(int field) const
             return basedesc->getFieldTypeFlags(field);
         field -= basedesc->getFieldCount();
     }
-    return 0;
+    static unsigned int fieldTypeFlags[] = {
+        FD_ISCOMPOUND,
+        FD_ISEDITABLE,
+    };
+    return (field>=0 && field<2) ? fieldTypeFlags[field] : 0;
 }
 
-const char *PoiRetrievalModuleDescriptor::getFieldName(int field) const
+const char *AsioDataDescriptor::getFieldName(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -304,16 +335,23 @@ const char *PoiRetrievalModuleDescriptor::getFieldName(int field) const
             return basedesc->getFieldName(field);
         field -= basedesc->getFieldCount();
     }
-    return nullptr;
+    static const char *fieldNames[] = {
+        "Buffer",
+        "Length",
+    };
+    return (field>=0 && field<2) ? fieldNames[field] : nullptr;
 }
 
-int PoiRetrievalModuleDescriptor::findField(const char *fieldName) const
+int AsioDataDescriptor::findField(const char *fieldName) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    int base = basedesc ? basedesc->getFieldCount() : 0;
+    if (fieldName[0]=='B' && strcmp(fieldName, "Buffer")==0) return base+0;
+    if (fieldName[0]=='L' && strcmp(fieldName, "Length")==0) return base+1;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
-const char *PoiRetrievalModuleDescriptor::getFieldTypeString(int field) const
+const char *AsioDataDescriptor::getFieldTypeString(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -321,10 +359,14 @@ const char *PoiRetrievalModuleDescriptor::getFieldTypeString(int field) const
             return basedesc->getFieldTypeString(field);
         field -= basedesc->getFieldCount();
     }
-    return nullptr;
+    static const char *fieldTypeStrings[] = {
+        "AsioBuffer",
+        "int",
+    };
+    return (field>=0 && field<2) ? fieldTypeStrings[field] : nullptr;
 }
 
-const char **PoiRetrievalModuleDescriptor::getFieldPropertyNames(int field) const
+const char **AsioDataDescriptor::getFieldPropertyNames(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -337,7 +379,7 @@ const char **PoiRetrievalModuleDescriptor::getFieldPropertyNames(int field) cons
     }
 }
 
-const char *PoiRetrievalModuleDescriptor::getFieldProperty(int field, const char *propertyname) const
+const char *AsioDataDescriptor::getFieldProperty(int field, const char *propertyname) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -350,7 +392,7 @@ const char *PoiRetrievalModuleDescriptor::getFieldProperty(int field, const char
     }
 }
 
-int PoiRetrievalModuleDescriptor::getFieldArraySize(void *object, int field) const
+int AsioDataDescriptor::getFieldArraySize(void *object, int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -358,18 +400,18 @@ int PoiRetrievalModuleDescriptor::getFieldArraySize(void *object, int field) con
             return basedesc->getFieldArraySize(object, field);
         field -= basedesc->getFieldCount();
     }
-    PoiRetrievalModule_Base *pp = (PoiRetrievalModule_Base *)object; (void)pp;
+    AsioData *pp = (AsioData *)object; (void)pp;
     switch (field) {
         default: return 0;
     }
 }
 
-void PoiRetrievalModuleDescriptor::setFieldArraySize(void *object, int field, int size) const
+void AsioDataDescriptor::setFieldArraySize(void *object, int field, int size) const
 {
     throw omnetpp::cRuntimeError("setFieldArraySize() is unsupported in message compiler legacy mode (--msg4 option)");
 }
 
-const char *PoiRetrievalModuleDescriptor::getFieldDynamicTypeString(void *object, int field, int i) const
+const char *AsioDataDescriptor::getFieldDynamicTypeString(void *object, int field, int i) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -377,13 +419,13 @@ const char *PoiRetrievalModuleDescriptor::getFieldDynamicTypeString(void *object
             return basedesc->getFieldDynamicTypeString(object,field,i);
         field -= basedesc->getFieldCount();
     }
-    PoiRetrievalModule_Base *pp = (PoiRetrievalModule_Base *)object; (void)pp;
+    AsioData *pp = (AsioData *)object; (void)pp;
     switch (field) {
         default: return nullptr;
     }
 }
 
-std::string PoiRetrievalModuleDescriptor::getFieldValueAsString(void *object, int field, int i) const
+std::string AsioDataDescriptor::getFieldValueAsString(void *object, int field, int i) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -391,13 +433,15 @@ std::string PoiRetrievalModuleDescriptor::getFieldValueAsString(void *object, in
             return basedesc->getFieldValueAsString(object,field,i);
         field -= basedesc->getFieldCount();
     }
-    PoiRetrievalModule_Base *pp = (PoiRetrievalModule_Base *)object; (void)pp;
+    AsioData *pp = (AsioData *)object; (void)pp;
     switch (field) {
+        case 0: {std::stringstream out; out << pp->getBuffer(); return out.str();}
+        case 1: return long2string(pp->getLength());
         default: return "";
     }
 }
 
-void PoiRetrievalModuleDescriptor::setFieldValueAsString(void *object, int field, int i, const char *value) const
+void AsioDataDescriptor::setFieldValueAsString(void *object, int field, int i, const char *value) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -407,13 +451,14 @@ void PoiRetrievalModuleDescriptor::setFieldValueAsString(void *object, int field
         }
         field -= basedesc->getFieldCount();
     }
-    PoiRetrievalModule_Base *pp = (PoiRetrievalModule_Base *)object; (void)pp;
+    AsioData *pp = (AsioData *)object; (void)pp;
     switch (field) {
-        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'PoiRetrievalModule_Base'", field);
+        case 1: pp->setLength(string2long(value)); break;
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'AsioData'", field);
     }
 }
 
-const char *PoiRetrievalModuleDescriptor::getFieldStructName(int field) const
+const char *AsioDataDescriptor::getFieldStructName(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -421,10 +466,13 @@ const char *PoiRetrievalModuleDescriptor::getFieldStructName(int field) const
             return basedesc->getFieldStructName(field);
         field -= basedesc->getFieldCount();
     }
-    return nullptr;
+    switch (field) {
+        case 0: return omnetpp::opp_typename(typeid(AsioBuffer));
+        default: return nullptr;
+    };
 }
 
-void *PoiRetrievalModuleDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
+void *AsioDataDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -432,16 +480,16 @@ void *PoiRetrievalModuleDescriptor::getFieldStructValuePointer(void *object, int
             return basedesc->getFieldStructValuePointer(object, field, i);
         field -= basedesc->getFieldCount();
     }
-    PoiRetrievalModule_Base *pp = (PoiRetrievalModule_Base *)object; (void)pp;
+    AsioData *pp = (AsioData *)object; (void)pp;
     switch (field) {
+        case 0: return (void *)(&pp->getBuffer()); break;
         default: return nullptr;
     }
 }
 
-void PoiRetrievalModuleDescriptor::setFieldStructValuePointer(void *object, int field, int i, void *ptr) const
+void AsioDataDescriptor::setFieldStructValuePointer(void *object, int field, int i, void *ptr) const
 {
     throw omnetpp::cRuntimeError("setFieldStructValuePointer() is unsupported in message compiler legacy mode (--msg4 option)");
 }
 
-} // namespace artery
 

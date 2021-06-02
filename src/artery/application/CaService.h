@@ -1,14 +1,25 @@
-/*
-* Artery V2X Simulation Framework
-* Copyright 2014-2019 Raphael Riebl et al.
-* Licensed under GPLv2, see COPYING file for detailed license and warranty terms.
-*/
+//
+// Copyright (C) 2014 Raphael Riebl <raphael.riebl@thi.de>
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
 #ifndef ARTERY_CASERVICE_H_
 #define ARTERY_CASERVICE_H_
 
 #include "artery/application/ItsG5BaseService.h"
-#include "artery/utility/Channel.h"
 #include "artery/utility/Geometry.h"
 #include <vanetza/asn1/cam.hpp>
 #include <vanetza/btp/data_interface.hpp>
@@ -19,9 +30,8 @@
 namespace artery
 {
 
-class NetworkInterfaceTable;
 class Timer;
-class VehicleDataProvider;
+class MovingNodeDataProvider;
 
 class CaService : public ItsG5BaseService
 {
@@ -39,12 +49,9 @@ class CaService : public ItsG5BaseService
 		void sendCam(const omnetpp::SimTime&);
 		omnetpp::SimTime genCamDcc();
 
-		ChannelNumber mPrimaryChannel = channel::CCH;
-		const NetworkInterfaceTable* mNetworkInterfaceTable = nullptr;
-		const VehicleDataProvider* mVehicleDataProvider = nullptr;
-		const Timer* mTimer = nullptr;
-		LocalDynamicMap* mLocalDynamicMap = nullptr;
-
+		const MovingNodeDataProvider* mNodeDataProvider;
+		const Timer* mTimer;
+		artery::LocalDynamicMap* mLocalDynamicMap;
 		omnetpp::SimTime mGenCamMin;
 		omnetpp::SimTime mGenCamMax;
 		omnetpp::SimTime mGenCam;
@@ -62,7 +69,7 @@ class CaService : public ItsG5BaseService
 		bool mFixedRate;
 };
 
-vanetza::asn1::Cam createCooperativeAwarenessMessage(const VehicleDataProvider&, uint16_t genDeltaTime);
+vanetza::asn1::Cam createCooperativeAwarenessMessage(const MovingNodeDataProvider&, uint16_t genDeltaTime);
 void addLowFrequencyContainer(vanetza::asn1::Cam&);
 
 } // namespace artery

@@ -23,75 +23,38 @@
 #include <omnetpp/csimplemodule.h>
 #include <vanetza/btp/data_interface.hpp>
 #include <vanetza/btp/data_request.hpp>
-#include "artery/application/Facilities.h"
-#include "artery/application/IndicationInterface.h"
-#include "artery/application/Middleware.h"
-#include "artery/application/NetworkInterface.h"
-#include "artery/application/TransportDescriptor.h"
-#include <set>
+#include "Facilities.h"
+#include "Middleware.h"
 
 namespace artery
 {
 
 class ItsG5BaseService :
 	public omnetpp::cSimpleModule, public omnetpp::cListener,
-	public IndicationInterface
+	public vanetza::btp::IndicationInterface
 {
 	public:
-		using port_type = PortNumber; /*< deprecated type alias, use PortNumber */
+		typedef Middleware::port_type port_type;
 
 		ItsG5BaseService();
 		virtual ~ItsG5BaseService();
-
-		/**
-		 * Determine if this service expects to receive any ITS messages.
-		 *
-		 * Middleware will throw an error if no listening descriptors are configured for
-		 * a service returning true by this method.
-		 *
-		 * \return true by default
-		 */
-		virtual bool requiresListener() const;
-
-		/**
-		 * Periodic service trigger.
-		 *
-		 * Middleware will call this method periodically as configured by its update interval.
-		 */
 		virtual void trigger();
-
-		/**
-		 * Add listening transport descriptor (channel + BTP port).
-		 *
-		 * Middleware will call this method for each descriptor configured for this service.
-		 * \param td configured transport descriptor
-		 */
-		void addTransportDescriptor(const TransportDescriptor& td);
-
-		/**
-		 * Get set of all transport descriptor of this service
-		 *
-		 * \return transport descriptors
-		 */
-		const std::set<TransportDescriptor>& getTransportDescriptors() const { return m_listeners; }
+		virtual bool requiresListener() const;
 
 	protected:
 		void initialize() override;
 		void finish() override;
-		void request(const vanetza::btp::DataRequestB&, std::unique_ptr<vanetza::DownPacket>, const NetworkInterface* = nullptr);
-		void indicate(const vanetza::btp::DataIndication&, std::unique_ptr<vanetza::UpPacket>, const NetworkInterface&) override;
-		virtual void indicate(const vanetza::btp::DataIndication&, std::unique_ptr<vanetza::UpPacket>);
+		void request(const vanetza::btp::DataRequestB&, std::unique_ptr<vanetza::DownPacket>);
+		void indicate(const vanetza::btp::DataIndication&, std::unique_ptr<vanetza::UpPacket>) override;
 		Facilities& getFacilities();
 		const Facilities& getFacilities() const;
-		PortNumber getPortNumber(ChannelNumber = channel::CCH) const;
-		std::set<TransportDescriptor> getListeningDescriptors() const;
+		port_type getPortNumber() const;
 		omnetpp::cModule* findHost();
 		void subscribe(const omnetpp::simsignal_t&);
 		void unsubscribe(const omnetpp::simsignal_t&);
 
 	private:
 		Middleware* m_middleware;
-		std::set<TransportDescriptor> m_listeners;
 };
 
 } // namespace artery

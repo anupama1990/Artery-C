@@ -18,8 +18,7 @@
 
 #include "artery/application/ItsG5Service.h"
 #include "artery/application/Middleware.h"
-#include <inet/common/ModuleAccess.h>
-#include <omnetpp/clog.h>
+#include "veins/base/utils/FindModule.h"
 #include <cassert>
 
 using namespace omnetpp;
@@ -44,7 +43,7 @@ Facilities& ItsG5BaseService::getFacilities()
 
 const Facilities& ItsG5BaseService::getFacilities() const
 {
-	ASSERT(m_middleware);
+	assert(m_middleware);
 	return m_middleware->getFacilities();
 }
 
@@ -53,26 +52,15 @@ bool ItsG5BaseService::requiresListener() const
 	return true;
 }
 
-void ItsG5BaseService::addTransportDescriptor(const TransportDescriptor& td)
+ItsG5BaseService::port_type ItsG5BaseService::getPortNumber() const
 {
-	m_listeners.insert(td);
-}
-
-PortNumber ItsG5BaseService::getPortNumber(ChannelNumber ch) const
-{
-	for (const auto& listener : m_listeners) {
-		if (getChannel(listener) == ch) {
-			return getPort(listener);
-		}
-	}
-
-	EV_WARN << "No listening port specified on channel " << ch << "\n";
-	return 0;
+	assert(m_middleware);
+	return m_middleware->getPortNumber(this);
 }
 
 cModule* ItsG5BaseService::findHost()
 {
-	return inet::findContainingNode(m_middleware);
+	return veins::FindModule<>::findHost(this);
 }
 
 void ItsG5BaseService::initialize()
@@ -106,27 +94,14 @@ void ItsG5BaseService::trigger()
 {
 }
 
-void ItsG5BaseService::request(const vanetza::btp::DataRequestB& req,
-	std::unique_ptr<vanetza::DownPacket> packet, const NetworkInterface* interface)
+void ItsG5BaseService::request(const vanetza::btp::DataRequestB& req, std::unique_ptr<vanetza::DownPacket> packet)
 {
 	assert(m_middleware);
-	if (interface) {
-		m_middleware->requestTransmission(req, std::move(packet), *interface);
-	} else {
-		m_middleware->requestTransmission(req, std::move(packet));
-	}
-}
-
-void ItsG5BaseService::indicate(const vanetza::btp::DataIndication& ind,
-	std::unique_ptr<vanetza::UpPacket> packet, const NetworkInterface&)
-{
-	// forward indication to "old" indicate method by default
-	this->indicate(ind, std::move(packet));
+	m_middleware->requestTransmission(req, std::move(packet));
 }
 
 void ItsG5BaseService::indicate(const vanetza::btp::DataIndication& ind, std::unique_ptr<vanetza::UpPacket> packet)
 {
-	// no-op by default
 }
 
 } // namespace artery

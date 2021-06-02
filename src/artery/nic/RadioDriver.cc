@@ -34,13 +34,14 @@
 #include "../../../extern/simulte/src/common/LteCommon.h"
 #include "../../../extern/simulte/src/common/LteControlInfo_m.h"
 #include "../../../extern/simulte/src/stack/phy/packet/cbr_m.h"
-#include "../../../extern/vanetza/vanetza/net/access_category.hpp"
+#include "../../../extern/vanetza/vanetza/access/access_category.hpp"
 #include "../../../extern/vanetza/vanetza/net/mac_address.hpp"
 #include "../../../extern/veins/src/veins/base/utils/FindModule.h"
 #include "../../../extern/simulte/src/stack/phy/layer/LtePhyBase.h"
+//#include "../../../extern/simulte/src/common/LteControlInfo.h"
 #include "../utility/Channel.h"
 #include <vanetza/geonet/data_request.hpp>
-
+#include "apps/nonip/CAMPacket_m.h"
 
 
 
@@ -74,9 +75,9 @@ vanetza::MacAddress convert(long addr)
     return mac;
 }
 
-int user_priority(vanetza::AccessCategory ac)
+int user_priority(vanetza::access::AccessCategory ac)
 {
-    using AC = vanetza::AccessCategory;
+    using AC = vanetza::access::AccessCategory;
     int up = 0;
     switch (ac) {
     case AC::BK:
@@ -136,7 +137,7 @@ void RadioDriver::initialize()
 
 void RadioDriver::finish()
 {
-   // binder_->unregisterNode(nodeId_);
+    // binder_->unregisterNode(nodeId_);
     /*if (mHost) {
         mHost->unsubscribe(channelBusySignal, this);
        }*/
@@ -146,7 +147,7 @@ void RadioDriver::finish()
 
 void RadioDriver::handleMessage(cMessage* msg){
 
-    EV<<"RadioDriver::handleMessage "<<msg->getName()<<endl;
+    EV<<"RadioDriver LTE::received CAM "<<msg->getName()<<endl;
     if (msg->isName("CBR")) {
         Cbr* cbrPkt = check_and_cast<Cbr*>(msg);
         double channel_load = cbrPkt->getCbr();
@@ -165,7 +166,7 @@ void RadioDriver::handleMessage(cMessage* msg){
 
 void RadioDriver::handleDataIndication(cMessage* packet)
 {
-    auto* lteControlInfo = check_and_cast<FlowControlInfoNonIp*>(packet->removeControlInfo());
+    auto* lteControlInfo = check_and_cast<FlowControlInfo*>(packet->removeControlInfo());
     auto* indication = new GeoNetIndication();
     indication->source = convert(lteControlInfo->getSrcAddr());
     indication->destination = convert(lteControlInfo->getDstAddr());
@@ -178,30 +179,44 @@ void RadioDriver::handleDataIndication(cMessage* packet)
 
 void RadioDriver::handleDataRequest(cMessage* packet)
 {
-    EV<<"RadioDriver::handleDataRequest start up complete: "<<startUpComplete_<<endl;
+    EV<<"RadioDriver::handleDataRequest start up complete: "<<endl;
     using vanetza::units::si::seconds;
-
     auto request = check_and_cast<GeoNetRequest*>(packet->removeControlInfo());
-    auto lteControlInfo = new FlowControlInfoNonIp();
 
+    auto lteControlInfo = new FlowControlInfo();
     lteControlInfo->setSrcAddr(convert(request->source_addr));
     lteControlInfo->setDstAddr(convert(request->destination_addr));
     lteControlInfo->setPriority(user_priority(request->access_category));
     lteControlInfo->setDuration(1);  // Duration/max lifetime of all CAM packets = 1s according to standards
     lteControlInfo->setCreationTime(packet->getCreationTime());
 
-    EV<<"RadioDriver::handleDataRequest Creation time: "<<packet->getCreationTime()<<endl;
-    EV<<"RadioDriver::handleDataRequest Duration: "<< lteControlInfo->getDuration()<<endl;
-
     if (request->destination_addr == vanetza::cBroadcastMacAddress) {
         lteControlInfo->setDirection(D2D_MULTI);
     }
 
     packet->setControlInfo(lteControlInfo);
+
+    //Create LTE compatible CAM packet out of GeoNet received from Vanetza
+
+    EV<<"Sending to CV2X protocol stack"<<endl;
+    cPacket* p = check_and_cast<cPacket *>(packet);
+    auto cam = makeShared<ByteCountChunk>(B(p->getByteLength()));
+    Packet* campacket = new Packet("LtePdcpPdu",cam);
+    auto camInfo = campacket->addTagIfAbsent<FlowControlInfo>();
+    camInfo->setSrcAddr(convert(request->source_addr));
+    camInfo->setDstAddr(convert(request->destination_addr));
+    camInfo->setPriority(user_priority(request->access_category));
+    camInfo->setDuration(1);
+    camInfo->setCreationTime(packet->getCreationTime());
+    if (request->destination_addr == vanetza::cBroadcastMacAddress) {
+        camInfo->setDirection(D2D_MULTI);
+    }
+
+
     CAMSGenerated = CAMSGenerated+1;
     CAMId = CAMId+1;
     emit(numberCAMs,CAMSGenerated);
-    send(packet, mLowerLayerOut);
+    send(campacket, mLowerLayerOut);
     emit(CAMIdSent,CAMId);
     delete request;
 }

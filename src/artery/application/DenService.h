@@ -27,6 +27,7 @@ class DenService : public ItsG5BaseService
 {
     public:
         DenService();
+        virtual ~DenService();
         void initialize() override;
         void receiveSignal(omnetpp::cComponent*, omnetpp::simsignal_t, omnetpp::cObject*, omnetpp::cObject*) override;
         void indicate(const vanetza::btp::DataIndication&, std::unique_ptr<vanetza::UpPacket>) override;
@@ -46,7 +47,7 @@ class DenService : public ItsG5BaseService
         const Timer* mTimer;
         uint16_t mSequenceNumber;
         std::shared_ptr<artery::den::Memory> mMemory;
-        boost::ptr_list<artery::den::UseCase> mUseCases;
+        std::list<artery::den::UseCase*> mUseCases;
 };
 
 } // namespace artery
