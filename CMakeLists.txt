@@ -18,7 +18,11 @@ include(cmake/GetNedFolders.cmake)
 include(cmake/AddOppBuildTarget.cmake)
 include(cmake/AddOppRun.cmake)
 
-find_package(Vanetza CONFIG PATHS extern/vanetza/build REQUIRED NO_CMAKE_PACKAGE_REGISTRY)
+#find_package(Vanetza CONFIG PATHS extern/vanetza/build REQUIRED NO_CMAKE_PACKAGE_REGISTRY)
+set(VANETZA_INSTALL ON)
+add_subdirectory(${PROJECT_SOURCE_DIR}/extern/vanetza)
+mark_as_advanced(BUILD_BENCHMARK BUILD_CERTIFY BUILD_SOCKTAP BUILD_TESTS BUILD_USING_CONAN)
+mark_as_advanced(VANETZA_ASN1_WITH_ASN1C VANETZA_EXPORT_PACKAGE VANETZA_NET_WITH_POSIX)
 
 find_path(Veins_DIR NAMES src/veins/package.ned PATHS extern/veins DOC "Veins root directory")
 import_opp_target(veins ${Veins_DIR}/src/Makefile)
@@ -35,18 +39,6 @@ find_program(MAKE_COMMAND NAMES make gmake HINTS ${CMAKE_MAKE_COMMAND} DOC "Make
 set(MAKE_ARGUMENTS "" CACHE STRING "Additional arguments passed to Makefile processor")
 string(REPLACE " " ";" MAKE_ARGUMENTS "${MAKE_ARGUMENTS}")
 
-if("${Vanetza_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}/extern/vanetza/build")
-    set(_make_command ${MAKE_COMMAND})
-    if(CMAKE_GENERATOR MATCHES "Makefiles")
-        set(_make_command \$\(MAKE\))
-    endif()
-    add_custom_target(build_vanetza
-        COMMAND ${_make_command} ${MAKE_ARGUMENTS} vanetza
-        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-        COMMENT "Building Vanetza (external dependency)"
-        VERBATIM)
-    add_dependencies(Vanetza::vanetza build_vanetza)
-endif()
 
 if("${Veins_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}/extern/veins")
     add_opp_build_target(Veins)
