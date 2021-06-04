@@ -9,7 +9,7 @@ package artery.envmod;
 import artery.envmod.LocalEnvironmentModel;
 import artery.inet.Car;
 
-module Car extends artery.inet.Car
+module Car extends artery.lte.Car
 {
     submodules:
         environmentModel: LocalEnvironmentModel {
