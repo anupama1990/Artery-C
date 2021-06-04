@@ -11,7 +11,7 @@ import artery.envmod.LocalEnvironmentModel;
 import artery.inet.World;
 import artery.utility.IdentityRegistry;
 
-network World extends artery.inet.World
+network World extends artery.lte.World
 {
     parameters:
         **.globalEnvironmentModule = default("environmentModel");
