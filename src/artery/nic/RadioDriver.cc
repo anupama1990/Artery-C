@@ -38,12 +38,9 @@
 #include "../../../extern/vanetza/vanetza/net/mac_address.hpp"
 #include "../../../extern/veins/src/veins/base/utils/FindModule.h"
 #include "../../../extern/simulte/src/stack/phy/layer/LtePhyBase.h"
-//#include "../../../extern/simulte/src/common/LteControlInfo.h"
 #include "../utility/Channel.h"
 #include <vanetza/geonet/data_request.hpp>
 #include "apps/nonip/CAMPacket_m.h"
-
-
 
 using namespace omnetpp;
 using namespace vanetza;
@@ -137,10 +134,6 @@ void RadioDriver::initialize()
 
 void RadioDriver::finish()
 {
-    // binder_->unregisterNode(nodeId_);
-    /*if (mHost) {
-        mHost->unsubscribe(channelBusySignal, this);
-       }*/
     unsubscribeTraCI();
 
 }
@@ -174,7 +167,7 @@ void RadioDriver::handleDataIndication(cMessage* packet)
     delete lteControlInfo;
 
     indicateData(packet);
-    EV<<" RadioDriver::handleDataIndication"<<endl;
+
 }
 
 void RadioDriver::handleDataRequest(cMessage* packet)
@@ -212,7 +205,6 @@ void RadioDriver::handleDataRequest(cMessage* packet)
         camInfo->setDirection(D2D_MULTI);
     }
 
-
     CAMSGenerated = CAMSGenerated+1;
     CAMId = CAMId+1;
     emit(numberCAMs,CAMSGenerated);
@@ -249,10 +241,6 @@ std::vector<TraCIPosition> RadioDriver::getStationaryModulePosition()
     {
         enbPosOmnet.push_back(traci::position_cast(boundary, Position {enbPosTraci[k].x,enbPosTraci[k].y})) ;
     }
-
-    //enbPos= traci::position_cast(boundary, Position {enbCoord.x,enbCoord.y});
-
-    EV<<"RadioDriver::getStationaryModulePosition: "<< enbPosOmnet[1].x <<" "<<enbPosOmnet[1].y<<endl;
     PoiRetrievalModule* s = new PoiRetrievalModule ("enbCoord");
 
     s->setEnbPositionOmnet(enbPosOmnet);
