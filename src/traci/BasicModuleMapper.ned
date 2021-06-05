@@ -4,6 +4,6 @@ simple BasicModuleMapper like ModuleMapper
 {
     parameters:
         @class(traci::BasicModuleMapper);
-        string objectType;
+        string vehicleType;
         double penetrationRate = default(1.0);
 }

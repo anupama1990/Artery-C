@@ -1,7 +1,6 @@
 package traci;
 
-
-simple Core like ICore
+simple Core
 {
     parameters:
         @class(traci::Core);
@@ -11,7 +10,12 @@ simple Core like ICore
 
         string launcherModule = default(".launcher");
         string subscriptionsModule = default(".subscriptions");
-        int version = default(0);
+
+        // check API version of TraCI server:
+        //  -1 ignores reported version entirely
+        //   0 matches API version bundled with Artery's TraCI client code
+        //   positive integers match the given TraCI API version (e.g. SUMO 1.1.0 uses API version 19)
+        int version = default(-1);
         bool selfStopping = default(true);
         double startTime @unit(second) = default(0.0s);
 }

@@ -20,16 +20,11 @@ namespace traci
 class SimulationCache;
 class VehicleCache;
 
-class ISubscriptionManager{
-public:
-    virtual ~ISubscriptionManager()= default;
-    virtual void step() = 0;
-};
-
-class SubscriptionManager: public ISubscriptionManager
+class SubscriptionManager
 {
 public:
     virtual ~SubscriptionManager() = default;
+    virtual void step() = 0;
     virtual void subscribeVehicleVariables(const std::set<int>& vehicleVariables) = 0;
     virtual void subscribeSimulationVariables(const std::set<int>& simulationVariables) = 0;
     virtual const std::unordered_set<std::string>& getSubscribedVehicles() const = 0;

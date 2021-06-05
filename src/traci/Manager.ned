@@ -10,7 +10,7 @@ module Manager
         subscriptions.coreModule = "^.core";
 
     submodules:
-        core : <default("Core")> like ICore {
+        core : Core {
         }
 
         launcher : <default("ConnectLauncher")> like Launcher {

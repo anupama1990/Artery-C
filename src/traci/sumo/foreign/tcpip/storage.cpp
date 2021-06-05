@@ -47,12 +47,6 @@ namespace tcpip
 		init();
 	}
 
-	Storage::Storage(const Storage &other){
-	    this->store = other.store;
-	    this->bigEndian_ = other.bigEndian_;
-	    this->iter_ = other.iter_;
-	}
-
 
 	// ----------------------------------------------------------------------
 	void Storage::init()
@@ -84,19 +78,6 @@ namespace tcpip
 		// According to C++ standard std::distance will simply compute the iterators
 		// difference for random access iterators as std::vector provides.
 		return static_cast<unsigned int>(std::distance(store.begin(), iter_));
-	}
-
-    // ----------------------------------------------------------------------
-	void Storage::resetPosition(int pos){
-	    if (pos < 0 || pos >= size()){
-	        std::stringstream os;
-	        os << "Storage::resetPosition(): position out of range. expected: [0, " << size() << " got " << pos;
-	        throw std::invalid_argument(os.str().c_str());
-	    }
-	    iter_ = store.begin();
-	    if (pos > 0){
-	        std::advance(iter_, pos);
-	    }
 	}
 
 
@@ -217,50 +198,70 @@ namespace tcpip
 	}
 
 
-	// -----------------------------------------------------------------------
-	/**
-	* Reads a string list form the array
-	* @return The read string
-	*/
-	std::vector<std::string> Storage::readStringList()
-	{
-		std::vector<std::string> tmp;
-		const int len = readInt();
-		tmp.reserve(len);
-		for (int i = 0; i < len; i++)
-		{
-			tmp.push_back(readString());
-		}
-		return tmp;
-	}
-
-
-	// ----------------------------------------------------------------------
-	/**
-	* Writes a string into the array;
-	* @param s		The string to be written
-	*/
-	void Storage::writeStringList(const std::vector<std::string> &s)
-	{
-		writeInt(static_cast<int>(s.size()));
-        for (std::vector<std::string>::const_iterator it = s.begin(); it!=s.end() ; it++)
-		{
-			writeString(*it);
+    // -----------------------------------------------------------------------
+    /**
+    * Reads a string list form the array
+    * @return The read string
+    */
+    std::vector<std::string> Storage::readStringList()
+    {
+        std::vector<std::string> tmp;
+        const int len = readInt();
+        tmp.reserve(len);
+        for (int i = 0; i < len; i++)
+        {
+            tmp.push_back(readString());
         }
-	}
+        return tmp;
+    }
+
+
+    // -----------------------------------------------------------------------
+    /**
+    * Reads a double list from the array
+    * @return The read double list
+    */
+    std::vector<double> Storage::readDoubleList()
+    {
+        std::vector<double> tmp;
+        const int len = readInt();
+        tmp.reserve(len);
+        for (int i = 0; i < len; i++)
+        {
+            tmp.push_back(readDouble());
+        }
+        return tmp;
+    }
+
 
     // ----------------------------------------------------------------------
     /**
-    *  Read command length (1 or 5 byte)
-    *  If first byte equals 0 use extended length field (int)
+    * Writes a string into the array;
+    * @param s      The string to be written
     */
-	int Storage::readCmdLength() {
-	    int len = readUnsignedByte();
-	    if (len == 0){
-	        len = readInt();
-	    }
-	    return len;
-	}
+    void Storage::writeStringList(const std::vector<std::string> &s)
+    {
+        writeInt(static_cast<int>(s.size()));
+        for (std::vector<std::string>::const_iterator it = s.begin(); it!=s.end() ; it++)
+        {
+            writeString(*it);
+        }
+    }
+
+
+    // ----------------------------------------------------------------------
+    /**
+    * Writes a double list into the array;
+    * @param s      The double list  to be written
+    */
+    void Storage::writeDoubleList(const std::vector<double> &s)
+    {
+        writeInt(static_cast<int>(s.size()));
+        for (std::vector<double>::const_iterator it = s.begin(); it!=s.end() ; it++)
+        {
+            writeDouble(*it);
+        }
+    }
 
 
 	// ----------------------------------------------------------------------
@@ -384,18 +385,6 @@ namespace tcpip
 		// the compiler cannot deduce to use a const_iterator as source
 		store.insert<StorageType::const_iterator>(store.end(), other.iter_, other.store.end());
 		iter_ = store.begin();
-	}
-
-    // ----------------------------------------------------------------------
-	/**
-	 * Write :length: number of bytes from given other
-	 */
-	void Storage::writeStorage(tcpip::Storage& other, int length){
-	    other.checkReadSafe(length);
-	    StorageType::const_iterator _end = other.iter_ + length;
-        // the compiler cannot deduce to use a const_iterator as source
-	    store.insert<StorageType::const_iterator>(store.end(), other.iter_,  _end);
-	    iter_ = store.begin();
 	}
 
 

@@ -1,9 +1,11 @@
 #ifndef BASICNODEMANAGER_H_XL6ISC2V
 #define BASICNODEMANAGER_H_XL6ISC2V
 
+#include "traci/Angle.h"
 #include "traci/Boundary.h"
 #include "traci/NodeManager.h"
 #include "traci/Listener.h"
+#include "traci/Position.h"
 #include "traci/SubscriptionManager.h"
 #include <omnetpp/ccomponent.h>
 #include <omnetpp/csimplemodule.h>
@@ -38,10 +40,13 @@ public:
      *
      * Each emitted vehicle update signal is accompanied by a VehicleObject (cObject details)
      */
-    class VehicleObject : public NodeManager::MovingObject
+    class VehicleObject : public omnetpp::cObject
     {
     public:
         virtual std::shared_ptr<VehicleCache> getCache() const = 0;
+        virtual const TraCIPosition& getPosition() const = 0;
+        virtual TraCIAngle getHeading() const = 0;
+        virtual double getSpeed() const = 0;
     };
 
 protected:
@@ -70,8 +75,10 @@ private:
     Boundary m_boundary;
     SubscriptionManager* m_subscriptions;
     unsigned m_nodeIndex;
+    std::map<std::string, omnetpp::cModule*> m_nodes;
     std::map<std::string, VehicleSink*> m_vehicles;
-    std::string m_objectSinkModule;
+    std::string m_vehicle_sink_module;
+    bool m_destroy_vehicles_on_crash;
 };
 
 } // namespace traci

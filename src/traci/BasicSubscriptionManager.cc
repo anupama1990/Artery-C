@@ -40,20 +40,19 @@ void BasicSubscriptionManager::finish()
 
 void BasicSubscriptionManager::traciInit()
 {
-    using namespace traci::constants;
+    using namespace libsumo;
     static const std::set<int> vars {
         VAR_DEPARTED_VEHICLES_IDS,
         VAR_ARRIVED_VEHICLES_IDS,
         VAR_DELTA_T,
+        VAR_TELEPORT_STARTING_VEHICLES_IDS,
         VAR_TIME
     };
     subscribeSimulationVariables(vars);
 
     // subscribe already running vehicles
-    if (!m_vehicle_vars.empty()) {
-        for (const std::string& id : m_api->vehicle().getIDList()) {
-            subscribeVehicle(id);
-        }
+    for (const std::string& id : m_api->vehicle().getIDList()) {
+        subscribeVehicle(id);
     }
 }
 
@@ -67,13 +66,15 @@ void BasicSubscriptionManager::traciClose()
 
 void BasicSubscriptionManager::subscribeVehicle(const std::string& id)
 {
-    updateVehicleSubscription(id, m_vehicle_vars);
+    if (!m_vehicle_vars.empty()) {
+        updateVehicleSubscription(id, m_vehicle_vars);
+    }
     m_subscribed_vehicles.insert(id);
 }
 
 void BasicSubscriptionManager::unsubscribeVehicle(const std::string& id, bool vehicle_exists)
 {
-    if (vehicle_exists) {
+    if (vehicle_exists && !m_vehicle_vars.empty()) {
         static const std::vector<int> empty;
         updateVehicleSubscription(id, empty);
     }
@@ -82,7 +83,8 @@ void BasicSubscriptionManager::unsubscribeVehicle(const std::string& id, bool ve
 
 void BasicSubscriptionManager::updateVehicleSubscription(const std::string& id, const std::vector<int>& vars)
 {
-    m_api->vehicle().subscribe(id, vars, INVALID_DOUBLE_VALUE, INVALID_DOUBLE_VALUE);
+    m_api->vehicle().subscribe(id, vars, libsumo::INVALID_DOUBLE_VALUE, libsumo::INVALID_DOUBLE_VALUE);
+
 }
 
 void BasicSubscriptionManager::subscribeVehicleVariables(const std::set<int>& add_vars)
@@ -107,7 +109,7 @@ void BasicSubscriptionManager::subscribeSimulationVariables(const std::set<int>&
     ASSERT(m_sim_vars.size() >= tmp_vars.size());
 
     if (m_sim_vars.size() != tmp_vars.size()) {
-        m_api->simulation().subscribe("", m_sim_vars, INVALID_DOUBLE_VALUE, INVALID_DOUBLE_VALUE);
+        m_api->simulation().subscribe("", m_sim_vars, libsumo::INVALID_DOUBLE_VALUE, libsumo::INVALID_DOUBLE_VALUE);
     }
 }
 
@@ -117,12 +119,12 @@ void BasicSubscriptionManager::step()
     m_sim_cache->reset(simvars);
     ASSERT(checkTimeSync(*m_sim_cache, omnetpp::simTime()));
 
-    const auto& arrivedVehicles = m_sim_cache->get<VAR_ARRIVED_VEHICLES_IDS>();
+    const auto& arrivedVehicles = m_sim_cache->get<libsumo::VAR_ARRIVED_VEHICLES_IDS>();
     for (const auto& id : arrivedVehicles) {
         unsubscribeVehicle(id, false);
     }
 
-    const auto& departedVehicles = m_sim_cache->get<VAR_DEPARTED_VEHICLES_IDS>();
+    const auto& departedVehicles = m_sim_cache->get<libsumo::VAR_DEPARTED_VEHICLES_IDS>();
     for (const auto& id : departedVehicles) {
         subscribeVehicle(id);
     }
