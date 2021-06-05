@@ -84,7 +84,7 @@ module Car
         //        nonipapp: AlertNonIp {
         //            @display("p=518.16003,431.80002");
         //        }
-        mobility: Mobility  {
+        mobility:Mobility  {
             parameters:
                 @display("p=50,200");
         }
@@ -160,7 +160,7 @@ module Car
        nl.out++ --> lteNic.upperLayerIn;
        nl.in++ <-- lteNic.upperLayerOut;
         // }
-//# 
+ 
         //# Internal Tcp/Udp applications connections with transport layer
         //#
 
