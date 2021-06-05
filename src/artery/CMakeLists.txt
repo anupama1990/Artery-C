@@ -13,7 +13,6 @@ add_library(core SHARED
     application/ItsG5Service.cc
     application/LocalDynamicMap.cc
     application/Middleware.cc
-    
     application/NetworkInterface.cc
     application/NetworkInterfaceTable.cc
     application/StationaryMiddleware.cc
@@ -70,6 +69,7 @@ target_link_libraries(core PUBLIC opp_interface)
 target_link_libraries(core PUBLIC traci)
 target_link_libraries(core PUBLIC Vanetza::vanetza)
 INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/extern/simulte/src")
+
 #if(TARGET veins)
  #   message(STATUS "Enable Veins integration")
   #  set_property(TARGET core APPEND PROPERTY SOURCES
@@ -79,7 +79,9 @@ INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/extern/simulte/src")
       #  veins/VeinsRadioDriver.cc)
    # target_link_libraries(core PUBLIC veins)
 #endif()
-    target_link_libraries(core PUBLIC veins)
+
+target_link_libraries(core PUBLIC veins)
+
 if(TARGET INET)
     message(STATUS "Enable INET integration")
     set_property(TARGET core APPEND PROPERTY SOURCES
