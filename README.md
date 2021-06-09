@@ -42,7 +42,7 @@ To build Artery-C in release mode:
 
 	mkdir build
 	cd build
-	mkdir build
+	cmake ..
 	make -j4
 
 To run the target "tunnel" in release mode:
