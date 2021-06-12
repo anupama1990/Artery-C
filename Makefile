@@ -1,6 +1,6 @@
 PYTHON ?= python
 PYTHON2 ?= python2
-INET_DIR = extern/inet4
+INET_DIR = extern/inet
 SIMULTE_DIR = extern/simulte
 VANETZA_DIR = extern/vanetza
 VANETZA_BUILD_TYPE ?= Release
