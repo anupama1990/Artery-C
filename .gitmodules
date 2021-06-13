@@ -13,3 +13,6 @@
 [submodule "extern/pybind11"]
 	path = extern/pybind11
 	url = https://github.com/anupama1990/pybind11.git
+[submodule "extern/inet"]
+	path = extern/inet
+	url = https://github.com/anupama1990/inet.git
