@@ -34,7 +34,7 @@
 #include "../../../extern/simulte/src/common/LteCommon.h"
 #include "../../../extern/simulte/src/common/LteControlInfo_m.h"
 #include "../../../extern/simulte/src/stack/phy/packet/cbr_m.h"
-#include "../../../extern/vanetza/vanetza/access/access_category.hpp"
+#include "../../../extern/vanetza/vanetza/net/access_category.hpp"
 #include "../../../extern/vanetza/vanetza/net/mac_address.hpp"
 #include "../../../extern/veins/src/veins/base/utils/FindModule.h"
 #include "../../../extern/simulte/src/stack/phy/layer/LtePhyBase.h"
@@ -72,9 +72,9 @@ vanetza::MacAddress convert(long addr)
     return mac;
 }
 
-int user_priority(vanetza::access::AccessCategory ac)
+int user_priority(vanetza::AccessCategory ac)
 {
-    using AC = vanetza::access::AccessCategory;
+    using AC = vanetza::AccessCategory;
     int up = 0;
     switch (ac) {
     case AC::BK:
