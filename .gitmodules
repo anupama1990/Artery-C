@@ -4,3 +4,6 @@
 [submodule "extern/vanetza"]
 	path = extern/vanetza
 	url = https://github.com/anupama1990/vanetza.git
+[submodule "extern/simulte"]
+	path = extern/simulte
+	url = https://github.com/anupama1990/simulte.git
