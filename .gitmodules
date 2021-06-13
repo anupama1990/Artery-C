@@ -10,3 +10,6 @@
 [submodule "extern/veins"]
 	path = extern/veins
 	url = https://github.com/anupama1990/veins.git
+[submodule "extern/pybind11"]
+	path = extern/pybind11
+	url = https://github.com/anupama1990/pybind11.git
