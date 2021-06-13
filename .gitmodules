@@ -13,6 +13,3 @@
 [submodule "extern/veins"]
 	path = extern/veins
 	url = https://github.com/anupama1990/veins.git
-[submodule "extern/vanetza"]
-	path = extern/vanetza
-	url = https://github.com/anupama1990/vanetza.git
