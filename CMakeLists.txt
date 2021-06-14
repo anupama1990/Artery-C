@@ -18,7 +18,7 @@ include(cmake/GetNedFolders.cmake)
 include(cmake/AddOppBuildTarget.cmake)
 include(cmake/AddOppRun.cmake)
 
-#find_package(Vanetza CONFIG PATHS extern/vanetza/build REQUIRED NO_CMAKE_PACKAGE_REGISTRY)
+find_package(Vanetza CONFIG PATHS extern/vanetza/build REQUIRED NO_CMAKE_PACKAGE_REGISTRY)
 set(VANETZA_INSTALL ON)
 add_subdirectory(${PROJECT_SOURCE_DIR}/extern/vanetza)
 mark_as_advanced(BUILD_BENCHMARK BUILD_CERTIFY BUILD_SOCKTAP BUILD_TESTS BUILD_USING_CONAN)
