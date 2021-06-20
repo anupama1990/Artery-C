@@ -17,10 +17,10 @@ Further details on the implementation of Artery can be found here:
 Artery-C currently uses the following software packages (please note the specific version):
 * C++ Compiler with C++11 support
 * Boost 1.65.1 and Vanetza libraries
-* Ubuntu 18.04
+* Ubuntu 18.04 onwards
 * SUMO 1.7.10 
-* OMNeT++ 5.6 
-* INET 3.6.5
+* OMNeT++ 6.0 
+* INET 4.3
 * Pybind 11
 * Debugging - GNU GDB 8.1.1
 
