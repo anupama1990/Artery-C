@@ -17,6 +17,13 @@
 #include <vanetza/btp/header_conversion.hpp>
 #include <vanetza/geonet/data_confirm.hpp>
 
+#include <vanetza/net/chunk_packet.hpp>
+#include <vanetza/net/osi_layer.hpp>
+#include <vanetza/net/packet_variant.hpp>
+#include <vanetza/common/byte_view.hpp>
+#include <vanetza/asn1/asn1c_wrapper.hpp>
+#include "artery/application/Asn1PacketVisitor.h"
+
 namespace vanetza {
 namespace geonet {
 
@@ -108,7 +115,21 @@ void Router::handleMessage(omnetpp::cMessage* msg)
         auto* packet = omnetpp::check_and_cast<GeoNetPacket*>(msg);
         auto* indication = omnetpp::check_and_cast<GeoNetIndication*>(packet->getControlInfo());
         mRouter->indicate(std::move(*packet).extractPayload(), indication->source, indication->destination);
-    } else if (msg->getArrivalGate() == mRadioDriverPropertiesIn) {
+
+        // auto payload = boost::create_byte_view(*std::move(*packet).extractPayload(), vanetza::OsiLayer::Application);
+
+        Asn1PacketVisitor<vanetza::asn1::Cam> visitor;
+        const vanetza::asn1::Cam* cam = boost::apply_visitor(visitor, *std::move(*packet).extractPayload());
+        EV << "CAM received ID " << endl;
+        if (cam && cam->validate()) {
+            CaObject obj = visitor.shared_wrapper;
+            EV << "CAM received ID " << obj.asn1()->header.messageID << endl;
+ 
+        }
+
+    }
+    else if (msg->getArrivalGate() == mRadioDriverPropertiesIn)
+    {
         auto* properties = omnetpp::check_and_cast<RadioDriverProperties*>(msg);
         auto addr = generateAddress(properties->LinkLayerAddress);
         mRouter->set_address(addr);
@@ -116,7 +137,9 @@ void Router::handleMessage(omnetpp::cMessage* msg)
         identity.geonet.insert({mNetworkInterface, addr});
         emit(Identity::changeSignal, Identity::ChangeGeoNetAddress, &identity);
         mNetworkInterface->channel = properties->ServingChannel;
-    } else {
+    }
+    else
+    {
         error("Do not know how to handle received message");
     }
 

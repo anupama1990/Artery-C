@@ -42,6 +42,17 @@
 #include <vanetza/geonet/data_request.hpp>
 
 
+// #include <vanetza/net/chunk_packet.hpp>
+// #include <vanetza/net/osi_layer.hpp>
+// #include <vanetza/net/packet_variant.hpp>
+#include <vanetza/common/byte_view.hpp>
+#include <vanetza/asn1/asn1c_wrapper.hpp>
+#include <vanetza/asn1/cam.hpp>
+#include "artery/application/CaObject.h"
+#include "artery/application/Asn1PacketVisitor.h"
+#include <vanetza/geonet/packet.hpp>
+#include "artery/networking/GeoNetPacket.h"
+
 
 
 using namespace omnetpp;
@@ -195,6 +206,15 @@ void RadioDriver::handleDataRequest(cMessage* packet)
 
     if (request->destination_addr == vanetza::cBroadcastMacAddress) {
         lteControlInfo->setDirection(D2D_MULTI);
+    }
+    
+    auto* geonet = omnetpp::check_and_cast<GeoNetPacket*>(packet);
+
+    Asn1PacketVisitor<vanetza::asn1::Cam> visitor;
+    const vanetza::asn1::Cam* cam = boost::apply_visitor(visitor, *std::move(*geonet).extractPayload());
+    if (cam && cam->validate()) {
+        CaObject obj = visitor.shared_wrapper;
+        EV << "CAM received ID " << obj.asn1()->header.messageID << endl;
     }
 
     packet->setControlInfo(lteControlInfo);
