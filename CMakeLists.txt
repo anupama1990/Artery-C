@@ -22,7 +22,7 @@ find_package(Vanetza CONFIG PATHS extern/vanetza/build REQUIRED NO_CMAKE_PACKAGE
 find_path(Veins_DIR NAMES src/veins/package.ned PATHS extern/veins DOC "Veins root directory")
 import_opp_target(veins ${Veins_DIR}/src/Makefile)
 
-find_path(INET_DIR NAMES src/inet/package.ned PATHS extern/inet4 DOC "INET root directory")
+find_path(INET_DIR NAMES src/inet/package.ned PATHS extern/inet DOC "INET root directory")
 import_opp_target(INET ${INET_DIR}/src/Makefile)
 
 
