@@ -183,7 +183,7 @@ void RadioDriver::handleDataIndication(cMessage* packet)
     packet->setControlInfo(indication);
     delete lteControlInfo;
 
-    indicateData(packet);
+    //indicateData(packet);
     EV<<" RadioDriver::handleDataIndication"<<endl;
 }
 
