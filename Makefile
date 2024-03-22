@@ -1,34 +1,29 @@
 PYTHON ?= python
 PYTHON2 ?= python2
-INET_DIR = extern/inet
-SIMULTE_DIR = extern/simulte
+INET_DIR = extern/inet4.5
+SIMU5G_DIR = extern/Simu5G
 VANETZA_DIR = extern/vanetza
 VANETZA_BUILD_TYPE ?= Release
 VANETZA_BUILD_DIR ?= $(VANETZA_DIR)/build
 VEINS_DIR = extern/veins
 
-all: inet vanetza simulte veins
-
+all: inet vanetza veins simu5g
 clean:
 	-$(MAKE) -C $(INET_DIR) cleanall
 	-$(MAKE) -C $(VEINS_DIR) cleanall
 	-rm -rf $(VANETZA_BUILD_DIR)
-
-#$(INET_DIR)/.oppfeaturestate: $(INET_DIR)/.oppfeatures
-	#cd $(INET_DIR); $(PYTHON) inet_featuretool repair
-
-#$(INET_DIR)/src/Makefile: $(INET_DIR)/.oppfeaturestate
-#	$(MAKE) -C $(INET_DIR) makefiles
+	-$(MAKE) -C $(SIMU5G_DIR) cleanall
+	
 
 inet: $(INET_DIR)/src/Makefile
 	$(MAKE) -C $(INET_DIR)/src
 
-$(SIMULTE_DIR)/src/Makefile: $(SIMULTE_DIR)/Version
-	$(MAKE) -C $(SIMULTE_DIR) makefiles INET_PROJ=$(INET_DIR)
-	$(MAKE) -C $(SIMULTE_DIR)/src depend
+$(SIMU5G_DIR)/src/Makefile: $(SIMU5G_DIR)/Version
+	$(MAKE) -C $(SIMU5G_DIR) makefiles INET_PROJ=$(INET_DIR)
+	$(MAKE) -C $(SIMU5G_DIR)/src depend
 
-simulte: $(SIMULTE_DIR)/src/Makefile
-	$(MAKE) -C $(SIMULTE_DIR)/src
+simu5g: $(SIMU5G_DIR)/src/Makefile
+	$(MAKE) -C $(SIMU5G_DIR)/src
 
 $(VEINS_DIR)/src/Makefile: $(VEINS_DIR)/configure
 	cd $(VEINS_DIR); $(PYTHON2) configure
@@ -36,7 +31,7 @@ $(VEINS_DIR)/src/Makefile: $(VEINS_DIR)/configure
 
 veins: $(VEINS_DIR)/src/Makefile
 	$(MAKE) -C $(VEINS_DIR)
-
+	
 $(VANETZA_BUILD_DIR):
 	mkdir -p $(VANETZA_BUILD_DIR)
 
@@ -45,3 +40,5 @@ $(VANETZA_BUILD_DIR)/Makefile: $(VANETZA_BUILD_DIR)
 
 vanetza: $(VANETZA_BUILD_DIR)/Makefile
 	$(MAKE) -C $(VANETZA_BUILD_DIR)
+
+

@@ -22,7 +22,7 @@ function(generate_opp_message msg_input)
 
     file(MAKE_DIRECTORY ${msg_output_dir})
     add_custom_command(OUTPUT "${msg_output_source}" "${msg_output_header}"
-        COMMAND ${OMNETPP_MSGC} ARGS -s _m.cc --msg4 ${CMAKE_CURRENT_SOURCE_DIR}/${msg_input}
+        COMMAND ${OMNETPP_MSGC} ARGS -s _m.cc --msg6 ${CMAKE_CURRENT_SOURCE_DIR}/${msg_input}
         COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/${msg_dir}/${msg_name}_m.cc" "${msg_output_source}"
         COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/${msg_dir}/${msg_name}_m.h" "${msg_output_header}"
         DEPENDS ${msg_input} ${OMNETPP_MSGC}

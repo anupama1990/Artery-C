@@ -10,6 +10,7 @@ function(get_ned_folders _target _output)
 
     get_target_property(_target_dependencies ${_target} INTERFACE_LINK_LIBRARIES)
     if(_target_dependencies)
+    	
         foreach(_target_dependency IN LISTS _target_dependencies)
             if(TARGET ${_target_dependency})
                 get_ned_folders(${_target_dependency} _folders_dependency)
@@ -19,5 +20,6 @@ function(get_ned_folders _target _output)
     endif()
 
     list(REMOVE_DUPLICATES _folders)
+    
     set(${_output} ${_folders} PARENT_SCOPE)
 endfunction()
