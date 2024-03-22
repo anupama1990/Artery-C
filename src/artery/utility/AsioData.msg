@@ -13,15 +13,21 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
+namespace artery;
+
+//
+// TODO generated message class
+//
 cplusplus {{
 #include <array>
 #include <cstdint>
 typedef std::array<uint8_t, 1024> AsioBuffer;
 typedef std::size_t AsioLength;
 }}
-class noncobject AsioBuffer;
+
+//class noncobject AsioBuffer;
 
 message AsioData {
-    AsioBuffer Buffer;
+  //  AsioBuffer Buffer;
     int Length;
 }

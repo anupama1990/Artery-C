@@ -5,9 +5,6 @@
 #include <omnetpp/checkandcast.h>
 #include <omnetpp/csimplemodule.h>
 #include <omnetpp/simutil.h>
-#if OMNETPP_VERSION >= 0x600
-  #include <omnetpp/ccontextswitcher.h>
-#endif
 
 using vanetza::access::DataRequest;
 using vanetza::ChunkPacket;
@@ -23,6 +20,7 @@ AccessInterface::AccessInterface(omnetpp::cGate* gate) :
 
 void AccessInterface::request(const DataRequest& request, std::unique_ptr<ChunkPacket> payload)
 {
+
     // Enter_Method on steroids...
     omnetpp::cMethodCallContextSwitcher ctx(mModuleOut);
     ctx.methodCall("request");
@@ -32,7 +30,7 @@ void AccessInterface::request(const DataRequest& request, std::unique_ptr<ChunkP
     gn->setControlInfo(new GeoNetRequest(request));
 
     // gn has been created in the context of mModuleOut, thus ownership is fine
-    mModuleOut->send(gn, mGateOut);
+    mModuleOut->send(gn, mGateOut); //MLC mGateOut is radioDriverData$o
 }
 
 } // namespace artery

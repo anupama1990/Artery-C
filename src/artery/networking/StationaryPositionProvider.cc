@@ -34,7 +34,7 @@ Position StationaryPositionProvider::getInitialPosition()
         inet::Coord inet_pos = mobility->getCurrentPosition();
         return Position { inet_pos.x, inet_pos.y };
     } else if (auto mobility = dynamic_cast<veins::BaseMobility*>(mobilityModule)) {
-        veins::Coord veins_pos = mobility->getPositionAt(simTime());
+        veins::Coord veins_pos = mobility->getPositionAt(omnetpp::simTime());
         return Position { veins_pos.x, veins_pos.y };
     } else {
         error("no suitable mobility module found");
@@ -56,6 +56,7 @@ void StationaryPositionProvider::initializePosition(const Position& pos)
     mPositionFix.longitude = geopos.longitude * degree;
     mPositionFix.confidence.semi_minor = 1.0 * si::meter;
     mPositionFix.confidence.semi_major = 1.0 * si::meter;
+    mPositionFix.course.assign(TrueNorth {}, TrueNorth {});
     mPositionFix.speed.assign(0.0 * si::meter_per_second, 0.0 * si::meter_per_second);
 
     // prevent signal listeners to modify our position data

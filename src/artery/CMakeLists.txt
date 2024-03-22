@@ -2,17 +2,22 @@ find_package(Boost 1.59 COMPONENTS date_time system REQUIRED)
 
 add_library(artery INTERFACE)
 add_library(core SHARED
-    
+    StaticNodeManager.cc
     application/CaObject.cc
     application/CaService.cc
+    application/CpObject.cc
+    application/CpService.cc
     application/DenmObject.cc
     application/DenService.cc
     application/ExampleService.cc
+    application/FilterObjects.cc
+    application/ObjectInfo.cpp
     application/ItsG5BaseService.cc
     application/ItsG5PromiscuousService.cc
     application/ItsG5Service.cc
     application/LocalDynamicMap.cc
     application/Middleware.cc
+    application/MultiChannelPolicy.cc
     application/NetworkInterface.cc
     application/NetworkInterfaceTable.cc
     application/StationaryMiddleware.cc
@@ -21,15 +26,18 @@ add_library(core SHARED
     application/TransportDispatcher.cc
     application/VehicleDataProvider.cc
     application/VehicleMiddleware.cc
-    application/MiddlewareBase.cc
-    application/MovingNodeDataProvider.cc
+    application/XmlMultiChannelPolicy.cc
+    application/den/ImpactReductionUseCase.cc
     application/den/Memory.cc
+    application/den/SuspendableUseCase.cc
+    application/den/TrafficJamUseCase.cc
     application/den/UseCase.cc
-	networking/AccessInterface.cc
+    networking/AccessInterface.cc
     networking/DccEntityBase.cc
     networking/FsmDccEntity.cc
     networking/GeoNetPacket.cc
     networking/LimericDccEntity.cc
+    networking/NoRateControlDccEntity.cc
     networking/Router.cc
     networking/Runtime.cc
     networking/SecurityEntity.cc
@@ -37,11 +45,11 @@ add_library(core SHARED
     networking/VehiclePositionProvider.cc
     nic/ChannelLoadSampler.cc
 	nic/RadioDriver.cc
-	nic/RadioDriverBase.cc  
+    nic/RadioDriverBase.cc  
     nic/ChannelLoadMeasurements.cc
     traci/MobilityBase.cc
-    traci/MovingNodeController.cc
     traci/ControllableVehicle.cc
+    traci/MovingNodeController.cc
     traci/VehicleController.cc
     traci/VehicleType.cc
     utility/AsioScheduler.cc
@@ -62,25 +70,28 @@ set_target_properties(core PROPERTIES
     OUTPUT_NAME artery_core
     OMNETPP_LIBRARY ON
     NED_FOLDERS ${CMAKE_CURRENT_SOURCE_DIR})
+
 target_include_directories(core PUBLIC ${PROJECT_SOURCE_DIR}/src)
 target_include_directories(core PUBLIC ${Boost_INCLUDE_DIRS})
 target_link_libraries(core PUBLIC ${Boost_LIBRARIES})
 target_link_libraries(core PUBLIC opp_interface)
 target_link_libraries(core PUBLIC traci)
-target_link_libraries(core PUBLIC Vanetza::vanetza)
-INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/extern/simulte/src")
+target_link_libraries(core PUBLIC vanetza)
 
-#if(TARGET veins)
- #   message(STATUS "Enable Veins integration")
-  #  set_property(TARGET core APPEND PROPERTY SOURCES
-   #     veins/VeinsConnectionManager.cc
-    #    veins/VeinsMobility.cc
-     #   veins/VeinsObstacleControl.cc
-      #  veins/VeinsRadioDriver.cc)
-   # target_link_libraries(core PUBLIC veins)
-#endif()
+INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/extern/Simu5G/src")
+#target_link_libraries(artery INTERFACE simu5g)
+if(TARGET veins)
+    message(STATUS "Enable Veins integration")
+    set_property(TARGET core APPEND PROPERTY SOURCES
+    #veins/VeinsConnectionManager.cc
+    #veins/VeinsMobility.cc
+    #veins/VeinsObstacleControl.cc
+    #veins/VeinsRadioDriver.cc
+    )
+   target_link_libraries(core PUBLIC veins)
+endif()
 
-target_link_libraries(core PUBLIC veins)
+#target_link_libraries(core PUBLIC veins)
 
 if(TARGET INET)
     message(STATUS "Enable INET integration")
@@ -88,9 +99,10 @@ if(TARGET INET)
 
         inet/AntennaMobility.cc
         inet/DistanceSwitchPathLoss.cc
-        inet/InetMobility.cc
-        inet/InetRadioDriver.cc
+       # inet/InetMobility.cc
+        
         inet/VanetRx.cc
+       # inet/InetRadioDriver.cc
     )
     target_link_libraries(core PUBLIC INET)
 endif()
@@ -106,19 +118,11 @@ macro(add_artery_feature name)
 endmacro()
 
 
-#if(WITH_STORYBOARD)
- #   add_subdirectory(storyboard)
-#endif()
 
-#if(WITH_TRANSFUSION)
-  #  add_subdirectory(transfusion)
-#endif()
+if(WITH_ENVMOD)
+    add_subdirectory(envmod)
+    set_property(SOURCE application/VehicleMiddleware.cc APPEND PROPERTY COMPILE_DEFINITIONS "WITH_ENVMOD")
+endif()
 
-#if(WITH_ENVMOD)
-#    add_subdirectory(envmod)
-#    set_property(SOURCE application/VehicleMiddleware.cc APPEND PROPERTY COMPILE_DEFINITIONS "WITH_ENVMOD")
-#endif()
 
-#if(WITH_TESTBED)
- #   add_subdirectory(testbed)
-#endif()
+

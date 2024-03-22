@@ -1,8 +1,5 @@
 #include "artery/networking/Runtime.h"
 #include <omnetpp/cmessage.h>
-#if OMNETPP_VERSION >= 0x600
-  #include <omnetpp/ccontextswitcher.h>
-#endif
 
 using vanetza::Clock;
 

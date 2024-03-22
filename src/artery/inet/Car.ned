@@ -1,12 +1,16 @@
 package artery.inet;
 
 import artery.application.VehicleMiddleware;
-import artery.networking.IVanetza;
+import artery.networking.Vanetza;
 import artery.nic.IRadioDriver;
-import inet.node.inet.INetworkNode;
+import inet.node.contract.INetworkNode;
 import inet.linklayer.contract.IWirelessInterface;
 import inet.mobility.contract.IMobility;
 import inet.networklayer.common.InterfaceTable;
+
+// NOTE:
+// Car does not inherit from PlainVehicle on purpose to avoid a "use-after-free" bug.
+// See https://github.com/riebl/artery/pull/27 for details.
 
 module Car like INetworkNode
 {
@@ -14,12 +18,14 @@ module Car like INetworkNode
         @display("i=block/wrxtx;is=vs");
         @networkNode;
         @labels(node,ethernet-node,wireless-node);
+
         @statistic[posX](source="xCoord(mobilityPos(mobilityStateChanged))"; record=vector?);
         @statistic[posY](source="yCoord(mobilityPos(mobilityStateChanged))"; record=vector?);
+
         int numRadios = default(1);
         bool withAntennaMobility = default(false);
         *.interfaceTableModule = default(absPath(".interfaceTable"));
-//        **.mobilityModule = default(absPath(".mobility"));
+        mobility.visualRepresentation = "^";
 
     gates:
         input radioIn[numRadios] @directIn;
@@ -48,21 +54,26 @@ module Car like INetworkNode
             parameters:
                 @display("p=250,300,row,100");
                 macModule = ".wlan[" + string(index) + "].mac";
+                radioModule = ".wlan[" + string(index) + "].radio";
         }
 
-        vanetza: <default("Vanetza")> like IVanetza {
+        vanetza[numRadios]: Vanetza {
             parameters:
-                @display("p=250,200");
+                @display("p=250,200,row,100");
                 *.middlewareModule = absPath("^.middleware");
                 *.mobilityModule = absPath("^.mobility");
-                *.radioDriverModule = absPath("^.radioDriver[0]");
+                *.radioDriverModule = absPath("^.radioDriver[" + string(index) + "]");
                 runtime.datetime = middleware.datetime;
+        }
+
+        mobility: <default("artery.inet.Mobility")> like IMobility {
+            parameters:
+                @display("p=50,200");
         }
 
         middleware: VehicleMiddleware {
             parameters:
                 @display("p=250,100");
-                routerModule = ".vanetza.router";
                 mobilityModule = ".mobility";
         }
 
@@ -72,8 +83,8 @@ module Car like INetworkNode
 
             wlan[i].upperLayerOut --> radioDriver[i].lowerLayerIn;
             wlan[i].upperLayerIn <-- radioDriver[i].lowerLayerOut;
-        }
 
-        radioDriver[0].upperLayer <--> vanetza.radioDriverData;
-        radioDriver[0].properties --> vanetza.radioDriverProperties;
+            radioDriver[i].upperLayer <--> vanetza[i].radioDriverData;
+            radioDriver[i].properties --> vanetza[i].radioDriverProperties;
+        }
 }

@@ -23,5 +23,3 @@ public:
            return _c;
     }
 };
-
-

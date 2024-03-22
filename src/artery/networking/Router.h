@@ -12,6 +12,7 @@ namespace artery
 {
 
 class Middleware;
+class NetworkInterface;
 class RadioDriverBase;
 
 class Router : public omnetpp::cSimpleModule, public omnetpp::cListener
@@ -20,7 +21,6 @@ class Router : public omnetpp::cSimpleModule, public omnetpp::cListener
         // cSimpleModule
         int numInitStages() const override;
         void initialize(int stage) override;
-        using omnetpp::cIListener::finish;  // [-Woverloaded-virtual]
         void finish() override;
         void handleMessage(omnetpp::cMessage*) override;
 
@@ -43,6 +43,7 @@ class Router : public omnetpp::cSimpleModule, public omnetpp::cListener
         RadioDriverBase* mRadioDriver;
         omnetpp::cGate* mRadioDriverDataIn;
         omnetpp::cGate* mRadioDriverPropertiesIn;
+        std::shared_ptr<NetworkInterface> mNetworkInterface;
 };
 
 } // namespace artery

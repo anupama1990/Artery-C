@@ -19,9 +19,6 @@
 #include <vanetza/btp/data_request.hpp>
 #include <vanetza/dcc/profile.hpp>
 #include <vanetza/geonet/interface.hpp>
-#if OMNETPP_VERSION >= 0x600
-  #include <omnetpp/ccontextswitcher.h>
-#endif
 
 using namespace omnetpp;
 using namespace vanetza;
@@ -42,10 +39,12 @@ ExampleService::~ExampleService()
 	cancelAndDelete(m_self_msg);
 }
 
-void ExampleService::indicate(const btp::DataIndication& ind, cPacket* packet)
+void ExampleService::indicate(const btp::DataIndication& ind, cPacket* packet, const NetworkInterface& net)
 {
+	Enter_Method("indicate");
+
 	if (packet->getByteLength() == 42) {
-		EV_INFO << "packet indication\n";
+		EV_INFO << "packet indication on channel " << net.channel << "\n";
 	}
 
 	delete(packet);
@@ -69,6 +68,7 @@ void ExampleService::finish()
 void ExampleService::handleMessage(cMessage* msg)
 {
 	Enter_Method("handleMessage");
+
 	if (msg == m_self_msg) {
 		EV_INFO << "self message\n";
 	}
@@ -77,19 +77,39 @@ void ExampleService::handleMessage(cMessage* msg)
 void ExampleService::trigger()
 {
 	Enter_Method("trigger");
-	btp::DataRequestB req;
-	req.destination_port = host_cast<ExampleService::port_type>(getPortNumber());
-	req.gn.transport_type = geonet::TransportType::SHB;
-	req.gn.traffic_class.tc_id(static_cast<unsigned>(dcc::Profile::DP3));
-	req.gn.communication_profile = geonet::CommunicationProfile::ITS_G5;
 
-	cPacket* packet = new cPacket("Example Service Packet");
-	packet->setByteLength(42);
-	request(req, packet);
+	// use an ITS-AID reserved for testing purposes
+	static const vanetza::ItsAid example_its_aid = 16480;
+
+	auto& mco = getFacilities().get_const<MultiChannelPolicy>();
+	auto& networks = getFacilities().get_const<NetworkInterfaceTable>();
+
+	for (auto channel : mco.allChannels(example_its_aid)) {
+		auto network = networks.select(channel);
+		if (network) {
+			btp::DataRequestB req;
+			// use same port number as configured for listening on this channel
+			req.destination_port = host_cast(getPortNumber(channel));
+			req.gn.transport_type = geonet::TransportType::SHB;
+			req.gn.traffic_class.tc_id(static_cast<unsigned>(dcc::Profile::DP3));
+			req.gn.communication_profile = geonet::CommunicationProfile::ITS_G5;
+			req.gn.its_aid = example_its_aid;
+
+			cPacket* packet = new cPacket("Example Service Packet");
+			packet->setByteLength(42);
+
+			// send packet on specific network interface
+			request(req, packet, network.get());
+		} else {
+			EV_ERROR << "No network interface available for channel " << channel << "\n";
+		}
+	}
 }
 
 void ExampleService::receiveSignal(cComponent* source, simsignal_t signal, cObject*, cObject*)
 {
+	Enter_Method("receiveSignal");
+
 	if (signal == scSignalCamReceived) {
 		auto& vehicle = getFacilities().get_const<traci::VehicleController>();
 		EV_INFO << "Vehicle " << vehicle.getVehicleId() << " received a CAM in sibling serivce\n";

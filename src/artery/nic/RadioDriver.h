@@ -25,7 +25,7 @@
 #include "artery/nic/RadioDriverBase.h"
 #include <omnetpp/clistener.h>
 #include <omnetpp/csimplemodule.h>
-#include "corenetwork/binder/LteBinder.h"
+#include "common/binder/Binder.h"
 #include "traci/Listener.h"
 #include "traci/Core.h"
 #include "traci/LiteAPI.h"
@@ -37,7 +37,8 @@
 #include "traci/Boundary.h"
 #include "traci/sumo/utils/traci/TraCIAPI.h"
 #include "traci/sumo/libsumo/TraCIDefs.h"
-#include "PoiRetrievalModule.h"
+
+//#include "PoiRetrievalModule.h"
 using namespace omnetpp;
 using libsumo::TraCIPosition;
 
@@ -48,6 +49,7 @@ class LiteAPI;
 
 class RadioDriver : public RadioDriverBase,  public traci::Listener
 {
+    /*
     public:
         void initialize() override;
         void handleMessage(omnetpp::cMessage*) override;
@@ -75,7 +77,7 @@ class RadioDriver : public RadioDriverBase,  public traci::Listener
         LteBinder* binder_;
         MacNodeId nodeId_;
         MacNodeId masterId_;
-        bool startUpComplete_;
+        bool startUpComplete_;*/
 
 };
 }

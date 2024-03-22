@@ -40,8 +40,4 @@ VehicleController* MobilityBase::getVehicleController()
     return mController.get();
 }
 
-traci::MovingNodeController* MobilityBase::getControllerBase(){
-    ASSERT(mController);
-    return mController.get();
-}
 } // namespace artery

@@ -7,6 +7,7 @@
 #include "artery/StaticNodeManager.h"
 #include "artery/inet/AntennaMobility.h"
 #include "artery/utility/InitStages.h"
+using namespace omnetpp;
 
 namespace artery
 {

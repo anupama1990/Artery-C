@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by nedtool 6.0 from /home/hegde/Workspace/PhD/v2xframework/Artery-C/src/artery/utility/AsioData.msg.
+// Generated file, do not edit! Created by opp_msgtool 6.0 from /home/hegde/workspace/main/Artery-C/src/artery/utility/AsioData.msg.
 //
 
 // Disable warnings about unused variables, empty switch stmts, etc:
@@ -26,6 +26,8 @@
 
 #include <iostream>
 #include <sstream>
+#include <memory>
+#include <type_traits>
 #include "AsioData_m.h"
 
 namespace omnetpp {
@@ -67,7 +69,7 @@ void doParsimUnpacking(omnetpp::cCommBuffer *buffer, std::list<T,A>& l)
 {
     int n;
     doParsimUnpacking(buffer, n);
-    for (int i=0; i<n; i++) {
+    for (int i = 0; i < n; i++) {
         l.push_back(T());
         doParsimUnpacking(buffer, l.back());
     }
@@ -87,7 +89,7 @@ void doParsimUnpacking(omnetpp::cCommBuffer *buffer, std::set<T,Tr,A>& s)
 {
     int n;
     doParsimUnpacking(buffer, n);
-    for (int i=0; i<n; i++) {
+    for (int i = 0; i < n; i++) {
         T x;
         doParsimUnpacking(buffer, x);
         s.insert(x);
@@ -110,7 +112,7 @@ void doParsimUnpacking(omnetpp::cCommBuffer *buffer, std::map<K,V,Tr,A>& m)
 {
     int n;
     doParsimUnpacking(buffer, n);
-    for (int i=0; i<n; i++) {
+    for (int i = 0; i < n; i++) {
         K k; V v;
         doParsimUnpacking(buffer, k);
         doParsimUnpacking(buffer, v);
@@ -148,41 +150,12 @@ void doParsimUnpacking(omnetpp::cCommBuffer *, T& t)
 
 }  // namespace omnetpp
 
-
-// forward
-template<typename T, typename A>
-std::ostream& operator<<(std::ostream& out, const std::vector<T,A>& vec);
-
-// Template rule which fires if a struct or class doesn't have operator<<
-template<typename T>
-inline typename std::enable_if<!std::is_base_of<omnetpp::cObject, T>::value, std::ostream&>::type
-operator<<(std::ostream& out,const T&) {return out.operator<<(omnetpp::opp_typename(typeid(T)));}
-
-// operator<< for std::vector<T>
-template<typename T, typename A>
-inline std::ostream& operator<<(std::ostream& out, const std::vector<T,A>& vec)
-{
-    out.put('{');
-    for(typename std::vector<T,A>::const_iterator it = vec.begin(); it != vec.end(); ++it)
-    {
-        if (it != vec.begin()) {
-            out.put(','); out.put(' ');
-        }
-        out << *it;
-    }
-    out.put('}');
-    
-    char buf[32];
-    sprintf(buf, " (size=%u)", (unsigned int)vec.size());
-    out.write(buf, strlen(buf));
-    return out;
-}
+namespace artery {
 
 Register_Class(AsioData)
 
-AsioData::AsioData(const char *name, short kind) : ::omnetpp::cMessage(name,kind)
+AsioData::AsioData(const char *name, short kind) : ::omnetpp::cMessage(name, kind)
 {
-    this->Length = 0;
 }
 
 AsioData::AsioData(const AsioData& other) : ::omnetpp::cMessage(other)
@@ -196,7 +169,7 @@ AsioData::~AsioData()
 
 AsioData& AsioData::operator=(const AsioData& other)
 {
-    if (this==&other) return *this;
+    if (this == &other) return *this;
     ::omnetpp::cMessage::operator=(other);
     copy(other);
     return *this;
@@ -204,32 +177,19 @@ AsioData& AsioData::operator=(const AsioData& other)
 
 void AsioData::copy(const AsioData& other)
 {
-    this->Buffer = other.Buffer;
     this->Length = other.Length;
 }
 
 void AsioData::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::omnetpp::cMessage::parsimPack(b);
-    doParsimPacking(b,this->Buffer);
     doParsimPacking(b,this->Length);
 }
 
 void AsioData::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::omnetpp::cMessage::parsimUnpack(b);
-    doParsimUnpacking(b,this->Buffer);
     doParsimUnpacking(b,this->Length);
-}
-
-AsioBuffer& AsioData::getBuffer()
-{
-    return this->Buffer;
-}
-
-void AsioData::setBuffer(const AsioBuffer& Buffer)
-{
-    this->Buffer = Buffer;
 }
 
 int AsioData::getLength() const
@@ -245,43 +205,48 @@ void AsioData::setLength(int Length)
 class AsioDataDescriptor : public omnetpp::cClassDescriptor
 {
   private:
-    mutable const char **propertynames;
+    mutable const char **propertyNames;
+    enum FieldConstants {
+        FIELD_Length,
+    };
   public:
     AsioDataDescriptor();
     virtual ~AsioDataDescriptor();
 
     virtual bool doesSupport(omnetpp::cObject *obj) const override;
     virtual const char **getPropertyNames() const override;
-    virtual const char *getProperty(const char *propertyname) const override;
+    virtual const char *getProperty(const char *propertyName) const override;
     virtual int getFieldCount() const override;
     virtual const char *getFieldName(int field) const override;
     virtual int findField(const char *fieldName) const override;
     virtual unsigned int getFieldTypeFlags(int field) const override;
     virtual const char *getFieldTypeString(int field) const override;
     virtual const char **getFieldPropertyNames(int field) const override;
-    virtual const char *getFieldProperty(int field, const char *propertyname) const override;
-    virtual int getFieldArraySize(void *object, int field) const override;
-    virtual void setFieldArraySize(void *object, int field, int size) const override;
+    virtual const char *getFieldProperty(int field, const char *propertyName) const override;
+    virtual int getFieldArraySize(omnetpp::any_ptr object, int field) const override;
+    virtual void setFieldArraySize(omnetpp::any_ptr object, int field, int size) const override;
 
-    virtual const char *getFieldDynamicTypeString(void *object, int field, int i) const override;
-    virtual std::string getFieldValueAsString(void *object, int field, int i) const override;
-    virtual void setFieldValueAsString(void *object, int field, int i, const char *value) const override;
+    virtual const char *getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual std::string getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const override;
+    virtual omnetpp::cValue getFieldValue(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const override;
 
     virtual const char *getFieldStructName(int field) const override;
-    virtual void *getFieldStructValuePointer(void *object, int field, int i) const override;
-    virtual void setFieldStructValuePointer(void *object, int field, int i, void *ptr) const override;
+    virtual omnetpp::any_ptr getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const override;
 };
 
 Register_ClassDescriptor(AsioDataDescriptor)
 
-AsioDataDescriptor::AsioDataDescriptor() : omnetpp::cClassDescriptor("AsioData", "omnetpp::cMessage")
+AsioDataDescriptor::AsioDataDescriptor() : omnetpp::cClassDescriptor(omnetpp::opp_typename(typeid(artery::AsioData)), "omnetpp::cMessage")
 {
-    propertynames = nullptr;
+    propertyNames = nullptr;
 }
 
 AsioDataDescriptor::~AsioDataDescriptor()
 {
-    delete[] propertynames;
+    delete[] propertyNames;
 }
 
 bool AsioDataDescriptor::doesSupport(omnetpp::cObject *obj) const
@@ -291,205 +256,257 @@ bool AsioDataDescriptor::doesSupport(omnetpp::cObject *obj) const
 
 const char **AsioDataDescriptor::getPropertyNames() const
 {
-    if (!propertynames) {
+    if (!propertyNames) {
         static const char *names[] = {  nullptr };
-        omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-        const char **basenames = basedesc ? basedesc->getPropertyNames() : nullptr;
-        propertynames = mergeLists(basenames, names);
+        omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+        const char **baseNames = base ? base->getPropertyNames() : nullptr;
+        propertyNames = mergeLists(baseNames, names);
     }
-    return propertynames;
+    return propertyNames;
 }
 
-const char *AsioDataDescriptor::getProperty(const char *propertyname) const
+const char *AsioDataDescriptor::getProperty(const char *propertyName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? basedesc->getProperty(propertyname) : nullptr;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? base->getProperty(propertyName) : nullptr;
 }
 
 int AsioDataDescriptor::getFieldCount() const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 2+basedesc->getFieldCount() : 2;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? 1+base->getFieldCount() : 1;
 }
 
 unsigned int AsioDataDescriptor::getFieldTypeFlags(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldTypeFlags(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeFlags(field);
+        field -= base->getFieldCount();
     }
     static unsigned int fieldTypeFlags[] = {
-        FD_ISCOMPOUND,
-        FD_ISEDITABLE,
+        FD_ISEDITABLE,    // FIELD_Length
     };
-    return (field>=0 && field<2) ? fieldTypeFlags[field] : 0;
+    return (field >= 0 && field < 1) ? fieldTypeFlags[field] : 0;
 }
 
 const char *AsioDataDescriptor::getFieldName(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldName(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldName(field);
+        field -= base->getFieldCount();
     }
     static const char *fieldNames[] = {
-        "Buffer",
         "Length",
     };
-    return (field>=0 && field<2) ? fieldNames[field] : nullptr;
+    return (field >= 0 && field < 1) ? fieldNames[field] : nullptr;
 }
 
 int AsioDataDescriptor::findField(const char *fieldName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    int base = basedesc ? basedesc->getFieldCount() : 0;
-    if (fieldName[0]=='B' && strcmp(fieldName, "Buffer")==0) return base+0;
-    if (fieldName[0]=='L' && strcmp(fieldName, "Length")==0) return base+1;
-    return basedesc ? basedesc->findField(fieldName) : -1;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    int baseIndex = base ? base->getFieldCount() : 0;
+    if (strcmp(fieldName, "Length") == 0) return baseIndex + 0;
+    return base ? base->findField(fieldName) : -1;
 }
 
 const char *AsioDataDescriptor::getFieldTypeString(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldTypeString(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeString(field);
+        field -= base->getFieldCount();
     }
     static const char *fieldTypeStrings[] = {
-        "AsioBuffer",
-        "int",
+        "int",    // FIELD_Length
     };
-    return (field>=0 && field<2) ? fieldTypeStrings[field] : nullptr;
+    return (field >= 0 && field < 1) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **AsioDataDescriptor::getFieldPropertyNames(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldPropertyNames(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldPropertyNames(field);
+        field -= base->getFieldCount();
     }
     switch (field) {
         default: return nullptr;
     }
 }
 
-const char *AsioDataDescriptor::getFieldProperty(int field, const char *propertyname) const
+const char *AsioDataDescriptor::getFieldProperty(int field, const char *propertyName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldProperty(field, propertyname);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldProperty(field, propertyName);
+        field -= base->getFieldCount();
     }
     switch (field) {
         default: return nullptr;
     }
 }
 
-int AsioDataDescriptor::getFieldArraySize(void *object, int field) const
+int AsioDataDescriptor::getFieldArraySize(omnetpp::any_ptr object, int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldArraySize(object, field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldArraySize(object, field);
+        field -= base->getFieldCount();
     }
-    AsioData *pp = (AsioData *)object; (void)pp;
+    AsioData *pp = omnetpp::fromAnyPtr<AsioData>(object); (void)pp;
     switch (field) {
         default: return 0;
     }
 }
 
-void AsioDataDescriptor::setFieldArraySize(void *object, int field, int size) const
+void AsioDataDescriptor::setFieldArraySize(omnetpp::any_ptr object, int field, int size) const
 {
-    throw omnetpp::cRuntimeError("setFieldArraySize() is unsupported in message compiler legacy mode (--msg4 option)");
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldArraySize(object, field, size);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    AsioData *pp = omnetpp::fromAnyPtr<AsioData>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set array size of field %d of class 'AsioData'", field);
+    }
 }
 
-const char *AsioDataDescriptor::getFieldDynamicTypeString(void *object, int field, int i) const
+const char *AsioDataDescriptor::getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldDynamicTypeString(object,field,i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldDynamicTypeString(object,field,i);
+        field -= base->getFieldCount();
     }
-    AsioData *pp = (AsioData *)object; (void)pp;
+    AsioData *pp = omnetpp::fromAnyPtr<AsioData>(object); (void)pp;
     switch (field) {
         default: return nullptr;
     }
 }
 
-std::string AsioDataDescriptor::getFieldValueAsString(void *object, int field, int i) const
+std::string AsioDataDescriptor::getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldValueAsString(object,field,i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValueAsString(object,field,i);
+        field -= base->getFieldCount();
     }
-    AsioData *pp = (AsioData *)object; (void)pp;
+    AsioData *pp = omnetpp::fromAnyPtr<AsioData>(object); (void)pp;
     switch (field) {
-        case 0: {std::stringstream out; out << pp->getBuffer(); return out.str();}
-        case 1: return long2string(pp->getLength());
+        case FIELD_Length: return long2string(pp->getLength());
         default: return "";
     }
 }
 
-void AsioDataDescriptor::setFieldValueAsString(void *object, int field, int i, const char *value) const
+void AsioDataDescriptor::setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount()) {
-            basedesc->setFieldValueAsString(object,field,i,value);
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValueAsString(object, field, i, value);
             return;
         }
-        field -= basedesc->getFieldCount();
+        field -= base->getFieldCount();
     }
-    AsioData *pp = (AsioData *)object; (void)pp;
+    AsioData *pp = omnetpp::fromAnyPtr<AsioData>(object); (void)pp;
     switch (field) {
-        case 1: pp->setLength(string2long(value)); break;
+        case FIELD_Length: pp->setLength(string2long(value)); break;
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'AsioData'", field);
+    }
+}
+
+omnetpp::cValue AsioDataDescriptor::getFieldValue(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValue(object,field,i);
+        field -= base->getFieldCount();
+    }
+    AsioData *pp = omnetpp::fromAnyPtr<AsioData>(object); (void)pp;
+    switch (field) {
+        case FIELD_Length: return pp->getLength();
+        default: throw omnetpp::cRuntimeError("Cannot return field %d of class 'AsioData' as cValue -- field index out of range?", field);
+    }
+}
+
+void AsioDataDescriptor::setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValue(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    AsioData *pp = omnetpp::fromAnyPtr<AsioData>(object); (void)pp;
+    switch (field) {
+        case FIELD_Length: pp->setLength(omnetpp::checked_int_cast<int>(value.intValue())); break;
         default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'AsioData'", field);
     }
 }
 
 const char *AsioDataDescriptor::getFieldStructName(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldStructName(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructName(field);
+        field -= base->getFieldCount();
     }
     switch (field) {
-        case 0: return omnetpp::opp_typename(typeid(AsioBuffer));
         default: return nullptr;
     };
 }
 
-void *AsioDataDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
+omnetpp::any_ptr AsioDataDescriptor::getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldStructValuePointer(object, field, i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructValuePointer(object, field, i);
+        field -= base->getFieldCount();
     }
-    AsioData *pp = (AsioData *)object; (void)pp;
+    AsioData *pp = omnetpp::fromAnyPtr<AsioData>(object); (void)pp;
     switch (field) {
-        case 0: return (void *)(&pp->getBuffer()); break;
-        default: return nullptr;
+        default: return omnetpp::any_ptr(nullptr);
     }
 }
 
-void AsioDataDescriptor::setFieldStructValuePointer(void *object, int field, int i, void *ptr) const
+void AsioDataDescriptor::setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const
 {
-    throw omnetpp::cRuntimeError("setFieldStructValuePointer() is unsupported in message compiler legacy mode (--msg4 option)");
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldStructValuePointer(object, field, i, ptr);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    AsioData *pp = omnetpp::fromAnyPtr<AsioData>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'AsioData'", field);
+    }
 }
 
+}  // namespace artery
+
+namespace omnetpp {
+
+}  // namespace omnetpp
 

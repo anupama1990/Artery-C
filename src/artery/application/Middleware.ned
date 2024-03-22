@@ -9,22 +9,17 @@ moduleinterface IMiddleware
 {
 }
 
-simple MiddlewareBase like IMiddleware {
-		@class(MiddlewareBase);
-		@signal[IdentityUpdated](type=artery::Identity);
-		@signal[IdentityRemoved](type=artery::Identity);
-
-}
-
 // Middleware for ITS G5 services
-simple Middleware extends MiddlewareBase
+simple Middleware like IMiddleware
 {
 	parameters:
 		@class(Middleware);
+		@signal[IdentityUpdated](type=artery::Identity);
+		@signal[IdentityRemoved](type=artery::Identity);
 		@signal[StoryboardSignal](type=StoryboardSignal);
 
-		string routerModule;
 		double updateInterval = default(0.1s) @unit(s);
 		string datetime;
 		xml services;
+		xml mcoPolicy = default(xml("<mco default=\"CCH\" />"));
 }

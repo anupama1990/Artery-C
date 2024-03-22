@@ -15,9 +15,14 @@
 
 namespace artery;
 
+//import inet.common.INETDefs;
+//import inet.common.packet.chunk.Chunk;
 //
 // TODO generated message class
 //
-packet PoiRetrievalModule {
+
+
+
+class PoiRetrievalModule  {
      @customize(true);
 }

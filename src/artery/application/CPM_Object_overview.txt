@@ -1,0 +1,778 @@
+
+
+File: vanetza/asn1/its/CPM.h
+
+typedef struct CPM {
+	ItsPduHeader_t	 header
+    {
+        long          protocolVersion;
+        long          messageID;
+        unsigned long stationID;
+        /* Context for parsing across buffer boundaries */
+        asn_struct_ctx_t _asn_ctx;
+    }
+
+	CollectivePerceptionMessage_t	 cpm
+    {
+    	long	 generationDeltaTime;
+	    CpmParameters_t	 cpmParameters
+        {
+        	CpmManagementContainer_t	 managementContainer
+            {
+                long	 stationType;
+                struct PerceivedObjectContainerSegmentInfo	*perceivedObjectContainerSegmentInfo	/* OPTIONAL */
+                {
+                    long	 totalMsgSegments;
+                    long	 thisSegmentNum;
+                    
+                    /* Context for parsing across buffer boundaries */
+                    asn_struct_ctx_t _asn_ctx;
+                }
+                ReferencePosition_t	 referencePosition
+                {
+                    long	 latitude;
+                    long	 longitude;
+                    PosConfidenceEllipse_t	 positionConfidenceEllipse
+                    {
+                       	long	 semiMajorConfidence;
+                        long	 semiMinorConfidence;
+                        long	 semiMajorOrientation;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+                    Altitude_t	 altitude
+                    {
+                       	long	 altitudeValue;
+                        long	 altitudeConfidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+                    /* Context for parsing across buffer boundaries */
+                    asn_struct_ctx_t _asn_ctx;
+                }
+                /* Context for parsing across buffer boundaries */
+                asn_struct_ctx_t _asn_ctx;
+            }
+
+            struct StationDataContainer	*stationDataContainer	/* OPTIONAL */
+            {
+                	enum StationDataContainer_PR present;
+                    union StationDataContainer_u {
+                        OriginatingVehicleContainer_t	 originatingVehicleContainer
+                        {
+                            Heading_t	 heading
+                            {
+                                long	 headingValue;
+                                long	 headingConfidence;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+                
+                            Speed_t	 speed
+                            {
+                                SpeedValue_t     speedValue;
+                                SpeedConfidence_t    speedConfidence;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            struct WGS84Angle	*vehicleOrientationAngle	/* OPTIONAL */
+                            {
+                                WGS84AngleValue_t    value;
+                                AngleConfidence_t    confidence;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            long	 driveDirection	/* DEFAULT 0 */;
+
+                            struct LongitudinalAcceleration	*longitudinalAcceleration	/* OPTIONAL */
+                            {
+                                long  longitudinalAccelerationValue;
+                                long  longitudinalAccelerationConfidence;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            struct LateralAcceleration	*lateralAcceleration	/* OPTIONAL */
+                            {
+                                long   lateralAccelerationValue;
+                                long   lateralAccelerationConfidence;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            struct VerticalAcceleration	*verticalAcceleration	/* OPTIONAL */
+                            {
+                                long  verticalAccelerationValue;
+                                long     verticalAccelerationConfidence;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            struct YawRate	*yawRate	/* OPTIONAL */
+                            {
+                                YawRateValue_t   yawRateValue;
+                                YawRateConfidence_t  yawRateConfidence;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            struct CartesianAngle	*pitchAngle	/* OPTIONAL */
+                            {
+                                long    value;
+                                long    confidence;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            struct CartesianAngle	*rollAngle	/* OPTIONAL */
+                            {
+                                long    value;
+                                long    confidence;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;                            
+                            }
+
+                            struct VehicleLength	*vehicleLength	/* OPTIONAL */
+                            {
+                                VehicleLengthValue_t     vehicleLengthValue;
+                                VehicleLengthConfidenceIndication_t  vehicleLengthConfidenceIndication;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            long	*vehicleWidth	/* OPTIONAL */;
+                            long	*vehicleHeight	/* OPTIONAL */;
+                            
+                            struct TrailerDataContainer	*trailerDataContainer	/* OPTIONAL */
+                            {
+                                A_SEQUENCE_OF(struct TrailerData) list
+                                {
+                                    long     refPointId;
+                                    long   hitchPointOffset;
+                                    long  frontOverhang;
+                                    long   rearOverhang;
+                                    long  *trailerWidth   /* OPTIONAL */;
+                                    struct CartesianAngle   *hitchAngle /* OPTIONAL */
+                                    {
+                                        long    value;
+                                        long    confidence;
+                                        
+                                        /* Context for parsing across buffer boundaries */
+                                        asn_struct_ctx_t _asn_ctx;
+                                    }
+                                    
+                                    /* Context for parsing across buffer boundaries */
+                                    asn_struct_ctx_t _asn_ctx;
+                                }
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+                            
+                            /* Context for parsing across buffer boundaries */
+                            asn_struct_ctx_t _asn_ctx;
+                        }
+
+                        OriginatingRSUContainer_t	 originatingRSUContainer
+                        {
+                            enum OriginatingRSUContainer_PR present;
+                            union OriginatingRSUContainer_u {
+
+                                IntersectionReferenceID_t    intersectionReferenceId
+                                {
+                                    long   *region /* OPTIONAL */;
+                                    long   id;
+                                    
+                                    /* Context for parsing across buffer boundaries */
+                                    asn_struct_ctx_t _asn_ctx;
+                                }
+
+                                RoadSegmentReferenceID_t     roadSegmentReferenceId
+                                {
+                                    long  *region /* OPTIONAL */;
+                                    long  id;
+                                    
+                                    /* Context for parsing across buffer boundaries */
+                                    asn_struct_ctx_t _asn_ctx;
+                                }
+
+                            } choice;
+                            
+                            /* Context for parsing across buffer boundaries */
+                            asn_struct_ctx_t _asn_ctx;
+                        }
+                        /*
+                        * This type is extensible,
+                        * possible extensions are below.
+                        */
+                    } choice;
+                    
+                    /* Context for parsing across buffer boundaries */
+                    asn_struct_ctx_t _asn_ctx;
+            }
+
+            struct SensorInformationContainer	*sensorInformationContainer	/* OPTIONAL */
+            {
+                A_SEQUENCE_OF(struct SensorInformation) list
+                {
+                    long     sensorID;
+                    long     type;
+                    DetectionArea_t  detectionArea
+                    {
+                        enum DetectionArea_PR present;
+                        union DetectionArea_u {
+                            VehicleSensor_t  vehicleSensor
+                            {
+                                long  refPointId /* DEFAULT 0 */;
+                                long  xSensorOffset;
+                                long  ySensorOffset;
+                                long *zSensorOffset  /* OPTIONAL */;
+                                VehicleSensorPropertyList_t  vehicleSensorPropertyList
+                                {
+                                    A_SEQUENCE_OF(struct VehicleSensorProperties) list
+                                    {
+                                        long    range;                                        
+                                        long    horizontalOpeningAngleStart;
+                                        long    horizontalOpeningAngleEnd;
+                                        long   *verticalOpeningAngleStart  /* OPTIONAL */;
+                                        long   *verticalOpeningAngleEnd    /* OPTIONAL */;
+
+                                        /* Context for parsing across buffer boundaries */
+                                        asn_struct_ctx_t _asn_ctx;
+                                    }
+                                    
+                                    /* Context for parsing across buffer boundaries */
+                                    asn_struct_ctx_t _asn_ctx;
+                                }
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            AreaRadial_t     stationarySensorRadial
+                            {
+                                long  range;
+                                long    stationaryHorizontalOpeningAngleStart;
+                                long    stationaryHorizontalOpeningAngleEnd;
+                                long   *verticalOpeningAngleStart  /* OPTIONAL */;
+                                long   *verticalOpeningAngleEnd    /* OPTIONAL */;
+                                struct OffsetPoint  *sensorPositionOffset   /* OPTIONAL */
+                                {
+                                    NodeOffsetPointXY_t  nodeOffsetPointxy
+                                    {
+                                        enum NodeOffsetPointXY_PR present;
+                                        union NodeOffsetPointXY_u {
+                                            Node_XY_20b_t    node_XY1
+                                            {
+                                                long  Offset_B10_t  x;
+                                                long  Offset_B10_t  y;
+                                                
+                                                /* Context for parsing across buffer boundaries */
+                                                asn_struct_ctx_t _asn_ctx;
+                                            }
+
+                                            Node_XY_22b_t    node_XY2
+                                            {
+                                                long Offset_B11_t     x;
+                                                long Offset_B11_t     y;
+                                                
+                                                /* Context for parsing across buffer boundaries */
+                                                asn_struct_ctx_t _asn_ctx;
+                                            }
+
+                                            Node_XY_24b_t    node_XY3;
+                                            {
+                                                long Offset_B12_t     x;
+                                                long Offset_B12_t     y;
+                                                
+                                                /* Context for parsing across buffer boundaries */
+                                                asn_struct_ctx_t _asn_ctx;
+                                            }
+                                            Node_XY_26b_t    node_XY4
+                                            {
+                                                long Offset_B13_t     x;
+                                                long Offset_B13_t     y;
+                                                
+                                                /* Context for parsing across buffer boundaries */
+                                                asn_struct_ctx_t _asn_ctx;
+                                            }
+                                            
+                                            Node_XY_28b_t    node_XY5
+                                            {
+                                                long Offset_B14_t     x;
+                                                long Offset_B14_t     y;
+                                                
+                                                /* Context for parsing across buffer boundaries */
+                                                asn_struct_ctx_t _asn_ctx;
+                                            }
+                                            
+                                            Node_XY_32b_t    node_XY6
+                                            {
+                                                long Offset_B16_t     x;
+                                                long Offset_B16_t     y;
+                                                
+                                                /* Context for parsing across buffer boundaries */
+                                                asn_struct_ctx_t _asn_ctx;
+                                            }
+                                            
+                                            Node_LLmD_64b_t  node_LatLon
+                                            {
+                                                long Longitude_t  lon;
+                                                long Latitude_t   lat;
+                                                
+                                                /* Context for parsing across buffer boundaries */
+                                                asn_struct_ctx_t _asn_ctx;
+                                            }
+
+                                            RegionalExtension_109P0_t    regional
+                                            {
+                                                long RegionId_t   regionId;
+                                                struct RegionalExtension_109P0__regExtValue
+                                                 {
+                                                    enum RegionalExtension_109P0__regExtValue_PR present;
+                                                    union RegionalExtension_109P0__regExtValue_u
+                                                    {
+                                                    
+                                                    } choice;
+                                                    
+                                                    /* Context for parsing across buffer boundaries */
+                                                    asn_struct_ctx_t _asn_ctx;
+                                                } regExtValue;
+                                                
+                                                /* Context for parsing across buffer boundaries */
+                                                asn_struct_ctx_t _asn_ctx;
+                                            }
+                                        } choice;
+                                        
+                                        /* Context for parsing across buffer boundaries */
+                                        asn_struct_ctx_t _asn_ctx;
+                                    }
+
+                                    struct NodeOffsetPointZ *nodeOffsetPointZ   /* OPTIONAL */
+                                    {
+                                        enum NodeOffsetPointZ_PR present;
+                                        union NodeOffsetPointZ_u {
+                                            long Offset_B10_t     node_Z1;
+                                            long Offset_B11_t     node_Z2;
+                                            long Offset_B12_t     node_Z3;
+                                            long Offset_B13_t     node_Z4;
+                                            long Offset_B14_t     node_Z5;
+                                            long Offset_B16_t     node_Z6;
+                                        } choice;
+                                        
+                                        /* Context for parsing across buffer boundaries */
+                                        asn_struct_ctx_t _asn_ctx;
+                                    }
+
+                                    
+                                    /* Context for parsing across buffer boundaries */
+                                    asn_struct_ctx_t _asn_ctx;
+                                }
+                                
+                                long  *sensorHeight   /* OPTIONAL */;
+                                /*
+                                 * This type is extensible,
+                                 * possible extensions are below.
+                                 */
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+                            AreaPolygon_t    stationarySensorPolygon
+                            {
+                                PolyPointList_t  polyPointList
+                                {
+                                    A_SEQUENCE_OF(struct OffsetPoint) list
+                                    {
+                                        /*line 273-379*/
+                                    }
+                                    
+                                    /* Context for parsing across buffer boundaries */
+                                    asn_struct_ctx_t _asn_ctx;
+                                }
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            AreaCircular_t   stationarySensorCircular
+                            {
+                                struct OffsetPoint  *nodeCenterPoint    /* OPTIONAL */
+                                {
+                                    /*line 273-379*/
+                                }
+                                
+                                long Radius_t     radius;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            AreaEllipse_t    stationarySensorEllipse;
+                            {
+                                struct OffsetPoint  *nodeCenterPoint    /* OPTIONAL */
+                                {
+                                    /*line 273-379*/
+                                }
+
+                                long SemiRangeLength_t    semiMinorRangeLength;
+                                long SemiRangeLength_t    semiMajorRangeLength;
+                                long WGS84AngleValue_t    semiMajorRangeOrientation;
+                                long SemiRangeLength_t   *semiHeight /* OPTIONAL */;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;                            
+                            }
+
+                            AreaRectangle_t  stationarySensorRectangle
+                            {
+                                struct OffsetPoint  *nodeCenterPoint    /* OPTIONAL */
+                                {
+                                    /*line 273-379*/
+                                }
+                                
+                                long SemiRangeLength_t    semiMajorRangeLength;
+                                long SemiRangeLength_t    semiMinorRangeLength;
+                                long WGS84AngleValue_t    semiMajorRangeOrientation;
+                                long SemiRangeLength_t   *semiHeight /* OPTIONAL */;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+                        } choice;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+                    
+                    long FreeSpaceConfidence_t   *freeSpaceConfidence    /* OPTIONAL */;
+
+                    /* Context for parsing across buffer boundaries */
+                    asn_struct_ctx_t _asn_ctx;
+                }
+                
+                /* Context for parsing across buffer boundaries */
+                asn_struct_ctx_t _asn_ctx;
+            }
+            
+            struct PerceivedObjectContainer	*perceivedObjectContainer	/* OPTIONAL */
+            {
+                A_SEQUENCE_OF(struct PerceivedObject) list;
+                {
+                    long Identifier_t     objectID;
+                    struct SensorIdList *sensorIDList   /* OPTIONAL */
+                    {
+                        A_SEQUENCE_OF(long Identifier_t) list;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+                    long TimeOfMeasurement_t  timeOfMeasurement;
+                    long ObjectAge_t *objectAge  /* OPTIONAL */;
+                    long ObjectConfidence_t   objectConfidence   /* DEFAULT 0 */;
+                    ObjectDistanceWithConfidence_t   xDistance;
+                    ObjectDistanceWithConfidence_t   yDistance;
+                    struct ObjectDistanceWithConfidence *zDistance  /* OPTIONAL */
+                    {
+                        long DistanceValue_t  value;
+                        long DistanceConfidence_t     confidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+
+                    SpeedExtended_t  xSpeed;
+                    {
+                        long SpeedValueExtended_t     value;
+                        long SpeedConfidence_t    confidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+
+                    SpeedExtended_t  ySpeed
+                    {
+                        long SpeedValueExtended_t     value;
+                        long SpeedConfidence_t    confidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+
+                    struct SpeedExtended    *zSpeed /* OPTIONAL */
+                    {
+                        long SpeedValueExtended_t     value;
+                        long SpeedConfidence_t    confidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+                    struct LongitudinalAcceleration *xAcceleration  /* OPTIONAL */
+                    {
+                        long LongitudinalAccelerationValue_t  longitudinalAccelerationValue;
+                        long AccelerationConfidence_t     longitudinalAccelerationConfidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+
+                    struct LateralAcceleration  *yAcceleration  /* OPTIONAL */
+                    {
+                        long LateralAccelerationValue_t   lateralAccelerationValue;
+                        long AccelerationConfidence_t     lateralAccelerationConfidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+                    struct VerticalAcceleration *zAcceleration  /* OPTIONAL */
+                    {
+                        long VerticalAccelerationValue_t  verticalAccelerationValue;
+                        long AccelerationConfidence_t     verticalAccelerationConfidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+                    struct CartesianAngle   *yawAngle   /* OPTIONAL */
+                    {
+                        long CartesianAngleValue_t    value;
+                        long AngleConfidence_t    confidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+                    struct ObjectDimension  *planarObjectDimension1 /* OPTIONAL */
+                    {
+                        long ObjectDimensionValue_t   value;
+                        long ObjectDimensionConfidence_t  confidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+                    struct ObjectDimension  *planarObjectDimension2 /* OPTIONAL */;
+                    {
+                        long ObjectDimensionValue_t   value;
+                        long ObjectDimensionConfidence_t  confidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+
+                    struct ObjectDimension  *verticalObjectDimension    /* OPTIONAL */;
+                    {
+                        long ObjectDimensionValue_t   value;
+                        long ObjectDimensionConfidence_t  confidence;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+
+                    long ObjectRefPoint_t     objectRefPoint /* DEFAULT 0 */;
+                    long DynamicStatus_t *dynamicStatus  /* OPTIONAL */;
+
+                    struct ObjectClassDescription   *classification /* OPTIONAL */
+                    {
+                        A_SEQUENCE_OF(struct ObjectClass) list
+                        {
+                            long ClassConfidence_t    confidence;
+                            
+                            struct ObjectClass__class {
+                                enum ObjectClass__class_PR present;
+                                union ObjectClass__class_u {
+                                    VehicleSubclass_t    vehicle
+                                    {
+                                        long VehicleSubclassType_t    type   /* DEFAULT 0 */;
+                                        long ClassConfidence_t    confidence /* DEFAULT 0 */;
+                                        
+                                        /* Context for parsing across buffer boundaries */
+                                        asn_struct_ctx_t _asn_ctx;
+                                    }
+
+                                    PersonSubclass_t     person
+                                    {
+                                        long PersonSubclassType_t     type   /* DEFAULT 0 */;
+                                        long ClassConfidence_t    confidence /* DEFAULT 0 */;
+                                        
+                                        /* Context for parsing across buffer boundaries */
+                                        asn_struct_ctx_t _asn_ctx;
+                                    }
+
+                                    AnimalSubclass_t     animal
+                                    {
+                                        long AnimalSubclassType_t     type   /* DEFAULT 0 */;
+                                        long ClassConfidence_t    confidence /* DEFAULT 0 */;
+                                        
+                                        /* Context for parsing across buffer boundaries */
+                                        asn_struct_ctx_t _asn_ctx;
+                                    }
+
+                                    OtherSubclass_t  other
+                                    {
+                                        long OtherSublassType_t   type   /* DEFAULT 0 */;
+                                        long ClassConfidence_t    confidence /* DEFAULT 0 */;
+                                        
+                                        /* Context for parsing across buffer boundaries */
+                                        asn_struct_ctx_t _asn_ctx;
+                                    }
+                                } choice;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            } Class;
+                            
+                            /* Context for parsing across buffer boundaries */
+                            asn_struct_ctx_t _asn_ctx;
+                        }
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+
+                    struct MatchedPosition  *matchedPosition    /* OPTIONAL */
+                    {
+                        long LaneID_t    *laneID /* OPTIONAL */;
+                        struct LongitudinalLanePosition *longitudinalLanePosition   /* OPTIONAL */
+                        {
+                            long LongitudinalLanePositionValue_t  longitudinalLanePositionValue;
+                            long LongitudinalLanePositionConfidence_t     longitudinalLanePositionConfidence;
+                            
+                            /* Context for parsing across buffer boundaries */
+                            asn_struct_ctx_t _asn_ctx;
+                        }
+
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+                    
+                    /* Context for parsing across buffer boundaries */
+                    asn_struct_ctx_t _asn_ctx;
+                }
+                
+                /* Context for parsing across buffer boundaries */
+                asn_struct_ctx_t _asn_ctx;
+            }
+            
+            struct FreeSpaceAddendumContainer	*freeSpaceAddendumContainer	/* OPTIONAL */
+            {
+                A_SEQUENCE_OF(struct FreeSpaceAddendum) list
+                {
+                    long FreeSpaceConfidence_t    freeSpaceConfidence;
+                    FreeSpaceArea_t  freeSpaceArea
+                    {
+                        enum FreeSpaceArea_PR present;
+                        union FreeSpaceArea_u 
+                        {
+                            AreaPolygon_t    freeSpacePolygon
+                            {
+                                PolyPointList_t  polyPointList
+                                {
+                                    A_SEQUENCE_OF(struct OffsetPoint) list
+                                    {
+                                        /*line 273-379*/
+                                    }
+                                    
+                                    /* Context for parsing across buffer boundaries */
+                                    asn_struct_ctx_t _asn_ctx;
+                                }
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            AreaCircular_t   freeSpaceCircular
+                            {
+                                struct OffsetPoint  *nodeCenterPoint    /* OPTIONAL */
+                                {
+                                    /*line 273-379*/
+                                }
+                                
+                                long Radius_t     radius;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                            AreaEllipse_t    freeSpaceEllipse
+                            {
+                                struct OffsetPoint  *nodeCenterPoint    /* OPTIONAL */
+                                {
+                                    /*line 273-379*/
+                                }
+
+                                long SemiRangeLength_t    semiMinorRangeLength;
+                                long SemiRangeLength_t    semiMajorRangeLength;
+                                long WGS84AngleValue_t    semiMajorRangeOrientation;
+                                long SemiRangeLength_t   *semiHeight /* OPTIONAL */;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;                            
+                            }
+
+                            AreaRectangle_t  freeSpaceRectangle
+                            {
+                                struct OffsetPoint  *nodeCenterPoint    /* OPTIONAL */
+                                {
+                                    /*line 273-379*/
+                                }
+                                
+                                long SemiRangeLength_t    semiMajorRangeLength;
+                                long SemiRangeLength_t    semiMinorRangeLength;
+                                long WGS84AngleValue_t    semiMajorRangeOrientation;
+                                long SemiRangeLength_t   *semiHeight /* OPTIONAL */;
+                                
+                                /* Context for parsing across buffer boundaries */
+                                asn_struct_ctx_t _asn_ctx;
+                            }
+
+                        } choice;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+
+                    struct SensorIdList *sensorIDList   /* OPTIONAL */
+                    {
+                        A_SEQUENCE_OF(long Identifier_t) list;
+                        
+                        /* Context for parsing across buffer boundaries */
+                        asn_struct_ctx_t _asn_ctx;
+                    }
+
+                    bool ShadowingApplies_t  *shadowingApplies   /* DEFAULT TRUE */;
+                    
+                    /* Context for parsing across buffer boundaries */
+                    asn_struct_ctx_t _asn_ctx;
+                }
+                
+                /* Context for parsing across buffer boundaries */
+                asn_struct_ctx_t _asn_ctx;
+            }
+
+            long NumberOfPerceivedObjects_t	 numberOfPerceivedObjects;
+ 
+            
+            /* Context for parsing across buffer boundaries */
+            asn_struct_ctx_t _asn_ctx;
+        }
+	
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+    }
+	
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+} CPM_t;
+

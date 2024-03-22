@@ -1,18 +1,22 @@
 #ifndef VEHICLECONTROLLER_H_AXBS5NQM
 #define VEHICLECONTROLLER_H_AXBS5NQM
 
-#include <artery/traci/MovingNodeController.h>
 #include "artery/traci/VehicleType.h"
-#include "artery/traci/MovingNodeController.h"
+#include "artery/utility/Geometry.h"
 #include "traci/LiteAPI.h"
 #include "traci/VariableCache.h"
+#include <vanetza/units/acceleration.hpp>
+#include <vanetza/units/angle.hpp>
+#include <vanetza/units/length.hpp>
+#include <vanetza/units/velocity.hpp>
+#include <string>
 
 namespace traci
 {
 
 class VehicleCache;
 
-class VehicleController: public MovingNodeController
+class VehicleController
 {
 public:
     using Acceleration = vanetza::units::Acceleration;
@@ -23,23 +27,21 @@ public:
     VehicleController(std::shared_ptr<VehicleCache> cache);
 
     const std::string& getVehicleId() const;
-    const std::string& getNodeId() const override;
-    std::string getTypeId() const override;
+    std::string getTypeId() const;
     const VehicleType& getVehicleType() const;
     const std::string getVehicleClass() const;
-    const std::string getNodeClass() const override;
 
-    artery::Position getPosition() const override;
-    artery::GeoPosition getGeoPosition() const override;
-    artery::Angle getHeading() const override;
-    Velocity getSpeed() const override;
-    Velocity getMaxSpeed() const override;
-    void setMaxSpeed(Velocity) override;
-    void setSpeed(Velocity) override;
+    artery::Position getPosition() const;
+    artery::GeoPosition getGeoPosition() const;
+    artery::Angle getHeading() const;
+    Velocity getSpeed() const;
+    Velocity getMaxSpeed() const;
+    void setMaxSpeed(Velocity);
+    void setSpeed(Velocity);
     void setSpeedFactor(double);
 
-    Length getLength() const override;
-    Length getWidth() const override;
+    Length getLength() const;
+    Length getWidth() const;
 
     void changeTarget(const std::string& edge);
 

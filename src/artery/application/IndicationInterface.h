@@ -2,7 +2,7 @@
 #define ARTERY_INDICATIONINTERFACE_H_
 
 #include <vanetza/btp/data_indication.hpp>
-
+using namespace vanetza;
 namespace artery
 {
 

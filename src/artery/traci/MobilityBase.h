@@ -1,7 +1,6 @@
 #ifndef ARTERY_MOBILITYBASE_H_1SQMAVHF
 #define ARTERY_MOBILITYBASE_H_1SQMAVHF
 
-
 #include "artery/traci/ControllableVehicle.h"
 #include "traci/LiteAPI.h"
 #include "traci/VehicleSink.h"
@@ -25,10 +24,10 @@ public:
 
     // ControllableVehicle
     traci::VehicleController* getVehicleController() override;
-    traci::MovingNodeController* getControllerBase() override;
+
     // generic signal for mobility state changes
     static omnetpp::simsignal_t stateChangedSignal;
-    std::unique_ptr<traci::VehicleController> mController;
+
 protected:
     std::string mVehicleId;
     traci::LiteAPI* mTraci = nullptr;
@@ -38,10 +37,9 @@ private:
     virtual void initialize(const Position&, Angle, double speed) = 0;
     virtual void update(const Position&, Angle, double speed) = 0;
 
-
+    std::unique_ptr<traci::VehicleController> mController;
 };
 
 } // namespace artery
 
 #endif /* ARTERY_MOBILITYBASE_H_1SQMAVHF */
-

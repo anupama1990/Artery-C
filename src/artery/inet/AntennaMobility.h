@@ -32,12 +32,11 @@ public:
     int numInitStages() const override;
 
 //private:
-//    inet::IMobility* mParentMobility = nullptr;
+    inet::IMobility* mParentMobility = nullptr;
 //    inet::Coord mOffsetCoord;
 //    inet::EulerAngles mOffsetAngles;
 //    inet::Rotation mOffsetRotation;
 };
 
 } // namespace artery
-
 #endif /* ARTERY_ANTENNAMOBILITY_H_BMWHZWNJ */

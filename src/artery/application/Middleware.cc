@@ -1,15 +1,18 @@
 /*
 * Artery V2X Simulation Framework
-* Copyright 2014-2018 Raphael Riebl et al.
+* Copyright 2014-2019 Raphael Riebl et al.
 * Licensed under GPLv2, see COPYING file for detailed license and warranty terms.
 */
 
 #include "artery/application/Middleware.h"
 #include "artery/application/ItsG5PromiscuousService.h"
 #include "artery/application/ItsG5Service.h"
-#include "artery/utility/InitStages.h"
+#include "artery/application/XmlMultiChannelPolicy.h"
 #include "artery/networking/Router.h"
+#include "artery/utility/Channel.h"
 #include "artery/utility/PointerCheck.h"
+#include "artery/utility/IdentityRegistry.h"
+#include "artery/utility/InitStages.h"
 #include "artery/utility/FilterRules.h"
 #include "inet/common/ModuleAccess.h"
 
@@ -20,6 +23,28 @@ namespace artery
 
 Define_Module(Middleware)
 
+namespace
+{
+
+ChannelNumber getChannel(const omnetpp::cXMLElement* cfg)
+{
+    ChannelNumber channel = 0;
+
+    const char* ch_attr = cfg->getAttribute("channel");
+    if (ch_attr) {
+        channel = parseChannelNumber(ch_attr);
+    }
+
+    // fall back to control channel for backward-compatibility
+    if (channel == 0) {
+        channel = channel::CCH;
+    }
+
+    return channel;
+}
+
+} // namespace
+
 Middleware::Middleware() : mLocalDynamicMap(mTimer)
 {
 }
@@ -29,25 +54,35 @@ Middleware::~Middleware()
     cancelAndDelete(mUpdateMessage);
 }
 
+int Middleware::numInitStages() const
+{
+    return InitStages::Total;
+}
+
 void Middleware::initialize(int stage)
 {
-    MiddlewareBase::initialize(stage);
     if (stage == InitStages::Prepare) {
         mTimer.setTimebase(par("datetime"));
-        mRouter = inet::getModuleFromPar<Router>(par("routerModule"), findHost());
         mUpdateInterval = par("updateInterval");
         mUpdateMessage = new cMessage("middleware update");
+        mIdentity.host = findHost();
+        mIdentity.host->subscribe(Identity::changeSignal, this);
+        mMultiChannelPolicy.reset(new XmlMultiChannelPolicy(par("mcoPolicy").xmlValue()));
     } else if (stage == InitStages::Self) {
         mFacilities.register_const(&mTimer);
         mFacilities.register_mutable(&mLocalDynamicMap);
+        mFacilities.register_const(&mIdentity);
         mFacilities.register_const(&mStationType);
-        mFacilities.register_const(mRouter);
+        mFacilities.register_const(mMultiChannelPolicy.get());
+        mFacilities.register_const(&mNetworkInterfaceTable);
 
         initializeServices(InitStages::Self);
 
         // start update cycle with random jitter to avoid unrealistic node synchronization
         const auto jitter = uniform(SimTime(0, SIMTIME_MS), mUpdateInterval);
         scheduleAt(simTime() + jitter + mUpdateInterval, mUpdateMessage);
+    } else if (stage == InitStages::Propagate) {
+        emit(artery::IdentityRegistry::updateSignal, &mIdentity);
     }
 }
 
@@ -71,35 +106,55 @@ void Middleware::initializeServices(int stage)
             module->finalizeParameters();
             module->buildInside();
             module->scheduleStart(simTime());
-            for (int i = 0; i <= stage; ++i) {
-                if (!module->callInitialize(i)) break;
-            }
+            // defer final module initialisation until service is attached to middleware
 
             ItsG5BaseService* service = dynamic_cast<ItsG5BaseService*>(module);
             if (service) {
-                cXMLElement* listener = service_cfg->getFirstChildWithTag("listener");
-                if (listener && listener->getAttribute("port")) {
-                    port_type port = boost::lexical_cast<port_type>(listener->getAttribute("port"));
-                    mServices.emplace(service, port);
-                    mBtpPortDispatcher.set_non_interactive_handler(vanetza::host_cast<port_type>(port), service);
-                } else if (!service->requiresListener()) {
-                        mServices.emplace(service, 0);
-                } else {
-                    auto promiscuous = dynamic_cast<ItsG5PromiscuousService*>(service);
-                    if (promiscuous != nullptr) {
-                        mServices.emplace(service, 0);
-                        mBtpPortDispatcher.add_promiscuous_hook(promiscuous);
-                    } else {
-                        error("No listener port defined for %s", service_name);
+                unsigned ports = 0;
+                unsigned channels = 0;
+                auto promiscuous = dynamic_cast<ItsG5PromiscuousService*>(service);
+
+                for (const cXMLElement* listener : service_cfg->getChildrenByTagName("listener")) {
+                    if (listener->getAttribute("port")) {
+                        auto port = boost::lexical_cast<PortNumber>(listener->getAttribute("port"));
+                        TransportDescriptor td = std::forward_as_tuple(getChannel(listener), port);
+                        mTransportDispatcher.addListener(service, td);
+                        service->addTransportDescriptor(td);
+                        ++ports;
+                    } else if (promiscuous && listener->getAttribute("channel")) {
+                        ChannelNumber channel = getChannel(listener);
+                        mTransportDispatcher.addPromiscuousListener(promiscuous, channel);
+                        ++channels;
                     }
                 }
+
+                // ensure that ordinary ITS-G5 services are listening to at least port
+                if (ports == 0 && !promiscuous && service->requiresListener()) {
+                    error("Listening ports are required for %s but none have been specified", module_type->getFullName());
+                }
+
+                // promiscuous ITS-G5 services grab packets from CCH by default if not specified otherwise
+                if (promiscuous && channels == 0) {
+                    mTransportDispatcher.addPromiscuousListener(promiscuous, channel::CCH);
+                }
+
+                mServices.emplace(service);
             } else {
                 error("%s is not of type ItsG5BaseService", module_type->getFullName());
+            }
+
+            // finalize module initialization now
+            for (int i = 0; i < stage; ++i) {
+                if (!module->callInitialize(i)) break;
             }
         }
     }
 }
 
+void Middleware::finish()
+{
+    emit(artery::IdentityRegistry::removeSignal, &mIdentity);
+}
 
 void Middleware::handleMessage(cMessage *msg)
 {
@@ -110,42 +165,78 @@ void Middleware::handleMessage(cMessage *msg)
     }
 }
 
+void Middleware::receiveSignal(omnetpp::cComponent*, omnetpp::simsignal_t signal, long changes, omnetpp::cObject* obj)
+{
+    if (signal == Identity::changeSignal) {
+        auto identity = check_and_cast<Identity*>(obj);
+        if (mIdentity.update(*identity, changes)) {
+            emit(artery::IdentityRegistry::updateSignal, &mIdentity);
+        }
+    }
+}
+
+cModule* Middleware::findHost()
+{
+    return inet::getContainingNode(this);
+}
 
 void Middleware::setStationType(const StationType& type)
 {
     mStationType = type;
 }
 
-vanetza::geonet::TransportInterface& Middleware::getTransportInterface()
+void Middleware::registerNetworkInterface(std::shared_ptr<NetworkInterface> ifc)
 {
-    return mBtpPortDispatcher;
+    mNetworkInterfaceTable.insert(ifc);
 }
 
 void Middleware::updateServices()
 {
     mLocalDynamicMap.dropExpired();
-    for (auto& kv : mServices) {
-        kv.first->trigger();
+    for (auto& service : mServices) {
+        service->trigger();
     }
     scheduleAt(simTime() + mUpdateInterval, mUpdateMessage);
 }
 
-Middleware::port_type Middleware::getPortNumber(const ItsG5BaseService* service) const
+void Middleware::requestTransmission(const vanetza::btp::DataRequestB& request,
+        std::unique_ptr<vanetza::DownPacket> packet, const NetworkInterface& netifc)
 {
-    port_type port = 0;
-    auto it = mServices.find(const_cast<ItsG5BaseService*>(service));
-    if (it != mServices.end()) {
-        port = it->second;
-    }
-    return port;
+    Enter_Method("requestTransmission");
+    netifc.getRouter().request(request, std::move(packet));
 }
 
 void Middleware::requestTransmission(const vanetza::btp::DataRequestB& request, std::unique_ptr<vanetza::DownPacket> packet)
 {
-    if (mRouter) {
-        mRouter->request(request, std::move(packet));
+    Enter_Method("requestTransmission");
+    //std::cout << "MLC -- Middleware::requestTransmission" << endl;
+
+    auto channels = mMultiChannelPolicy->allChannels(request.gn.its_aid);
+    if (channels.empty()) {
+        EV_WARN << "No channel found for ITS-AID " << request.gn.its_aid << "\n";
+    }
+
+    unsigned pass = 0;
+    for (ChannelNumber channel : channels) {
+        auto netifc = mNetworkInterfaceTable.select(channel);
+        if (netifc) {
+            ++pass;
+            if (channels.size() > pass) {
+                // duplicate packet for all but last network interface
+                netifc->getRouter().request(request, vanetza::duplicate(*packet));
+            } else {
+                // last network interface -> pass "original" packet
+                netifc->getRouter().request(request, std::move(packet));
+            }
+        } else {
+            EV_ERROR << "No network interface operating on channel " <<  channel << "\n";
+        }
+    }
+
+    if (pass == 0) {
+        EV_ERROR << "ITS-AID " << request.gn.its_aid << " packet lost in Middleware\n";
     } else {
-        error("Transmission of BTP-B packet requested but router is not available");
+        EV_DETAIL << "ITS-AID " << request.gn.its_aid << " packet passed to " << pass << " network interfaces\n";
     }
 }
 
