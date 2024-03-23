@@ -1,0 +1,8 @@
+if(NOT DEFINED ASN1C_OUTPUT_DIR)
+    message(FATAL_ERROR "Missing ASN.1 output directory (ASN1C_OUTPUT_DIR)")
+elseif(NOT DEFINED ASN1C_SOURCE_FILE)
+    message(FATAL_ERROR "Missing ASN.1 source file (ASN1C_SOURCE_FILE)")
+endif()
+
+file(REMOVE_RECURSE ${ASN1C_OUTPUT_DIR})
+file(WRITE ${ASN1C_SOURCE_FILE} "")

@@ -1,0 +1,13 @@
+sudo: required
+language: minimal
+services:
+ - docker
+
+install:
+ - docker build --tag vanetza/travis tools/docker
+
+script:
+ - docker run -itd
+     --mount type=bind,source=$TRAVIS_BUILD_DIR,destination=/travis
+     --name vanetza vanetza/travis
+ - docker exec vanetza /travis/tools/docker/build_and_run_tests.sh
