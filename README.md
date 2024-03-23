@@ -5,7 +5,7 @@ understanding a complete system that consist of two key components: (i) Communic
 
 ## Requirements
 
-Artery-C currently uses the following software packages (please note the specific version):
+``Artery-C`` currently uses the following software packages (please note the specific version):
 * C++ Compiler with C++11 support
 * Boost 1.65.1 and Vanetza libraries
 * Ubuntu 18.04 onwards
@@ -15,22 +15,22 @@ Artery-C currently uses the following software packages (please note the specifi
 * Pybind 11 (optional)
 * Debugging - GNU GDB 8.1.1
 
-The simulation framework is organized as follows:
-- [Facilities layer] - comprises of the modules corresponding to different types of V2X messaging services and protocols in the facilities layer - cooperative awareness (CA) service, collective perception service (CPS), Decentralized environmental notification (DEN) service. Further extensions to other messaging services are possible to be implemented here. Currently, it re-uses the components from the ``Artery`` framework. Please refer to the path ``src/artery``.
+``Artery-C`` is organized as follows:
+- Facilities layer - comprises of the modules corresponding to different types of V2X messaging services and protocols in the facilities layer - cooperative awareness (CA) service, collective perception service (CPS), Decentralized environmental notification (DEN) service. Further extensions to other messaging services are possible to be implemented here. Currently, it re-uses the components from the ``Artery`` framework. Please refer to the path ``src/artery``.
 - [Network & Transport layer] - implementation of BTP and Geonetworking protocols. Currently, it re-uses the components from the ``Vanetza`` framework. Please refer to the path ``extern/vanetza``.
 - [Access layers] - comprises of the modules corresponding to the access layers of the Cellular V2X protocol stack - PDCP, RLC, MAC and PHY. Additionally, an implementation of the radio resource control (RRC) module has been provided. It was initially develeloped by implementing a dedicated sidelink interface, sidelink resource allocation modes along with control and user planes as an extension to the ``SimuLTE`` framework. It is now upgraded to support integration with ``Simu5G`` and all the 5G-NR standard compliant features of the Cellular V2X protocol stack. Different types of wireless channel models to support system level simulations are also included here. Please refer to the path ``extern/Simu5G``.
 - [INET] (https://github.com/inet-framework/inet) (located in the path ``extern/inet4.5``).
 - [Road traffic environments] - different types of road traffic scenarios are simulated at a microscopic level within the ``SUMO`` framework. The specific road traffic scenarios are loacted in the ``scenarios`` folder and the simulation settings can be modified in the corresponding ``*.xml`` and ``omnetpp.ini`` files within each folder. Other suitable scenarios can be added here.
 - [TraCI API] - support bi-directional communication between the network simulator ``Artery-C`` and the road traffic simulator ``SUMO``. Please refer to the path ``src/traci``. To retrive additional information from the road traffic model into the network simulator ``Artery-C``, specific functions in the files (located in the path ``src/traci``) can be accordingly modified.
 
-Note: It is recommended to align with the versions of the INET*, *Veins* and *Vanetza* as provided in the ``extern`` folder which get downloaded upon cloning the ``Artery-C`` framework. However recent versions of *INET*, *Veins* and *Vanetza* can be downloaded here:
+Note: It is recommended to align with the versions of the *INET*, *Veins* and *Vanetza* as provided in the ``extern`` folder which get downloaded upon cloning the ``Artery-C`` framework. However recent versions of *INET*, *Veins* and *Vanetza* can be downloaded here:
 
 - [INET](https://github.com/inet-framework/inet)
 - [Veins](https://github.com/sommer/veins)
 - [Vanetza](https://github.com/riebl/vanetza)
 
 ## Build instructions
-The first step involves building the dependencies from the Artery-C's root directory. The ``Makefile`` contains rules for building all the dependencies by executing ``make all`` (for release mode) and ``make all MODE=debug`` (for debug mode).
+The first step involves building the dependencies from the root directory of ``Artery-C``. The ``Makefile`` contains rules for building all the dependencies by executing ``make all`` (for release mode) and ``make all MODE=debug`` (for debug mode).
 
 To build Artery-C in release mode:
 
