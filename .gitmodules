@@ -1,0 +1,18 @@
+[submodule "scenarios/InTAS"]
+	path = scenarios/InTAS
+	url = https://github.com/anupama1990/InTAS.git
+[submodule "extern/vanetza"]
+	path = extern/vanetza
+	url = https://github.com/anupama1990/vanetza.git
+[submodule "extern/simulte"]
+	path = extern/simulte
+	url = https://github.com/anupama1990/simulte.git
+[submodule "extern/veins"]
+	path = extern/veins
+	url = https://github.com/anupama1990/veins.git
+[submodule "extern/pybind11"]
+	path = extern/pybind11
+	url = https://github.com/anupama1990/pybind11.git
+[submodule "extern/inet"]
+	path = extern/inet
+	url = https://github.com/anupama1990/inet.git
