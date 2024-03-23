@@ -1,5 +1,0 @@
-package traci;
-
-moduleinterface SubscriptionManager
-{
-}

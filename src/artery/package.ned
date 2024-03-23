@@ -1,2 +1,0 @@
-package artery;
-@namespace(artery);
