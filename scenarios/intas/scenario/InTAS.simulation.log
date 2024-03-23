@@ -1,0 +1,43 @@
+***Starting server on port 47939 ***
+Loading net-file from 'ingolstadt.net.xml' ... done (950ms).
+Loading additional-files from 'buildings.poly.xml' ... done (525ms).
+Loading additional-files from 'enodeb_poi.add.xml' ... done (0ms).
+Loading additional-files from 'cellsites/cellsites.xml' ... done (2ms).
+Loading done.
+Simulation started with time: 0.000
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Simulation ended at time: 50.200
+Performance: 
+ Duration: 61.906s
+ Real time factor: 0.810907
+ UPS: 1040.690725
+ UPS-Persons: 32.436274
+Vehicles: 
+ Inserted: 62 (Loaded: 200)
+ Running: 62
+ Waiting: 18
+Persons: 
+ Inserted: 2
+ Running: 1
+
+DijkstraRouter answered 13 queries and explored 1852.692 edges on average.
+DijkstraRouter spent 0.016s answering queries (1.231ms on average).
+DijkstraRouter answered 8 queries and explored 2546.875 edges on average.
+DijkstraRouter spent 0.012s answering queries (1.500ms on average).
+DijkstraRouter answered 7 queries and explored 1737.286 edges on average.
+DijkstraRouter spent 0.008s answering queries (1.143ms on average).
+DijkstraRouter answered 7 queries and explored 2156.286 edges on average.
+DijkstraRouter spent 0.010s answering queries (1.429ms on average).
+DijkstraRouter answered 6 queries and explored 2266.333 edges on average.
+DijkstraRouter spent 0.009s answering queries (1.500ms on average).
+DijkstraRouter answered 5 queries and explored 1961.600 edges on average.
+DijkstraRouter spent 0.007s answering queries (1.400ms on average).
+DijkstraRouter answered 5 queries and explored 2371.800 edges on average.
+DijkstraRouter spent 0.009s answering queries (1.800ms on average).
+DijkstraRouter answered 5 queries and explored 2528.600 edges on average.
+DijkstraRouter spent 0.009s answering queries (1.800ms on average).
+DijkstraRouter answered 5 queries and explored 2484.800 edges on average.
+DijkstraRouter spent 0.009s answering queries (1.800ms on average).
+DijkstraRouter answered 5 queries and explored 1865.200 edges on average.
+DijkstraRouter spent 0.007s answering queries (1.400ms on average).

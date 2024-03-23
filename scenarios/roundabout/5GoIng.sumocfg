@@ -1,0 +1,44 @@
+<!--
+	Roundabout Scenario developed for the Project 5GoIng
+	Author: Silas Lobo
+
+	This program is free software: you can redistribute it and/or modify
+    	it under the terms of the GNU General Public License as published by
+   	the Free Software Foundation, either version 3 of the License, or
+    	(at your option) any later version.
+-->
+<configuration>
+	<input>
+		<net-file value="5GoIng.net.xml"/>
+		<route-files value="BusRoutes.flow.xml,passenger.rou.xml,trucks.rou.xml"/>
+		<additional-files value="busStop.add.xml, enodeb_poi.add.xml"/>		
+	</input>
+	<time>
+		<begin value="0"/>
+		<step-length value="0.1"/>
+		<end value="3600"/>
+	</time>
+	<processing>
+		<route-steps value="200"/>
+		<threads value="1"/>
+		<time-to-teleport value="300"/>		
+        	<max-depart-delay value="300"/>
+		<default.carfollowmodel value="Krauss"/>
+		<parking.maneuver value="true"/>
+		<pedestrian.model value="striping"/>
+		<pedestrian.striping.stripe-width value="0.55"/>
+		<pedestrian.striping.jamtime value="30"/>
+	</processing>
+	<routing>
+		<routing-algorithm value="dijkstra"/>
+		<device.rerouting.probability value="0.82"/>
+		<device.rerouting.period value="300" />
+		<device.rerouting.threads value="1"/>
+		<device.rerouting.synchronize value="true"/>
+		<persontrip.transfer.car-walk value="allJunctions"/>
+	</routing>
+	<report>
+        	<verbose value="true"/>
+		<no-warnings value="true"/>	    	
+	</report>
+</configuration>

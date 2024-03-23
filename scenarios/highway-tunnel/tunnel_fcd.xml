@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Mi 02 Jun 2021 19:39:24 CEST by Eclipse SUMO GUI Version v1_7_0+0806-7a2be207e1
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="tunnel.net.xml"/>
+        <route-files value="tunnel.rou.xml"/>
+        <additional-files value="tunnel_poi.add.xml"/>
+    </input>
+
+    <output>
+        <fcd-output value="tunnel_fcd.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="1000"/>
+        <step-length value="0.1"/>
+    </time>
+
+    <report>
+        <message-log value="sumo-0.log"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <traci_server>
+        <remote-port value="57011"/>
+    </traci_server>
+
+    <random_number>
+        <seed value="23423"/>
+    </random_number>
+
+    <gui_only>
+        <quit-on-end value="true"/>
+        <start value="true"/>
+        <tracker-interval value="0.1"/>
+    </gui_only>
+
+</configuration>
+-->
+
+<fcd-export xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/fcd_file.xsd">
+    <timestep time="0.00">
+        <vehicle id="flow0.0" x="3104.30" y="722.83" angle="316.47" type="vtype0" speed="0.00" pos="2.60" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="0.10">
+        <vehicle id="flow0.0" x="3104.28" y="722.86" angle="316.47" type="vtype0" speed="0.29" pos="2.63" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="0.20">
+        <vehicle id="flow0.0" x="3104.24" y="722.90" angle="316.47" type="vtype0" speed="0.58" pos="2.69" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="0.30">
+        <vehicle id="flow0.0" x="3104.18" y="722.96" angle="316.47" type="vtype0" speed="0.87" pos="2.77" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="0.40">
+        <vehicle id="flow0.0" x="3104.10" y="723.05" angle="316.47" type="vtype0" speed="1.16" pos="2.89" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="0.50">
+        <vehicle id="flow0.0" x="3104.00" y="723.15" angle="316.47" type="vtype0" speed="1.45" pos="3.04" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="0.60">
+        <vehicle id="flow0.0" x="3103.88" y="723.28" angle="316.47" type="vtype0" speed="1.74" pos="3.21" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="0.70">
+        <vehicle id="flow0.0" x="3103.74" y="723.42" angle="316.47" type="vtype0" speed="2.03" pos="3.41" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="0.80">
+        <vehicle id="flow0.0" x="3103.58" y="723.59" angle="316.47" type="vtype0" speed="2.32" pos="3.64" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="0.90">
+        <vehicle id="flow0.0" x="3103.40" y="723.78" angle="316.47" type="vtype0" speed="2.61" pos="3.91" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="1.00">
+        <vehicle id="flow0.0" x="3103.20" y="723.99" angle="316.47" type="vtype0" speed="2.90" pos="4.20" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="1.10">
+        <vehicle id="flow0.0" x="3102.98" y="724.22" angle="316.47" type="vtype0" speed="3.19" pos="4.51" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="1.20">
+        <vehicle id="flow0.0" x="3102.74" y="724.47" angle="316.47" type="vtype0" speed="3.48" pos="4.86" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="1.30">
+        <vehicle id="flow0.0" x="3102.48" y="724.75" angle="316.47" type="vtype0" speed="3.77" pos="5.24" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="1.40">
+        <vehicle id="flow0.0" x="3102.20" y="725.04" angle="316.47" type="vtype0" speed="4.06" pos="5.64" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="1.50">
+        <vehicle id="flow0.0" x="3101.90" y="725.36" angle="316.47" type="vtype0" speed="4.35" pos="6.08" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="1.60">
+        <vehicle id="flow0.0" x="3101.58" y="725.69" angle="316.47" type="vtype0" speed="4.64" pos="6.54" lane="557620619_0" slope="0.00"/>
+    </timestep>
+    <timestep time="1.70">
+        <vehicle id="flow0.0" x="3101.24" y="726.05" angle="316.47" type="vtype0" speed="4.93" pos="7.04" lane="557620619_0" slope="0.00"/>
+        <vehicle id="flow1.0" x="3104.30" y="722.83" angle="316.47" type="vtype1" speed="0.00" pos="2.60" lane="557620619_0" slope="0.00"/>
+    </timestep>
+</fcd-export>

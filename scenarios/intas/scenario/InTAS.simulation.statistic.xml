@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Fri 03 Nov 2023 11:44:12 AM CET by Eclipse SUMO GUI Version 1.9.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="ingolstadt.net.xml"/>
+        <route-files value="red_routes/BusRoutes.flow.xml,red_routes/ped.rou.xml,red_routes/InTAS_001.rou.xml,red_routes/InTAS_002.rou.xml,red_routes/InTAS_003.rou.xml,red_routes/InTAS_004.rou.xml,red_routes/InTAS_005.rou.xml,red_routes/InTAS_006.rou.xml,red_routes/InTAS_007.rou.xml,red_routes/InTAS_008.rou.xml,red_routes/InTAS_009.rou.xml,red_routes/InTAS_010.rou.xml,red_routes/InTAS_011.rou.xml,red_routes/InTAS_012.rou.xml,red_routes/InTAS_013.rou.xml,red_routes/InTAS_014.rou.xml,red_routes/InTAS_015.rou.xml,red_routes/InTAS_016.rou.xml,red_routes/InTAS_017.rou.xml,red_routes/InTAS_018.rou.xml,red_routes/InTAS_019.rou.xml,red_routes/InTAS_020.rou.xml,red_routes/InTAS_021.rou.xml,red_routes/InTAS_022.rou.xml"/>
+        <additional-files value="buildings.poly.xml,enodeb_poi.add.xml,cellsites/cellsites.xml"/>
+    </input>
+
+    <output>
+        <precision value="3"/>
+        <netstate-dump.precision value="3"/>
+        <emission-output.precision value="3"/>
+        <battery-output.precision value="3"/>
+        <elechybrid-output.precision value="3"/>
+        <summary-output value="InTAS.simulation.summary.xml"/>
+        <tripinfo-output value="InTAS.simulation.tripinfo.xml"/>
+        <statistic-output value="InTAS.simulation.statistic.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="86400"/>
+        <step-length value="0.025"/>
+    </time>
+
+    <processing>
+        <threads value="10"/>
+        <route-steps value="200"/>
+        <ignore-junction-blocker value="15"/>
+        <time-to-teleport value="300"/>
+        <time-to-teleport.highways value="300"/>
+        <max-depart-delay value="300"/>
+        <default.carfollowmodel value="Krauss"/>
+        <parking.maneuver value="true"/>
+        <pedestrian.model value="striping"/>
+        <pedestrian.striping.stripe-width value="0.55"/>
+        <pedestrian.striping.jamtime value="30"/>
+    </processing>
+
+    <routing>
+        <routing-algorithm value="dijkstra"/>
+        <persontrip.transfer.car-walk value="allJunctions"/>
+        <device.rerouting.probability value="0.82"/>
+        <device.rerouting.explicit value="default_001,default_002,default_003,default_004,default_005,default_006,default_007,default_008,default_009,default_010,default_011,default_012,default_013,default_014,default_015,default_016,default_017,default_018,default_019,default_020,default_021,default_022,random_001,random_002,random_003,random_004,random_005,random_006,random_007,random_008,random_009,random_010,random_011,random_012,random_013,random_014,random_015,random_016,random_017,random_018,random_019,random_020,random_021,random_022"/>
+        <device.rerouting.period value="300"/>
+        <device.rerouting.threads value="10"/>
+        <device.rerouting.synchronize value="true"/>
+    </routing>
+
+    <report>
+        <verbose value="true"/>
+        <no-warnings value="true"/>
+        <log value="InTAS.simulation.log"/>
+        <message-log value="sumo-0.log"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <traci_server>
+        <remote-port value="47939"/>
+    </traci_server>
+
+    <random_number>
+        <seed value="23423"/>
+    </random_number>
+
+    <gui_only>
+        <quit-on-end value="true"/>
+        <tracker-interval value="0.025"/>
+    </gui_only>
+
+</configuration>
+-->
+
+<statistics xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/statistic_file.xsd">
+    <vehicles loaded="200" inserted="62" running="62" waiting="18"/>
+    <teleports total="0" jam="0" yield="0" wrongLane="0"/>
+    <safety collisions="0" emergencyStops="0"/>
+    <persons loaded="2" running="1" jammed="0"/>
+    <vehicleTripStatistics routeLength="0.000" speed="0.000" duration="0.000" waitingTime="0.000" timeLoss="0.000" departDelay="0.000" departDelayWaiting="-1"/>
+    <pedestrianStatistics number="0" routeLength="0.000" duration="0.000" timeLoss="0.000"/>
+    <rideStatistics number="0"/>
+    <transportStatistics number="0"/>
+</statistics>

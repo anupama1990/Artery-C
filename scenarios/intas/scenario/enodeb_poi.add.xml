@@ -1,0 +1,12 @@
+<additional>
+<poi id="1" type="eNodeB" color="white" width="10" height="30" layer="202.00" lat="48.770408" lon="11.416408" imgFile="../../images/enodeb.jpg"/>
+<poi id="2" type="eNodeB" color="white" width="10" height="30" layer="202.00" lat="48.763192" lon="11.413433" imgFile="../../images/enodeb.jpg"/>
+<poi id="3" type="eNodeB" color="white" width="10" height="30" layer="202.00" lat="48.756521" lon="11.429622" imgFile="../../images/enodeb.jpg"/>
+<poi id="4" type="eNodeB" color="white" width="10" height="30" layer="202.00" lat="48.761148" lon="11.444170" imgFile="../../images/enodeb.jpg"/>
+<poi id="5" type="eNodeB" color="white" width="10" height="30" layer="202.00" lat="48.754186" lon="11.455140" imgFile="../../images/enodeb.jpg"/>
+<poi id="6" type="eNodeB" color="white" width="10" height="30" layer="202.00" lat="48.764996" lon="11.457778" imgFile="../../images/enodeb.jpg"/>
+<poi id="7" type="eNodeB" color="white" width="10" height="30" layer="202.00" lat="48.775663" lon="11.457771" imgFile="../../images/enodeb.jpg"/>
+<poi id="8" type="eNodeB" color="white" width="10" height="30" layer="202.00" lat="48.770913" lon="11.451431" imgFile="../../images/enodeb.jpg"/>
+<poi id="9" type="eNodeB" color="white" width="10" height="30" layer="202.00" lat="48.774992" lon="11.440092" imgFile="../../images/enodeb.jpg"/>
+<poi id="10" type="eNodeB" color="white" width="10" height="30" layer="202.00" lat="48.767269" lon="11.433903" imgFile="../../images/enodeb.jpg"/>
+</additional>

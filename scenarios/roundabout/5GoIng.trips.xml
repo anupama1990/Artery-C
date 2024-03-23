@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generated on 2022-07-22 10:03:22.344270 by randomTrips.py UNKNOWN
+  options: -n 5GoIng.net.xml -p 360 <doubleminus>vehicle-class truck -e 3600 <doubleminus>vehicle-class passenger -o 5GoIng.trips.xml
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="passenger" vClass="passenger"/>
+    <trip id="0" depart="0.00" from="767516519#1" to="-1042026729" type="passenger"/>
+    <trip id="1" depart="360.00" from="146973220#0" to="146973220#0" type="passenger"/>
+    <trip id="2" depart="720.00" from="767516522#0" to="767516521#0" type="passenger"/>
+    <trip id="3" depart="1080.00" from="767516523#7" to="-146973220#1" type="passenger"/>
+    <trip id="4" depart="1440.00" from="767516510#2" to="-1042026729" type="passenger"/>
+    <trip id="5" depart="1800.00" from="1016166670#0" to="767516516#0" type="passenger"/>
+    <trip id="6" depart="2160.00" from="-1016166670#1" to="1016166670#1" type="passenger"/>
+    <trip id="7" depart="2520.00" from="767516519#1" to="767516517#0" type="passenger"/>
+    <trip id="8" depart="2880.00" from="1016166670#0" to="767516518#1" type="passenger"/>
+    <trip id="9" depart="3240.00" from="767516523#2" to="-1016166670#0" type="passenger"/>
+</routes>

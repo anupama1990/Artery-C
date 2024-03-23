@@ -1,0 +1,29 @@
+# active simulated LTE Basestations
+*.numLteBaseStations = 8
+*.eNodeB[0].mobility.initialX = 4757.483186959347m
+*.eNodeB[0].mobility.initialY = 6164.2445952612325m
+*.eNodeB[1].mobility.initialX = 4686.3951382556115m
+*.eNodeB[1].mobility.initialY = 6356.767862094508m
+*.eNodeB[2].mobility.initialX = 4516.218599698099m
+*.eNodeB[2].mobility.initialY = 6579.149755716266m
+*.eNodeB[3].mobility.initialX = 4176.718466798135m
+*.eNodeB[3].mobility.initialY = 6635.570816704945m
+*.eNodeB[4].mobility.initialX = 4211.238002483791m
+*.eNodeB[4].mobility.initialY = 6148.266226935142m
+*.eNodeB[5].mobility.initialX = 3612.50241034379m
+*.eNodeB[5].mobility.initialY = 6241.820677406096m
+*.eNodeB[6].mobility.initialX = 3441.415407741617m
+*.eNodeB[6].mobility.initialY = 6643.324129181856m
+*.eNodeB[7].mobility.initialX = 5595.2321866887505m
+*.eNodeB[7].mobility.initialY = 6146.245476880984m
+
+# external enbs for interference simulation
+*.numExtCells = 2
+*.extCell[*].txPower = 20
+*.extCell[*].txDirection = "ISOTROPIC"
+*.extCell[*].bandAllocation = "RANDOM_ALLOC"
+*.extCell[*].bandUtilization = 0.5
+*.extCell[0].mobility.initialX = 4286.528113875131m
+*.extCell[0].mobility.initialY = 6341.689253916906m
+*.extCell[1].mobility.initialX = 4318.756857322354m
+*.extCell[1].mobility.initialY = 6661.093356293568m

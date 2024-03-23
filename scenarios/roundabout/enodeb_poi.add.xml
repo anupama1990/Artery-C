@@ -1,0 +1,5 @@
+<additional>
+<poi id="1" type="eNodeB" color="white" width="5" height="15" layer="202.00" lat="48.755062" lon="11.478555" imgFile="../images/enodeb.jpg"/>
+<poi id="2" type="eNodeB" color="white" width="5" height="15" layer="202.00" lat="48.755225" lon="11.479495" imgFile="../images/enodeb.jpg"/>
+<poi id="3" type="RSU" color="white" width="5" height="15" layer="202.00" lat="48.7549667" lon="11.4743667" imgFile="../images/rsu.jpg"/>
+</additional>

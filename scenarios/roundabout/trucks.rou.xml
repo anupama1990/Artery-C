@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2022-07-22 10:47:20 by Eclipse SUMO duarouter Version 1.12.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
+
+    <input>
+        <net-file value="5GoIng.net.xml"/>
+        <additional-files value="busStop.add.xml"/>
+        <route-files value="5GoIng.trucks.trips.xml"/>
+    </input>
+
+    <output>
+        <output-file value="trucks.rou.xml"/>
+        <alternatives-output value="trucks.rou.alt.xml"/>
+    </output>
+
+    <report>
+        <no-warnings value="true"/>
+        <ignore-errors value="true"/>
+    </report>
+
+    <random_number>
+        <random value="true"/>
+    </random_number>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="truck" vClass="truck"/>
+    <vehicle id="truck_0" type="truck" depart="0.00">
+        <route edges="767516519#1 767516523#4 767516523#5 767516523#6 767516516#0 767516516#1 -1042026729"/>
+    </vehicle>
+    <vehicle id="truck_1" type="truck" depart="360.00">
+        <route edges="146973220#0"/>
+    </vehicle>
+    <vehicle id="truck_3" type="truck" depart="1080.00">
+        <route edges="767516523#7 767516523#0 767516523#1 767516523#2 767516523#3 767516523#4 767516523#5 767516523#6 767516516#0 767516516#1 -1042026729 -146973220#1"/>
+    </vehicle>
+    <vehicle id="truck_6" type="truck" depart="2160.00">
+        <route edges="-1016166670#1 -1016166670#0 865774625 767516521#0 767516521#1 767516523#2 767516523#3 767516523#4 767516523#5 767516523#6 767516523#7 767516523#0 767516522#0 767516522#1 1016166670#0 1016166670#1"/>
+    </vehicle>
+</routes>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+<vType id="bus" vClass="bus" color="green"/>
+	<flow id="21" type="bus" begin="0" end="3600" period="400">
+	<route edges="-1016166670#1 -1016166670#0 865774625 865774624#0 865774624#1 865774624#2 164051425#0"/>
+		 <stop busStop="bs_0" duration="7.00"/>
+	</flow>
+</routes>
