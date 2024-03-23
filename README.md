@@ -83,4 +83,4 @@ Artery-C automatically starts ``SUMO`` when the target ``make run_tunnel`` or ``
     *.traci.launcher.sumo = "sumo-gui"
     
 ## To cite Artery-C:
-- [1] A. Hegde and A. Festag, “Artery-C – An OMNeT++ Based Discrete Event Simulation Framework for Cellular V2X,” in ACM Conference on Modeling, Analysis and Simulation of Wireless and Mobile Systems (MSWIM), Alicante, Spain, Nov. 2020, pp. 450–456, doi: 10.1145/3416010.3423240, © 2023 ACM, Inc. Extended version on arXiv: (URL:) http://arxiv.org/abs/2009.05724.
+[1] A. Hegde and A. Festag, “Artery-C – An OMNeT++ Based Discrete Event Simulation Framework for Cellular V2X,” in ACM Conference on Modeling, Analysis and Simulation of Wireless and Mobile Systems (MSWIM), Alicante, Spain, Nov. 2020, pp. 450–456, doi: 10.1145/3416010.3423240, © 2023 ACM, Inc. Extended version on arXiv: (URL:) http://arxiv.org/abs/2009.05724.
