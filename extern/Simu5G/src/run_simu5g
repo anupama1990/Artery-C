@@ -1,0 +1,15 @@
+#! /bin/sh
+DIR=`dirname $0`
+DIR=`(cd $DIR ; pwd)`
+INET_DIR=`(cd $DIR/../../inet/src ; pwd)`
+COMMAND_LINE_OPTIONS="-n $DIR/../simulations:$DIR:$INET_DIR"
+
+if [ -f $DIR/libsimu5g.so -o -f $DIR/libsimu5g.dll -o -f $DIR/libsimu5g.dylib ]; then
+  opp_run -l $DIR/simu5g $COMMAND_LINE_OPTIONS $*
+elif [ -x $DIR/simu5g -o -x $DIR/simu5g.exe ]; then
+  $DIR/simu5g $COMMAND_LINE_OPTIONS $*
+elif [ -f $DIR/libsimu5g_dbg.so -o -f $DIR/libsimu5g_dbg.dll -o -f $DIR/libsimu5g_dbg.dylib ]; then
+  opp_run -l $DIR/simu5g_dbg $COMMAND_LINE_OPTIONS $*
+elif [ -x $DIR/simu5g_dbg -o -x $DIR/simu5g_dbg.exe ]; then
+  $DIR/simu5g_dbg $COMMAND_LINE_OPTIONS $*
+fi
