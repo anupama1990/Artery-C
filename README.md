@@ -14,8 +14,8 @@ providing new classes of services and user experiences.
 * Boost 1.65.1 and Vanetza libraries
 * Ubuntu 18.04 onwards
 * SUMO 1.7.10 
-* OMNeT++ 6.0 
-* INET 4.5
+* OMNeT++ 6.0.2 
+* INET 4.5.2
 * Pybind 11 (optional)
 * Debugging - GNU GDB 8.1.1
 
