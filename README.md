@@ -12,7 +12,7 @@ providing new classes of services and user experiences.
 ``Artery-C`` currently uses the following software packages (please note the specific version):
 * C++ Compiler with C++11 support
 * Boost 1.65.1 and Vanetza libraries
-* Ubuntu 18.04 onwards
+* Ubuntu 20.04 onwards
 * SUMO 1.7.10 
 * OMNeT++ 6.0.2 
 * INET 4.5.2
